@@ -5,3 +5,53 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+
+/* montserrat-regular - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/montserrat-v29-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
+  /* montserrat-800 - latin */
+  @font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 800;
+    src: url('../fonts/montserrat-v29-latin-800.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
+
+  @font-face {
+    font-display: swap; 
+    font-family: 'Core Sans C';
+    font-style: normal;
+    font-weight: 800;
+    src: url('../fonts/CoreSansC-85Heavy.woff2') format('woff2'); 
+  }
+
+  @font-face {
+    font-display: swap; 
+    font-family: 'Core Sans C';
+    font-style: normal;
+    font-weight: 600;
+    src: url('../fonts/CoreSansC-65Bold.woff2') format('woff2'); 
+  }
+
+  @font-face {
+    font-display: swap; 
+    font-family: 'Core Sans C';
+    font-style: normal;
+    font-weight: 800;
+    src: url('../fonts/CoreSansC-75ExtraBoldIt.woff2') format('woff2'); 
+  }
+
+  @font-face {
+    font-display: swap; 
+    font-family: 'Core Sans C';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../fonts/CoreSansC-55Medium.woff2') format('woff2'); 
+  }
