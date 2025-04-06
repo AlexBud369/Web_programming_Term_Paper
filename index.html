@@ -3,43 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Home page</title>
 </head>
 <body>
-    <header>
-        <img src="images/logo.png" alt="Euphoria Logo" class="logo">
-        
-        <nav>
+<header>
+    <div class="header-container">
+            <!-- Logo -->
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="Euphoria Logo">
+        </a>
+            
+        <!-- Main Navigation -->
+        <nav class="main-nav">
             <ul>
-                <li><a href="#">Shop</a></li>
-                <li><a href="#">Men</a></li>
-                <li><a href="#">Women</a></li>
-                <li><a href="#">Combos</a></li>
-                <li><a href="#">Joggers</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="catalog.html">Catalog</a></li>
+                <li class="auth-only"><a href="account.html" class="account-link">Account</a></li>
+                <li class="auth-only"><a href="cart.html" class="cart-link">Cart</a></li>
             </ul>
         </nav>
-        
+            
+            <!-- Search Bar -->
         <div class="search-bar">
-            <img src="images/home_page_icons/search_icon.svg" alt="Search" class="icon">
+            <button class="search-btn">
+                <img src="images/home_page_icons/search_icon.svg" alt="Search" class="icon">
+            </button>
             <input type="text" placeholder="Search">
+            
         </div>
+            
+         <!-- Controls -->
+        <div class="header-controls">
+            <!-- Language Selector -->
+            <div class="language-selector">
+                <span class="current-language">English</span>
+                <i class="fas fa-chevron-down"></i>
+                <ul class="language-dropdown">
+                    <li data-lang="en">English</li>
+                    <li data-lang="ru">Русский</li>
+                </ul>
+            </div>
+                
+                <!-- Theme Toggle -->
+            <button class="theme-toggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+                
+                <!-- Burger Menu (visible on all devices) -->
+            <button class="burger-menu" aria-label="Menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </button>
+        </div>
+    </div>
         
-        <div class="icon-group">
-            <div class="icon-square">
-                <img src="images/home_page_icons/user_icon.svg" alt="Account" class="icon">
-            </div>
-            <div class="icon-square">
-                <img src="images/home_page_icons/heart_icon.svg" alt="Wishlist" class="icon">
-            </div>
-            <div class="icon-square">
-                <img src="images/home_page_icons/cart_icon.svg" alt="Cart" class="icon">
+    <!-- Mobile Menu (hidden by default) -->
+    <div class="mobile-menu">
+        <div class="auth-section">
+            <button class="login-btn">Login</button>
+            <button class="register-btn">Register</button>
+            <div class="user-profile" style="display:none;">
+                <span class="username"></span>
+                <button class="logout-btn">Logout</button>
             </div>
         </div>
-        
-        <div class="burger-menu">
-            <img src="" alt="Burger_menu" class="icon">
+            
+        <div class="accessibility-menu">
+            <h3>Accessibility</h3>
+            <div class="accessibility-option">
+                <label>
+                    <input type="checkbox" id="a11y-toggle"> Accessibility Mode
+                </label>
+            </div>
+                
+            <div class="a11y-options" style="display:none;">
+                <div class="option-group">
+                    <label>Text Size:</label>
+                    <input type="range" id="font-size" min="100" max="200" step="50" value="100">
+                    <span id="font-size-value">100%</span>
+                </div>
+                    
+                <div class="option-group">
+                    <label>Color Scheme:</label>
+                    <div class="color-schemes">
+                        <label><input type="radio" name="color-scheme" value="scheme-1"> Black+Green</label>
+                        <label><input type="radio" name="color-scheme" value="scheme-2"> Beige+Brown</label>
+                        <label><input type="radio" name="color-scheme" value="scheme-3"> Blue+Navy</label>
+                    </div>
+                </div>
+                    
+                <div class="option-group">
+                    <label>
+                        <input type="checkbox" id="images-toggle"> Show Images
+                    </label>
+                </div>
+            </div>
         </div>
-    </header>
+    </div>
+</header>
     <main>
         <section class="hero">
             <div class="hero-content">
