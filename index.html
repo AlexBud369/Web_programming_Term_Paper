@@ -9,12 +9,9 @@
 <body>
 <header>
     <div class="header-container">
-            <!-- Logo -->
         <a href="index.html" class="logo">
             <img src="images/logo.png" alt="Euphoria Logo">
         </a>
-            
-        <!-- Main Navigation -->
         <nav class="main-nav">
             <ul>
                 <li><a href="about.html">About Us</a></li>
@@ -23,8 +20,6 @@
                 <li class="auth-only"><a href="cart.html" class="cart-link">Cart</a></li>
             </ul>
         </nav>
-            
-            <!-- Search Bar -->
         <div class="search-bar">
             <button class="search-btn">
                 <img src="images/home_page_icons/search_icon.svg" alt="Search" class="icon">
@@ -32,34 +27,28 @@
             <input type="text" placeholder="Search">
             
         </div>
-            
-         <!-- Controls -->
         <div class="header-controls">
-            <!-- Language Selector -->
             <div class="language-selector">
-                <span class="current-language">English</span>
-                <i class="fas fa-chevron-down"></i>
+                <span class="current-language">
+                    English
+                    <img src="images/home_page_icons/Vector.svg" alt="Select language" class="drop-icon">
+                </span>
                 <ul class="language-dropdown">
                     <li data-lang="en">English</li>
                     <li data-lang="ru">Русский</li>
                 </ul>
             </div>
-                
-                <!-- Theme Toggle -->
-            <button class="theme-toggle" aria-label="Toggle theme">
-                <i class="fas fa-moon"></i>
-            </button>
-                
-                <!-- Burger Menu (visible on all devices) -->
+            <label class="custom-toggle">
+                <input type="checkbox" class="toggle-input">
+                <div class="toggle-track">
+                  <div class="toggle-knob"></div>
+                </div>
+            </label>
             <button class="burger-menu" aria-label="Menu">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
+                <img src="images/home_page_icons/burger-menu-icon.svg" alt="" class="burger-menu-icon">
             </button>
         </div>
     </div>
-        
-    <!-- Mobile Menu (hidden by default) -->
     <div class="mobile-menu">
         <div class="auth-section">
             <button class="login-btn">Login</button>
@@ -104,7 +93,7 @@
     </div>
 </header>
     <main>
-        <section class="hero">
+       <section class="hero">
             <div class="hero-content">
                 <h1>T-Shirt / Tops</h1>
                 <h2>Summer Value Pack</h2>
