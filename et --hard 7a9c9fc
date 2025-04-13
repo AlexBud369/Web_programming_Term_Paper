@@ -1,0 +1,17 @@
+[33m56934b0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mgh[m[33m, [m[1;31morigin/gh[m[33m)[m HEAD@{0}: reset: moving to HEAD~1
+[33m7a9c9fc[m HEAD@{1}: commit (amend): refactor: add Lato font files
+[33ma3785bb[m HEAD@{2}: commit: feat: add Lato font files
+[33m56934b0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mgh[m[33m, [m[1;31morigin/gh[m[33m)[m HEAD@{3}: commit: feat: create html files for all pages
+[33mb2afbfb[m HEAD@{4}: commit: feat: add styles for home page header
+[33m1ffc657[m HEAD@{5}: commit: feat: redesign header with responsive navigation and theme switcher
+[33m07dabeb[m HEAD@{6}: commit: feat: add html code of slider section for home page
+[33me74500a[m HEAD@{7}: commit: feat: add html code of header for home page
+[33m10d90ea[m HEAD@{8}: commit: feat: add Montserrat and Core-Sans-C font-faces in CSS
+[33m13aaa44[m HEAD@{9}: commit: feat: add Core-Sans-C and Montseratt font files
+[33m53c6709[m HEAD@{10}: commit: feat: add images folder and assets for homepage
+[33mb397f30[m HEAD@{11}: commit: feat: add styles folder with main.css
+[33m5492f3d[m HEAD@{12}: commit: feat: create basic page layout with header, main, footer
+[33mb36b83e[m HEAD@{13}: commit: init: create project structure with index.html
+[33mfea57a0[m HEAD@{14}: checkout: moving from main to gh
+[33m161aa8f[m[33m ([m[1;32mmain[m[33m)[m HEAD@{15}: checkout: moving from main to main
+[33m161aa8f[m[33m ([m[1;32mmain[m[33m)[m HEAD@{16}: commit (initial): init: create project structure with index.html
