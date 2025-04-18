@@ -1,0 +1,267 @@
+body, html {
+  max-width: 90rem;
+  margin: 0 auto;
+}
+
+header {
+  background-color: var(--primary-color);
+  color: #807D7E;
+  height: var(--header-height);
+  
+}
+
+.header-container {
+  display: flex;
+  /*align-items: center;*/
+  max-width: 77.25rem;
+  margin-left: 7.083%;
+  margin-right: 7.083%;
+  padding-left: 0px;
+  padding-top: 31px;
+}
+
+.logo img {
+  width: 91.16px;
+  height: 45px;
+  width: auto;
+}
+
+.main-nav{
+  display: flex;
+  align-items: center;
+  margin-left: 62px;
+  margin-top: -2px;
+}
+
+.main-nav ul {
+  display: flex;
+  list-style: none;
+  gap: 40px;
+  
+}
+
+.main-nav a {
+  color: #807D7E;
+  text-decoration: none;
+  transition: color 0.3s;
+  font-size: 22px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+}
+
+.main-nav a:hover {
+  color: var(--secondary-color);
+}
+
+.search-bar {
+  display: flex;
+  width: 267px;
+  height: 44px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background: #F6F6F6;
+  align-items: center;
+  gap: 12px;
+  margin-left: 56px;
+  margin-top: 0;
+}
+
+.search-bar input {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  background: #F6F6F6;
+}
+
+.search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Header Controls */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-left: 134px;
+  margin-top: 0;
+}
+/* Основные стили остаются как в предыдущем примере */
+.language-selector {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.current-language {
+  color: #807D7E;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+/* Стили для иконки-картинки */
+.drop-icon {
+  width: 12px; /* Регулируйте под ваш размер */
+  height: 12px;
+  margin-left: 4px;
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.language-selector.active .drop-icon {
+  transform: rotate(180deg);
+}
+
+/* Стили выпадающего списка (как в предыдущем примере) */
+.language-dropdown {
+  display: none;
+  position: absolute;
+  /* ... остальные стили ... */
+}
+
+.language-selector.active .language-dropdown {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.custom-toggle {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 3px;
+  margin-top: -2px;
+}
+
+.toggle-input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.toggle-track {
+  width: 70px;
+  height: 25px;
+  background: rgba(138, 51, 253, 0.1);
+  border: 1px solid #000;
+  border-radius: 50px;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.toggle-knob {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #FFF;
+  border-radius: 50px;
+  top: 2.5px;
+  left: 2.5px;
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Анимация при включении */
+.toggle-input:checked + .toggle-track {
+  background: rgba(138, 51, 253, 0.3);
+}
+
+.toggle-input:checked + .toggle-track .toggle-knob {
+  transform: translateX(45px);
+  background: #8A33FD;
+}
+
+/* Состояния при наведении */
+.custom-toggle:hover .toggle-track {
+  background: rgba(138, 51, 253, 0.2);
+}
+
+.custom-toggle:hover .toggle-knob {
+  transform: scale(1.1);
+}
+
+.toggle-input:checked:hover + .toggle-track .toggle-knob {
+  transform: translateX(45px) scale(1.1);
+}
+
+/* Активное состояние (при нажатии) */
+.custom-toggle:active .toggle-knob {
+  transform: scale(0.9);
+}
+
+.toggle-input:checked:active + .toggle-track .toggle-knob {
+  transform: translateX(45px) scale(0.9);
+}
+
+/* Burger Menu */
+.burger-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin-top: -2px;
+  margin-left: 1px;
+}
+
+.burger-menu-icon{
+  width: 24px;
+  height: 24px;
+
+}
+
+.bar {
+  width: 100%;
+  height: 3px;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: var(--header-height);
+  right: 0;
+  width: 300px;
+  background: var(--primary-color);
+  padding: 20px;
+  box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+  z-index: 99;
+}
+
+/* Auth Only Elements 
+.auth-only {
+  display: none;
+}
+
+.logged-in .auth-only {
+  display: block;
+}*/
+
+/* Accessibility Options */
+.a11y-options {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.option-group {
+  margin-bottom: 10px;
+}
+
+.color-schemes label {
+  display: block;
+  margin: 5px 0;
+}
