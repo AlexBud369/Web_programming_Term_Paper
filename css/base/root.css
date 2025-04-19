@@ -1,9 +1,9 @@
 :root {
     /* Цветовая схема */
     --primary-color: #FFFFFF;
-    --secondary-color: #3498db;
+    --secondary-color: #3C4242;
     --text-color: #807D7E;
-    --bg-color: #fff;
+    --bg-color: #F6F6F6;
     --header-height: 108px;
     
     /* Шрифты */
