@@ -3,130 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preload" href="../fonts/CoreSansC-55Medium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../fonts/CoreSansC-65Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../fonts/CoreSansC-85Heavy.woff2" as="font" type="font/woff2" crossorigin>
+
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/pages/home.css">
     <title>Home page</title>
 </head>
 <body>
-<header>
-    <div class="header-container">
-        <a href="index.html" class="logo">
-            <img src="../images/logo.png" alt="Euphoria Logo">
-        </a>
-        <nav class="main-nav">
-            <ul>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="catalog.html">Catalog</a></li>
-                <li class="auth-only"><a href="account.html" class="account-link">Account</a></li>
-                <li class="auth-only"><a href="cart.html" class="cart-link">Cart</a></li>
-            </ul>
-        </nav>
-        <div class="search-bar">
-            <button class="search-btn">
-                <img src="../images/home_page_icons/search_icon.svg" alt="Search" class="icon">
-            </button>
-            <input type="text" placeholder="Search">
-            
-        </div>
-        <div class="header-controls">
-            <div class="language-selector">
-                <button class="language-toggle" aria-expanded="false">
-                  <span class="current-language">English</span>
-                  <img src="../images/home_page_icons/Vector.svg" alt="" class="drop-icon">
-                </button>
-                <ul class="language-dropdown">
-                  <li><button type="button" data-lang="en">English</button></li>
-                  <li><button type="button" data-lang="ru">Русский</button></li>
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="../images/logo.png" alt="Euphoria Logo">
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="catalog.html">Catalog</a></li>
+                    <li class="auth-only"><a href="account.html" class="account-link">Account</a></li>
+                    <li class="auth-only"><a href="cart.html" class="cart-link">Cart</a></li>
                 </ul>
-              </div>
-            <label class="custom-toggle">
-                <input type="checkbox" class="toggle-input">
-                <div class="toggle-track">
-                  <div class="toggle-knob"></div>
-                </div>
-            </label>
-            <button class="burger-menu" aria-label="Menu">
-                <img src="../images/home_page_icons/burger-menu-icon.svg" alt="" class="burger-menu-icon">
-            </button>
-        </div>
-    </div>
-    <div class="mobile-menu">
-        <div class="auth-section">
-            <button class="login-btn">Login</button>
-            <button class="register-btn">Register</button>
-            <div class="user-profile" style="display:none;">
-                <span class="username"></span>
-                <button class="logout-btn">Logout</button>
-            </div>
-        </div>
-            
-        <div class="accessibility-menu">
-            <h3>Accessibility</h3>
-            <div class="accessibility-option">
-                <label>
-                    <input type="checkbox" id="a11y-toggle"> Accessibility Mode
-                </label>
-            </div>
+            </nav>
+            <div class="search-bar">
+                <button class="search-btn">
+                    <img src="../images/home_page_icons/search_icon.svg" alt="Search" class="icon">
+                </button>
+                <input type="text" placeholder="Search">
                 
-            <div class="a11y-options" style="display:none;">
-                <div class="option-group">
-                    <label>Text Size:</label>
-                    <input type="range" id="font-size" min="100" max="200" step="50" value="100">
-                    <span id="font-size-value">100%</span>
+            </div>
+            <div class="header-controls">
+                <div class="language-selector">
+                    <button class="language-toggle" aria-expanded="false">
+                    <span class="current-language">English</span>
+                    <img src="../images/home_page_icons/Vector.svg" alt="" class="drop-icon">
+                    </button>
+                    <ul class="language-dropdown">
+                    <li><button type="button" data-lang="en">English</button></li>
+                    <li><button type="button" data-lang="ru">Русский</button></li>
+                    </ul>
                 </div>
-                    
-                <div class="option-group">
-                    <label>Color Scheme:</label>
-                    <div class="color-schemes">
-                        <label><input type="radio" name="color-scheme" value="scheme-1"> Black+Green</label>
-                        <label><input type="radio" name="color-scheme" value="scheme-2"> Beige+Brown</label>
-                        <label><input type="radio" name="color-scheme" value="scheme-3"> Blue+Navy</label>
-                    </div>
-                </div>
-                    
-                <div class="option-group">
-                    <label>
-                        <input type="checkbox" id="images-toggle"> Show Images
+                <div class="custom-toggle">
+                    <input type="checkbox" id="a11y-toggle" class="toggle-input">
+                    <label for="a11y-toggle" class="toggle-label">
+                        <span class="toggle-track">
+                            <span class="toggle-knob"></span>
+                        </span>
                     </label>
                 </div>
+                <button class="burger-menu" aria-label="Menu">
+                    <img src="../images/home_page_icons/burger-menu-icon.svg" alt="" class="burger-menu-icon">
+                </button>
             </div>
         </div>
-    </div>
-</header>
+        <div class="mobile-menu">
+            <div class="auth-section">
+                <button class="login-btn">Login</button>
+                <button class="register-btn">Register</button>
+                <div class="user-profile" style="display:none;">
+                    <span class="username"></span>
+                    <button class="logout-btn">Logout</button>
+                </div>
+            </div>
+                
+            <div class="accessibility-menu">
+                <h3>Accessibility</h3>
+                <div class="accessibility-option">
+                    <label>
+                        <input type="checkbox" id="a11y-toggle"> Accessibility Mode
+                    </label>
+                </div>
+                    
+                <div class="a11y-options" style="display:none;">
+                    <div class="option-group">
+                        <label>Text Size:</label>
+                        <input type="range" id="font-size" min="100" max="200" step="50" value="100">
+                        <span id="font-size-value">100%</span>
+                    </div>
+                        
+                    <div class="option-group">
+                        <label>Color Scheme:</label>
+                        <div class="color-schemes">
+                            <label><input type="radio" name="color-scheme" value="scheme-1"> Black+Green</label>
+                            <label><input type="radio" name="color-scheme" value="scheme-2"> Beige+Brown</label>
+                            <label><input type="radio" name="color-scheme" value="scheme-3"> Blue+Navy</label>
+                        </div>
+                    </div>
+                        
+                    <div class="option-group">
+                        <label>
+                            <input type="checkbox" id="images-toggle"> Show Images
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
     <main>
-      <!-- <section class="hero">
-            <div class="hero-content">
-                <h1>T-Shirt / Tops</h1>
-                <h2>Summer Value Pack</h2>
-                <p>cool / colorful / comfy</p>
-                <button class="shop-btn">Shop Now</button>
-            </div>
-            
+        <section class="hero">
             <div class="hero-slider">
-                <button class="slider-arrow slider-prev">
-                    <img src="images/home_page_icons/carousel-control-prev.svg" alt="Previous">
+                <button class="slider-arrow slider-prev" aria-label="Previous slide">
+                    <img src="../images/home_page_icons/carousel-control-prev.svg" alt="Previous">
                 </button>
                 
-                <div class="hero-images">
-                    <div class="hero-image active" style="background-image: url('images/home_page_person1.jpg')"></div>
-                    <div class="hero-image" style="background-image: url('images/')"></div>
-                    <div class="hero-image" style="background-image: url('images/')"></div>
+                <div class="slider-container">
+                    <div class="hero-images">
+                        <div class="hero-slide active" data-index="0">
+                            <img src="../images/home_page_person1.jpg" alt="Slide 1" class="slide-image">
+                            <div class="hero-content">
+                                <h1>T-Shirt / Tops</h1>
+                                <h2>Summer Value Pack</h2>
+                                <p>cool / colorful / comfy</p>
+                                <button class="shop-btn">Shop Now</button>
+                            </div>
+                        </div>
+                        <div class="hero-slide" data-index="1">
+                            <img src="../images/home_page_person2.jpg" alt="Slide 2" class="slide-image">
+                            <div class="hero-content">
+                                <h1>Accessories</h1>
+                                <h2>Perfect Details</h2>
+                                <p>Elegance / Individuality</p>
+                                <button class="shop-btn">Shop Now</button>
+                            </div>
+                        </div>
+                        <div class="hero-slide" data-index="2">
+                            <img src="../images/home_page_person3.jpg" alt="Slide 3" class="slide-image">
+                            <div class="hero-content">
+                                <h1>Sale Up To 50%</h1>
+                                <h2>Special Offers</h2>
+                                <p>Limited Time Only</p>
+                                <button class="shop-btn">Shop Now</button>
+                            </div>
+                        </div>
+                        <div class="hero-slide" data-index="3">
+                            <img src="../images/home_page_person1.jpg" alt="Slide 4" class="slide-image">
+                            <div class="hero-content">
+                                <h1>Evening Wear</h1>
+                                <h2>Luxury Collection</h2>
+                                <p>Sophistication / Glamour</p>
+                                <button class="shop-btn">Shop Now</button>
+                            </div>
+                        </div>
+                        <div class="hero-slide" data-index="4">
+                            <img src="../images/home_page_person1.jpg" alt="Slide 5" class="slide-image">
+                            <div class="hero-content">
+                                <h1>Street Style</h1>
+                                <h2>Urban Fashion</h2>
+                                <p>Bold / Expressive</p>
+                                <button class="shop-btn">Shop Now</button>
+                            </div>
+                        </div>
+                        <div class="hero-slide" data-index="5">
+                            <img src="../images/home_page_person6.jpg" alt="Slide 6" class="slide-image">
+                            <div class="hero-content">
+                                <h1>Premium Collection</h1>
+                                <h2>Exceptional Quality</h2>
+                                <p>For Fashion Connoisseurs</p>
+                                <button class="shop-btn">Shop Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+
+                    <div class="slider-progress">
+                        <div class="progress-bar"></div>
+                    </div>
                 </div>
                 
-                <button class="slider-arrow slider-next">
-                    <img src="images/home_page_icons/carousel-control-next.svg" alt="Next">
+                <button class="slider-arrow slider-next" aria-label="Next slide">
+                    <img src="../images/home_page_icons/carousel-control-next.svg" alt="Next">
                 </button>
-                <div class="slider-dots">
-                    <span class="dot active"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
             </div>
-        </section>-->
-        
+        </section>
     </main>
     <footer>
 
     </footer>
+    <script type="module" src="../js/main.js"></script>
 </body>
 </html>
