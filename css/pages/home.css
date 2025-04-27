@@ -514,7 +514,9 @@ img, video, canvas {
 }
 
 .promo-section {
-  padding: 130px 100px;
+  padding-top: 130px;
+  padding-left: 100px;
+  padding-right: 100px;
   box-sizing: border-box;
 }
 
@@ -615,6 +617,149 @@ img, video, canvas {
 .promo-content-2 .promo-heading { margin-bottom: 17px; }
 .promo-content-2 .promo-discount { margin-bottom: 17.24px; }
 
+.new-arrivals {
+  max-width: 1440px;
+  margin-top: 98px;
+  margin-left: 6.944%;
+  margin-right: 6.944%;
+  margin-bottom: 100px;
+  box-sizing: border-box;
+  position: relative; 
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: clamp(40px, 4.86vw, 70px);
+  gap: clamp(12px, 1.39vw, 20px);
+
+}
+
+.vertical-line {
+  border-radius: 10px;
+  background: #8A33FD;
+  width: 6px;
+  height: clamp(24px, 2.08vw, 30px);
+  flex-shrink: 0;
+}
+
+.section-title {
+  color: var(--secondary-color);
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 2.36vw, 2.125rem);
+  font-style: normal;
+  font-weight: 600;
+  line-height: clamp(1.625rem, 2.33vw, 33.5px);
+  letter-spacing: clamp(0.4px, 0.047vw, 0.68px);
+}
+
+.slider-container-new-arrivals {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  position: relative
+}
+
+.swiper {
+  width: 100%;
+  max-width: 1212px;
+  padding: 0 21.5px; 
+  overflow: visible;  
+}
+
+.swiper-wrapper {
+  display: flex;
+  width: max-content;
+  gap: clamp(20px, 2.68vw, 38.58px);
+}
+
+.swiper-slide {
+  width: 262.815px;
+  scroll-snap-align: start;
+  border-radius: 12px;
+  overflow: hidden; 
+}
+
+.swiper-slide:last-child {
+  margin-right: 0;
+}
+
+.product-card {
+  width: 100%;
+  height: 322px; 
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-image-container {
+  width: 262.815px;
+  height: 264px; 
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.product-image:hover {
+  transform: scale(1.02);
+}
+
+.product-name {
+  color: var(--secondary-color);
+  font-family: var(--font-main);
+  font-size: clamp(16px, 1.39vw, 20px);
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.2px;
+  margin-top: clamp(16px, 2.28vw, 32.85px); 
+  text-align: left; 
+  height: auto; 
+  min-height: 25.15px; 
+  display: block; 
+  padding: 0;
+  position: relative;
+  top: 0;
+}
+
+.swiper-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 14px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.swiper-button-prev {
+  left: calc((100% - 1169px) / 2 - 50px); 
+}
+
+.swiper-button-next {
+  right: calc((100% - 1169px) / 2 - 50px); 
+}
+
+.swiper-button img {
+  width: 14px; 
+  height: 12px;
+  object-fit: contain;
+}
 
 @media (max-width: 1439px){
   /*header*/
@@ -675,7 +820,30 @@ img, video, canvas {
     width: 1.3rem;
     height: 2.4rem;
   }
+  /*second slider*/
+  .slider-container-new-arrivals{
+    justify-content: center;
+  }
 
+  .new-arrivals{
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+
+  .section-header{
+    margin-left: 4.944%;
+  }
+
+  .swiper,
+  .swiper-wrapper {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .swiper-slide:nth-child(n+4) {
+    display: none; 
+  }
+ 
 }
 
 
@@ -770,6 +938,20 @@ img, video, canvas {
     width: 15%;
     bottom: 40px;
   }
+
+/*second slider*/
+  .swiper-slide {
+    width: 200px;
+  }
+  .product-image-container {
+    height: calc(246px - 58px * (200/262)); 
+  }
+  
+  .product-name {
+    height: 58px * (200/262); 
+    padding: 0 8px; 
+  }
+  
 }
 
 @media (max-width: 810px) {
@@ -801,6 +983,17 @@ img, video, canvas {
   .custom-toggle{
     display: none;
   }
+
+/*second slider*/
+  .swiper-slide:nth-child(n+3) {
+    display: none; 
+  }
+
+  .swiper,
+  .swiper-wrapper {
+    justify-content: space-around;
+  }
+
 }
 
 @media (max-width: 576px){
@@ -890,6 +1083,16 @@ img, video, canvas {
   html {
     font-size: 12px; 
   }
+
+/*second slider*/
+  .swiper-slide:nth-child(n+2) {
+    display: none; 
+  }
+
+  .swiper-slide{
+    width: 236px;
+  }
+
 }
 
 @media (max-width: 320px){
