@@ -957,7 +957,103 @@ img, video, canvas {
   transition: all 0.3s;
   margin-top: 10px;
   font-size: 0.75rem;
+}
 
+.everyday-fashion-section {
+  width: 100%;
+  max-width: 1240px;
+  margin: 100px auto;
+  position: relative;
+}
+
+.everyday-banner {
+  display: flex;
+  height: 640px;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #F5F5F5;
+}
+
+.everyday-text-content {
+  flex: 0 0 614px;
+  position: relative;
+}
+
+.everyday-bg-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.text-wrapper {
+  position: relative;
+  padding: 183px 0 0 74px;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.everyday-title {
+  color: #FFF;
+  font-family:  var(--font-heading);
+  font-size: 34px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 50px;
+  letter-spacing: 0.208px;
+  margin: 0 0 17px 0;
+  text-align: left;
+}
+
+.everyday-description {
+  color: #FFF;
+  font-family: var(--font-main);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  letter-spacing: 1px;
+  margin: 0 0 50px 0;
+  text-align: left;
+}
+
+.everyday-shop-btn {
+  max-width: 171px;
+  display: inline-flex;
+  padding: 12px 44px;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  border-radius: 8px;
+  background: #FFF;
+  color: #000;
+  font-family:  var(--font-main);
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.everyday-shop-btn:hover {
+  background: #e0e0e0;
+  transform: translateY(-2px);
+}
+
+.everyday-image-content {
+  flex: 0 0 626px;
+  position: relative;
+}
+
+.everyday-main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
 }
 
 @media (max-width: 1439px){
@@ -1113,6 +1209,70 @@ img, video, canvas {
     margin-left: 0 !important; 
   }
  
+  .everyday-fashion-section {
+    max-width: 970px;
+    margin: 70px auto;
+  }
+  
+  .everyday-banner {
+    max-height: 520px;
+    display: flex;
+  }
+  
+  .everyday-text-content {
+    flex: 0 0 520px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .text-wrapper {
+    max-width: 400px;
+    width: 100%;
+    padding: 20% 0; 
+    margin: 0 auto; 
+    position: relative;
+    z-index: 2;
+  }
+
+  .everyday-title br,
+  .everyday-description br {
+    display: none;
+  }
+  
+  .everyday-title {
+    font-size: 30px;
+    line-height: 1.3;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  .everyday-description {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 30px;
+    width: 100%;
+  }
+  
+  .everyday-shop-btn {
+    margin: 0;
+  }
+  
+  .everyday-image-content {
+    flex: 0 0 530px;
+  }
+  
+  .everyday-bg-image {
+    width: 520px;
+    height: 100%;
+  }
+  
+  .everyday-main-image {
+    width: 530px;
+    height: 520px;
+  }
+  
 }
 
 
@@ -1286,7 +1446,68 @@ img, video, canvas {
     height: 58px * (200/262); 
     padding: 0 8px; 
   }
+    
+  .everyday-fashion-section {
+    padding: 0 20px;
+    box-sizing: border-box;
+    margin: 60px auto;
+    max-width: 800px;
+  }
+
+  .everyday-banner, 
+  .everyday-text-content,
+  .everyday-title,
+  .everyday-description {
+    text-align: center;
+  }
+
+  .everyday-banner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 380px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+  }
+
+  .everyday-bg-image { width: 100%; }
+
+  .everyday-text-content,
+  .text-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+  }
+
+  .everyday-text-content { max-height: 380px; }
+
+  .everyday-title {
+    font-size: 28px;
+    line-height: 1.3;
+    margin: 0 auto 15px;
+    width: 100%;
+  }
   
+  .everyday-description {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0 auto 25px;
+    width: 100%;
+    padding: 0 20px;
+  }
+  
+  .everyday-shop-btn {
+    display: inline-block;
+    margin: 0 auto;
+    padding: 10px 30px;
+  }
+  
+  .everyday-image-content {
+    display: none;
+    width: 0;
+    height: 0;
+  }
 }
 
 @media (max-width: 810px) {
@@ -1454,6 +1675,31 @@ img, video, canvas {
     width: 236px;
   }
 
+  .everyday-fashion-section {
+    padding: 0 12px;
+    margin: 40px auto;
+  }
+  
+  .everyday-banner {
+    min-height: 350px;
+    border-radius: 6px;
+  }
+  
+  .everyday-text-content {
+    padding: 25px 15px;
+  }
+  
+  .everyday-title {
+    font-size: 22px;
+    line-height: 1.2;
+  }
+  
+  .everyday-description {
+    font-size: 14px;
+    padding: 0 10px;
+    line-height: 1.4;
+    text-align: justify;
+  }
 }
 
 @media (max-width: 320px){
