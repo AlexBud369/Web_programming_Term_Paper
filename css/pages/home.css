@@ -657,21 +657,26 @@ img, video, canvas {
   align-items: center;
   width: 100%;
   overflow: hidden;
-  position: relative
+  position: relative;
+  margin-top: 67px;
 }
 
 .swiper {
   width: 100%;
-  max-width: 1167px;
-  padding: 0 21.5px; 
-  overflow: visible;  
+  max-width: 1169px;
+  margin-left: 21.5px;
+  margin-right: 21.5px;
+  overflow: hidden;  
+  position: relative;
 }
 
 .swiper-wrapper {
   display: flex;
-  width: max-content;
-  gap: clamp(20px, 2.68vw, 38.58px);
- 
+  flex-wrap: nowrap;
+  width: auto; 
+  transition: transform 0.3s ease;
+  gap: 0; 
+  /*width: max-content;*/
 }
 
 .swiper-slide {
@@ -680,6 +685,7 @@ img, video, canvas {
   scroll-snap-align: start;
   border-radius: 12px;
   overflow: hidden; 
+  flex-shrink: 0;
 }
 
 .swiper-slide:last-child {
@@ -695,7 +701,8 @@ img, video, canvas {
 }
 
 .product-image-container {
-  width: 262.815px;
+  width: 100%;
+  /*width: 262.815px;*/
   height: 264px; 
   flex-shrink: 0;
   overflow: hidden;
@@ -749,7 +756,7 @@ img, video, canvas {
 }
 
 .swiper-button-prev {
-  left: calc((100% - 1169px) / 2 - 50px); 
+  left: calc((100% - 1169px) / 2 - 50px);  
 }
 
 .swiper-button-next {
@@ -762,10 +769,7 @@ img, video, canvas {
   object-fit: contain;
 }
 
-.swiper-button-prev::after,
-.swiper-button-next::after {
-  display: none;
-}
+
 
 .saving-zone {
   max-width: 1240px;
@@ -1073,8 +1077,6 @@ img, video, canvas {
 
 .featured-categories-section .section-header {
   margin-bottom: clamp(40px, 4.86vw, 70px);
-  padding-left: 15px; 
-  padding-right: 15px; 
 }
 
 .featured-categories-grid {
@@ -1156,18 +1158,8 @@ img, video, canvas {
   width: 590px;
 }
 
-.section-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+.map-content .section-header{
   margin-bottom: 25px;
-}
-
-.vertical-line {
-  width: 6px;
-  height: 30px;
-  background: #8A33FD;
-  border-radius: 3px;
 }
 
 .map-title {
@@ -1275,6 +1267,7 @@ img, video, canvas {
   /*second slider*/
   .slider-container-new-arrivals{
     justify-content: center;
+    overflow: hidden;
   }
 
   .new-arrivals{
@@ -1286,15 +1279,23 @@ img, video, canvas {
     margin-left: 4.944%;
   }*/
 
-  .swiper,
-  .swiper-wrapper {
+  .swiper {
     width: 100%;
-    justify-content: space-between;
+    overflow: hidden;
+    box-sizing: border-box;
   }
   
-  .swiper-slide:nth-child(n+4) {
+ /* .swiper-slide:nth-child(n+4) {
     display: none; 
+  }*/
+  .swiper-slide {
+    width: calc((100% - 77.16px) / 3) !important; 
   }
+
+  .product-image-container {
+    width: 100%;
+  }
+
 /*saving section*/
   .saving-zone {
     max-width: 1100px;
@@ -1434,6 +1435,11 @@ img, video, canvas {
   .featured-categories-grid {
     grid-template-columns: repeat(3, minmax(200px, 274px));
   }
+
+  .featured-categories-section .section-header{
+    padding-left: 15px; 
+    padding-right: 15px; 
+  }
 }
 
 
@@ -1552,24 +1558,24 @@ img, video, canvas {
   }
 
 /*map section*/
-.map-container {
-  flex-direction: column;
-  align-items: center;
-  padding: 0 40px;
-  max-width: 850px;
-  gap: 40px;
-}
+  .map-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 0 40px;
+    max-width: 850px;
+    gap: 40px;
+  }
 
-.map-description {
-  max-width: 550px;
-}
+  .map-description {
+    max-width: 550px;
+  }
 
-.map-iframe-container {
-  width: 100%;
-  max-width: 550px;
-  height: auto;
-  aspect-ratio: 550/482;
-}
+  .map-iframe-container {
+    width: 100%;
+    max-width: 550px;
+    height: auto;
+    aspect-ratio: 550/482;
+  }
 
 }
 
@@ -1617,8 +1623,11 @@ img, video, canvas {
   }
 
 /*second slider*/
-  .swiper-slide {
+  /*.swiper-slide {
     width: 200px;
+  }*/
+  .swiper-slide {
+    width: calc((100% - 60px) / 3) !important; 
   }
   .product-image-container {
     height: calc(246px - 58px * (200/262)); 
@@ -1779,14 +1788,18 @@ img, video, canvas {
   }
 
 /*second slider*/
-  .swiper-slide:nth-child(n+3) {
+  /*.swiper-slide:nth-child(n+3) {
     display: none; 
+  }*/
+  .swiper-slide {
+    width: calc((100% - 20px) / 2) !important; 
   }
 
-  .swiper,
+ /* .swiper,
   .swiper-wrapper {
     justify-content: space-around;
-  }
+  }*/
+
 /*saving section*/
    .card-hawaiian {
     background-size: cover;
@@ -1899,8 +1912,12 @@ img, video, canvas {
   }
 
 /*second slider*/
-  .swiper-slide:nth-child(n+2) {
+  /*.swiper-slide:nth-child(n+2) {
     display: none; 
+  }*/
+  .swiper-slide {
+    width: calc(100% - 20px) !important; 
+    margin: 0 auto;
   }
 
   .swiper-slide{
