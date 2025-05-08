@@ -1,21 +1,29 @@
 export function initSlider(containerSelector) {
+  console.log('Attempting to initialize slider with selector:', containerSelector);
   const container = document.querySelector(containerSelector);
-  if (!container) return null;
+  if (!container) {
+    console.warn('Slider container not found');
+    return null;
+  }
+  console.log('Slider container found:', container);
 
   const slides = Array.from(container.querySelectorAll('.hero-slide'));
   const prevBtn = container.querySelector('.slider-prev');
   const nextBtn = container.querySelector('.slider-next');
   const progressBar = container.querySelector('.progress-bar');
 
-  if (slides.length === 0) return null;
+  if (slides.length === 0) {
+    console.warn('No slides found');
+    return null;
+  }
+  console.log('Slides found:', slides.length);
+
+  if (!prevBtn) console.warn('Previous button not found');
+  if (!nextBtn) console.warn('Next button not found');
+  if (!progressBar) console.warn('Progress bar not found');
 
   let currentIndex = 0;
   let isAnimating = false;
-  const autoPlayDelay = 5000;
-  let autoPlayInterval;
-  let progressStartTime = 0;
-  let progressAnimationFrame;
-  let resizeTimer;
 
   function updateSlideSizes() {
     const containerHeight = container.offsetHeight;
@@ -29,147 +37,65 @@ export function initSlider(containerSelector) {
     });
   }
 
-  function showSlide(index, isAutoPlay = false) {
+  function updateProgressBar() {
+    if (!progressBar) return;
+
+    // Прогресс: от 0 до 1, где 0 — первый слайд, 1 — последний
+    const progress = currentIndex / (slides.length - 1);
+    progressBar.style.transition = 'width 0.3s ease';
+    progressBar.style.width = `${progress * 100}%`;
+    console.log('Progress bar updated to:', progress * 100, '%');
+  }
+
+  function showSlide(index) {
     if (isAnimating || !slides.length) return;
     isAnimating = true;
 
+    // Бесконечная прокрутка
     const newIndex = (index + slides.length) % slides.length;
-    
-    if (!isAutoPlay) {
-      resetProgressBar();
-    }
-
     currentIndex = newIndex;
 
     slides.forEach(slide => slide.classList.remove('active'));
     slides[currentIndex].classList.add('active');
 
-    if (isAutoPlay) {
-      startProgressBar();
-    }
+    updateProgressBar();
 
     setTimeout(() => {
       isAnimating = false;
-    }, 500);
+    }, 800); // Синхронизация с CSS transition
   }
 
-  function animateProgressBar(timestamp) {
-    if (!progressStartTime) {
-      progressStartTime = timestamp;
-    }
-
-    const elapsed = timestamp - progressStartTime;
-    const progress = Math.min(elapsed / autoPlayDelay, 1);
-
-    if (progressBar) {
-      progressBar.style.width = `${progress * 100}%`;
-    }
-
-    if (progress < 1) {
-      progressAnimationFrame = requestAnimationFrame(animateProgressBar);
-    } else {
-      nextSlide(true);
-    }
-  }
-
-  function startProgressBar() {
-    if (!progressBar) return;
-    
-    cancelAnimationFrame(progressAnimationFrame);
-    progressStartTime = 0;
-    
-    progressBar.style.transition = 'none';
-    progressBar.style.width = '0%';
-    void progressBar.offsetWidth;
-    
-    progressAnimationFrame = requestAnimationFrame(animateProgressBar);
-  }
-
-  function resetProgressBar() {
-    if (!progressBar) return;
-    
-    cancelAnimationFrame(progressAnimationFrame);
-    progressStartTime = 0;
-    
-    progressBar.style.transition = 'none';
-    progressBar.style.width = '0%';
-    void progressBar.offsetWidth;
-  }
-
-  function nextSlide(isAutoPlay = false) {
-    showSlide(currentIndex + 1, isAutoPlay);
-    if (!isAutoPlay) {
-      resetAutoPlay();
-    }
+  function nextSlide() {
+    showSlide(currentIndex + 1);
   }
 
   function prevSlide() {
     showSlide(currentIndex - 1);
-    resetAutoPlay();
-  }
-
-  function startAutoPlay() {
-    stopAutoPlay();
-    autoPlayInterval = setTimeout(() => {
-      nextSlide(true);
-    }, autoPlayDelay);
-    startProgressBar();
-  }
-
-  function stopAutoPlay() {
-    clearTimeout(autoPlayInterval);
-    resetProgressBar();
-  }
-
-  function resetAutoPlay() {
-    stopAutoPlay();
-    startAutoPlay();
   }
 
   function handleResize() {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
       updateSlideSizes();
+      updateProgressBar();
     }, 100);
   }
 
-  function handleTouchStart(e) {
-    touchStartX = e.touches[0].clientX;
-    stopAutoPlay();
-  }
-
-  function handleTouchEnd(e) {
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX - touchEndX;
-    if (Math.abs(diff) > 50) {
-      diff > 0 ? nextSlide() : prevSlide();
-    } else {
-      startAutoPlay();
-    }
-  }
-
   function setupEvents() {
-    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
-    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-    
-    let touchStartX = 0;
-    container.addEventListener('touchstart', handleTouchStart, { passive: true });
-    container.addEventListener('touchend', handleTouchEnd, { passive: true });
-    
-    container.addEventListener('mouseenter', stopAutoPlay);
-    container.addEventListener('mouseleave', startAutoPlay);
+    if (prevBtn) {
+      prevBtn.addEventListener('click', prevSlide);
+      console.log('Previous button event listener added');
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', nextSlide);
+      console.log('Next button event listener added');
+    }
     window.addEventListener('resize', handleResize);
   }
 
   function cleanupEvents() {
     if (prevBtn) prevBtn.removeEventListener('click', prevSlide);
     if (nextBtn) nextBtn.removeEventListener('click', nextSlide);
-    
-    container.removeEventListener('touchstart', handleTouchStart);
-    container.removeEventListener('touchend', handleTouchEnd);
-    
-    container.removeEventListener('mouseenter', stopAutoPlay);
-    container.removeEventListener('mouseleave', startAutoPlay);
     window.removeEventListener('resize', handleResize);
   }
 
@@ -177,23 +103,19 @@ export function initSlider(containerSelector) {
     updateSlideSizes();
     showSlide(0);
     setupEvents();
-    startAutoPlay();
   }
 
+  let resizeTimer;
   init();
 
   return {
-    next: () => nextSlide(),
+    next: nextSlide,
     prev: prevSlide,
-    goTo: (index) => showSlide(index),
-    stop: stopAutoPlay,
-    start: startAutoPlay,
+    goTo: showSlide,
     updateSizes: updateSlideSizes,
     destroy: () => {
       cleanupEvents();
-      stopAutoPlay();
       clearTimeout(resizeTimer);
-      cancelAnimationFrame(progressAnimationFrame);
     }
   };
 }
