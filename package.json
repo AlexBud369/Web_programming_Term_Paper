@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "json-server": "^0.17.4",
     "swiper": "^11.2.6"
+  },
+  "scripts": {
+    "start:json": "json-server --watch db.json --port 3000"
   }
 }
