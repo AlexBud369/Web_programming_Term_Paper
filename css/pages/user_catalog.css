@@ -73,3 +73,20 @@ body, html {
     border-color: var(--secondary-color);
     outline: none;
 }
+
+.search-input {
+    padding: 8px 12px;
+}
+
+.filter-list {
+    list-style: none;
+    padding: 0;
+}
+
+.filter-list li {
+    margin-bottom: 10px;
+}
+
+.filter-list input {
+    margin-right: 8px;
+}
