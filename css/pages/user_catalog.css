@@ -90,3 +90,63 @@ body, html {
 .filter-list input {
     margin-right: 8px;
 }
+
+
+.price-range {
+    position: relative;
+}
+
+.price-slider {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 6px;
+    background: var(--text-color);
+    outline: none;
+    opacity: 0.7;
+    transition: opacity var(--transition-base);
+}
+
+.price-slider:hover {
+    opacity: 1;
+}
+
+.price-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: var(--secondary-color);
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.price-slider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: var(--secondary-color);
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+#price-range-min {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+#price-range-max {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.price-values {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin-top: 40px;
+}
+ 
