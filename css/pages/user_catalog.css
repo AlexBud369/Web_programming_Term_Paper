@@ -45,3 +45,31 @@ body, html {
     background: var(--secondary-color);
     color: var(--primary-color);
 }
+
+.filter-section {
+    margin-bottom: 25px;
+}
+
+.filter-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+    font-family: var(--font-heading);
+}
+
+.sort-select, .style-select, .search-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--text-color);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    transition: var(--transition-base);
+}
+
+.sort-select:focus, .style-select:focus, .search-input:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+}
