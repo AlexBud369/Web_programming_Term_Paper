@@ -196,3 +196,20 @@ body, html {
     border-color: var(--secondary-color);
 }
  
+.products-main {
+    flex: 1;
+}
+
+.products-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--text-color);
+}
+
+.products-count {
+    font-size: 0.875rem;
+    color: var(--text-color);
+}
