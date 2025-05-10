@@ -227,7 +227,11 @@ body, html {
     overflow: hidden;
     box-shadow: var(--shadow-md);
     position: relative;
-   
+    transition: transform var(--transition-base);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
 }
 
 .product-image-container {
@@ -240,8 +244,12 @@ body, html {
     width: 100%;
     height: auto;
     display: block;
+    transition: var(--transition-base);
 }
 
+.product-image-container:hover .product-image {
+    transform: scale(1.05);
+}
 
 .quick-view {
     position: absolute;
@@ -258,6 +266,9 @@ body, html {
     font-size: 0.875rem;
 }
 
+.product-image-container:hover .quick-view {
+    display: block;
+}
 
 .product-info {
     padding: 15px;
@@ -326,6 +337,10 @@ body, html {
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.875rem;
-    
+    transition: var(--transition-base);
+}
+
+.add-to-cart:hover {
+    background: darken(var(--secondary-color), 10%);
 }
 
