@@ -344,3 +344,43 @@ body, html {
     background: darken(var(--secondary-color), 10%);
 }
 
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.page-btn {
+    padding: 8px 12px;
+    border: 1px solid var(--text-color);
+    background: var(--primary-color);
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--secondary-color);
+    transition: var(--transition-base);
+}
+
+.page-btn.active {
+    background: var(--secondary-color);
+    color: var(--primary-color);
+    border-color: var(--secondary-color);
+}
+
+.page-btn:hover:not(.active) {
+    background: var(--bg-color);
+}
+
+.page-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.no-results {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-color);
+    font-size: 1rem;
+}
