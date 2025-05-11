@@ -197,3 +197,128 @@ body, html {
     width: 137px;
     height: 46px;
 }
+
+@media (max-width: 992px) {
+    .product-overview {
+        flex-direction: column;
+        gap: 2rem;
+        align-items: center;
+    }
+    
+    .main-product-image {
+        max-width: 80%;
+    }
+    
+    .main-image {
+        height: auto;
+        max-height: 40rem;
+        object-position: center top;
+    }
+    
+    .product-details {
+        max-width: 80%;
+        padding: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-product-image {
+        max-width: 100%;
+    }
+    
+    .product-details {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+    
+    .product-sizes {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+    
+    .action-row {
+        max-width: 100%;
+        flex-wrap: wrap;
+    }
+    
+    .add-to-cart,
+    .product-price {
+        flex: 1;
+        min-width: 200px; 
+    }
+}
+
+@media (max-width: 576px) {
+
+    .main-image {
+        max-height: 25rem;
+    }
+    
+    .breadcrumbs a,
+    .rating-score,
+    .rating-count,
+    .section-title,
+    .add-to-cart,
+    .product-price {
+        font-size: 1rem;
+    }
+    
+    .product-title {
+        font-size: 1.5rem;
+    }
+    
+
+    .product-rating {
+        flex-wrap: wrap;
+        row-gap: 0.5rem;
+    }
+    
+    .stars {
+        order: 1;
+    }
+    
+    .rating-score {
+        order: 2;
+        margin-left: 0;
+    }
+    
+    .comments {
+        order: 3;
+        margin-left: 0;
+        width: 100%;
+    }
+    
+
+    .action-row {
+        justify-content: space-between;
+    }
+    
+    .add-to-cart,
+    .product-price {
+        min-width: calc(50% - 10px); 
+        flex: none;
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .main-image {
+        max-height: 20rem;
+    }
+    
+    .add-to-cart,
+    .product-price {
+        min-width: 100%; 
+    }
+    
+    .product-sizes {
+        gap: 0.75rem;
+    }
+    
+    .size-option {
+        width: 2.5rem;
+        height: 2.5rem;
+        line-height: 2.5rem;
+    }
+}
