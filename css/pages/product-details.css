@@ -432,6 +432,137 @@ body, html {
     color: #6d28c4;
 }
 
+.similar-products-section {
+    padding: 40px 40px 50px;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.similar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 274px);
+    gap: 50px;
+    justify-content: center;
+    margin-top: 70px;
+}
+
+.product-card {
+    width: 274px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+}
+
+.product-image-container {
+    position: relative;
+    width: 100%;
+    height: 394px;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-base);
+}
+
+.product-image:hover {
+    transform: scale(1.02);
+}
+
+.quick-view {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 16px;
+    background: #8A33FD;
+    color: var(--primary-color);
+    font-family: var(--font-main);
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    opacity: 0;
+    transition: var(--transition-base);
+}
+
+.product-image-container:hover .quick-view {
+    opacity: 1;
+}
+
+.product-info {
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    align-items: center;
+}
+
+.product-name {
+    color: var(--secondary-color);
+    font-family: var(--font-main);
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.product-brand {
+    color: var(--text-color);
+    font-family: var(--font-main);
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.rating-count {
+    color: var(--text-color);
+    font-family: var(--font-main);
+    font-size: 0.875rem;
+}
+
+.product-price {
+    color: var(--secondary-color);
+    font-family: var(--font-main);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.product-colors, .product-category {
+    color: var(--text-color);
+    font-family: var(--font-main);
+    font-size: 0.875rem;
+}
+
+.add-to-cart {
+    padding: 8px 16px;
+    background: #8A33FD;
+    color: var(--primary-color);
+    font-family: var(--font-main);
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition-base);
+    max-width: 160px;
+    width: 100%;
+}
+
+.add-to-cart:hover {
+    background: #6d28c4;
+}
 
 
 
