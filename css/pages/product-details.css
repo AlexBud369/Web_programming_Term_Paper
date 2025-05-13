@@ -488,6 +488,14 @@ body, html {
     .description-content p, .features-table td {
         font-size: clamp(13px, 1.5vw, 15px);
     }
+
+    .feedback-section, .similar-products-section {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    .feedback-section {
+        padding-bottom: 30px;
+    }
 }
 
 
@@ -549,6 +557,16 @@ body, html {
     .description-content p, .features-table td {
         font-size: clamp(12px, 1.5vw, 14px);
     }
+
+     .feedback-list {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    .feedback-card {
+        max-width: 500px;
+        width: 100%;
+    }
 }
 
 @media (max-width: 768px) {
@@ -607,6 +625,26 @@ body, html {
 
     .video-container {
         max-width: 100%;
+    }
+
+     .feedback-section, .similar-products-section {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .feedback-section {
+        padding-bottom: 20px;
+    }
+    .similar-products-section {
+        padding-top: 20px;
+    }
+    .section-title {
+        font-size: clamp(1.25rem, 2vw, 1.75rem);
+    }
+    .feedback-author, .product-name {
+        font-size: 1rem;
+    }
+    .feedback-text, .product-brand, .product-price, .product-colors, .product-category {
+        font-size: 0.75rem;
     }
 
 }
