@@ -187,6 +187,213 @@ body, html {
 }
 
 
+.checkout-section {
+    padding: 40px 40px 80px;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 840px;
+    margin: 0 auto;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    max-width: 840px;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    color: var(--secondary-color);
+    font-family: var(--font-main);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.form-group input, .form-group select {
+    padding: 10px;
+    background: #F6F6F6;
+    border: 1px solid #807D7E;
+    border-radius: 4px;
+    font-family: var(--font-main);
+    font-size: 1rem;
+    color: var(--secondary-color);
+    max-width: 382px;
+}
+
+.form-group input::placeholder, .form-group select option {
+    color: #807D7E;
+    opacity: 1;
+}
+
+.delivery-method {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    max-width: 840px;
+}
+
+.method-title {
+    color: var(--secondary-color);
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    font-weight: 600;
+    line-height: 33.5px;
+    letter-spacing: 0.56px;
+    margin: 0 0 20px;
+}
+
+.payment-method {
+    margin-bottom: 40px;
+    max-width: 840px;
+}
+
+.delivery-options, .payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option-block {
+    background: #F6F6F6;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.option-block label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-color);
+    font-family: var(--font-main);
+    font-size: 0.875rem;
+    width: 100%;
+}
+
+.option-block label span {
+    color: var(--text-color);
+    font-size: 0.875rem;
+}
+
+.delivery-charges {
+    margin-left: auto;
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+.payment-details {
+    margin-top: 10px;
+}
+
+.card-select {
+    padding: 10px;
+    background: #FFFFFF;
+    border: 1px solid #807D7E;
+    border-radius: 4px;
+    font-family: var(--font-main);
+    font-size: 1rem;
+    color: var(--secondary-color);
+    width: 100%;
+    max-width: 382px;
+}
+
+.pickup-details {
+    margin-top: 10px;
+}
+
+.pickup-details input {
+    width: 100%;
+    padding: 10px;
+    background: #FFFFFF;
+    border: 1px solid #807D7E;
+    border-radius: 4px;
+    font-family: var(--font-main);
+    font-size: 1rem;
+    color: var(--secondary-color);
+}
+
+.payment-options p {
+    color: var(--text-color);
+    font-family: var(--font-main);
+    font-size: 0.875rem;
+    margin: 5px 0;
+}
+
+.place-order-btn {
+    max-width: 200px;
+    padding: 12px 24px;
+    background: #8A33FD;
+    color: var(--primary-color);
+    font-family: var(--font-main);
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition-base);
+    align-self: flex-end;
+}
+
+.place-order-btn:hover {
+    background: #6d28c4;
+}
+
+.success-notification {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--primary-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    z-index: 1000;
+}
+
+.success-notification p {
+    color: var(--secondary-color);
+    font-family: var(--font-main);
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.success-notification button {
+    padding: 8px 16px;
+    background: #8A33FD;
+    color: var(--primary-color);
+    font-family: var(--font-main);
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition-base);
+}
+
+.success-notification button:hover {
+    background: #6d28c4;
+}
+
+
+
 @media (max-width: 1200px) {
     .cart-section, .checkout-section {
         padding: 60px 30px;
