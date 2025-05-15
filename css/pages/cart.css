@@ -392,8 +392,6 @@ body, html {
     background: #6d28c4;
 }
 
-
-
 @media (max-width: 1200px) {
     .cart-section, .checkout-section {
         padding: 60px 30px;
@@ -431,6 +429,21 @@ body, html {
     }
 }
 
+@media (max-width: 992px) {
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+        max-width: 382px;
+        width: 100%;
+        margin: 0 auto;
+    }
+    .form-group input, .form-group select {
+        max-width: 382px;
+    }
+    .cart-item {
+        flex: 0 1 300px;
+    }
+}
 
 @media (max-width: 768px) {
     .cart-section, .checkout-section {
@@ -456,5 +469,17 @@ body, html {
     .cart-total {
         font-size: 1rem;
     }
-
+    .form-group label {
+        font-size: 0.875rem;
+    }
+    .form-group input, .form-group select {
+        font-size: 0.875rem;
+    }
+    .place-order-btn {
+        max-width: 160px;
+        font-size: 0.875rem;
+    }
+    .cart-item {
+        flex: 0 1 250px;
+    }
 } 
