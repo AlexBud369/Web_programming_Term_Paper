@@ -199,7 +199,109 @@
             </div>
         </section>
 
-        
+        <section class="checkout-section" aria-label="Checkout Form">
+            <div class="section-header">
+                <div class="vertical-line"></div>
+                <h2 class="section-title">Checkout</h2>
+            </div>
+            <form id="checkout-form" class="checkout-form" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first-name">First Name*</label>
+                        <input type="text" id="first-name" name="first-name" required placeholder="Enter your first name" aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name*</label>
+                        <input type="text" id="last-name" name="last-name" required placeholder="Enter your last name" aria-required="true">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="country">Country/Region*</label>
+                        <select id="country" name="country" required aria-required="true">
+                            <option value="" disabled selected>Select your country</option>
+                            <option value="Belarus">Belarus</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company Name</label>
+                        <input type="text" id="company" name="company" placeholder="Enter company name">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="street-address">Street Address*</label>
+                        <input type="text" id="street-address" name="street-address" required placeholder="Enter street address" aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="apt-suite">Apt, Suite, Unit</label>
+                        <input type="text" id="apt-suite" name="apt-suite" placeholder="Enter apt/suite/unit">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City*</label>
+                        <input type="text" id="city" name="city" required placeholder="Enter city" aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State*</label>
+                        <input type="text" id="state" name="state" required placeholder="Enter state" aria-required="true">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="postal-code">Postal Code*</label>
+                        <input type="text" id="postal-code" name="postal-code" required placeholder="Enter postal code" aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone* (Belarusian format: +375XXXXXXXXX)</label>
+                        <input type="tel" id="phone" name="phone" pattern="\+375[0-9]{9}" placeholder="+375123456789" required aria-required="true">
+                    </div>
+                </div>
+                <div class="form-group delivery-method">
+                    <h2 class="method-title">Shipping Method</h2>
+                    <div class="delivery-options">
+                        <div class="option-block">
+                            <label><input type="radio" name="delivery" value="courier" checked> Courier (1 day) <span class="delivery-charges">$15.00</span></label>
+                        </div>
+                        <div class="option-block">
+                            <label><input type="radio" name="delivery" value="mail"> Mail (2 days) <span class="delivery-charges">$5.00</span></label>
+                        </div>
+                        <div class="option-block">
+                            <label><input type="radio" name="delivery" value="pickup"> Pickup <span class="delivery-charges">$0.00</span></label>
+                            <div class="pickup-details">
+                                <input type="text" placeholder="Enter pickup point">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group payment-method">
+                    <h2 class="method-title">Payment Method</h2>
+                    <div class="payment-options">
+                        <div class="option-block">
+                            <label><input type="radio" name="payment" value="credit-card" checked> Credit Card <span>We accept Belarusian cards.</span></label>
+                            <div class="payment-details">
+                                <select name="card-type" class="card-select" aria-label="Select card type">
+                                    <option value="" disabled selected>Select card type</option>
+                                    <option value="belkart">Belkart</option>
+                                    <option value="belarusbank">Belarusbank</option>
+                                    <option value="prior">Priorbank</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="option-block">
+                            <label><input type="radio" name="payment" value="cash"> Cash on delivery <span>Pay with cash upon delivery.</span></label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="place-order-btn" aria-label="Place Order">Order Now</button>
+            </form>
+        </section>
+
+        <div class="success-notification" id="success-notification" role="alertdialog" aria-labelledby="success-message">
+            <p id="success-message">Order Successfully Placed!</p>
+            <button id="close-notification" aria-label="Close notification">Close</button>
+        </div>
     </main>
 
     <footer class="footer" aria-label="Site footer">
