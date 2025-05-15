@@ -103,8 +103,105 @@
         </div>
     </header>
     <main>
+        <section class="cart-section" aria-label="Shopping Cart">
+            <div class="section-header">
+                <div class="vertical-line"></div>
+                <h1 class="section-title">Your Cart</h1>
+            </div>
+            <div class="cart-container">
+                <div class="cart-header" role="row">
+                    <div class="cart-column" role="columnheader">Product Details</div>
+                    <div class="cart-column" role="columnheader">Price</div>
+                    <div class="cart-column" role="columnheader">Quantity</div>
+                    <div class="cart-column" role="columnheader">Shipping</div>
+                    <div class="cart-column" role="columnheader">Subtotal</div>
+                    <div class="cart-column" role="columnheader">Action</div>
+                </div>
+                <div class="cart-items" role="list">
+                    <div class="cart-item" data-id="1" role="listitem">
+                        <div class="cart-column product-details">
+                            <img src="../images/product_images/product1.jpg" alt="Khaki Chino Pants" class="product-image">
+                            <div class="product-info">
+                                <h3 class="product-name">Khaki Chino Pants</h3>
+                                <p class="product-color">Color: Khaki</p>
+                                <p class="product-size">Size: M</p>
+                            </div>
+                        </div>
+                        <div class="cart-column product-price">$105.00</div>
+                        <div class="cart-column quantity-control">
+                            <button class="quantity-btn decrease" aria-label="Decrease quantity">-</button>
+                            <input type="number" class="quantity-input" value="1" min="1" aria-label="Quantity">
+                            <button class="quantity-btn increase" aria-label="Increase quantity">+</button>
+                        </div>
+                        <div class="cart-column shipping-cost">$5.00</div>
+                        <div class="cart-column subtotal">$110.00</div>
+                        <div class="cart-column action">
+                            <button class="delete-btn" aria-label="Delete item"><img src="../images/cart_images/deletecon.svg" alt="Delete"></button>
+                        </div>
+                    </div>
+                    <div class="cart-item" data-id="2" role="listitem">
+                        <div class="cart-column product-details">
+                            <img src="../images/product2.jpg" alt="White T-shirt" class="product-image">
+                            <div class="product-info">
+                                <h3 class="product-name">White T-shirt</h3>
+                                <p class="product-color">Color: White</p>
+                                <p class="product-size">Size: L</p>
+                            </div>
+                        </div>
+                        <div class="cart-column product-price">$90.00</div>
+                        <div class="cart-column quantity-control">
+                            <button class="quantity-btn decrease" aria-label="Decrease quantity">-</button>
+                            <input type="number" class="quantity-input" value="2" min="1" aria-label="Quantity">
+                            <button class="quantity-btn increase" aria-label="Increase quantity">+</button>
+                        </div>
+                        <div class="cart-column shipping-cost">$5.00</div>
+                        <div class="cart-column subtotal">$185.00</div>
+                        <div class="cart-column action">
+                            <button class="delete-btn" aria-label="Delete item"><img src="../images/cart_images/deletecon.svg" alt="Delete"></button>
+                        </div>
+                    </div>
+                    <div class="cart-item" data-id="3" role="listitem">
+                        <div class="cart-column product-details">
+                            <img src="../images/product3.jpg" alt="Green Sweater" class="product-image">
+                            <div class="product-info">
+                                <h3 class="product-name">Green Sweater</h3>
+                                <p class="product-color">Color: Green</p>
+                                <p class="product-size">Size: S</p>
+                            </div>
+                        </div>
+                        <div class="cart-column product-price">$110.00</div>
+                        <div class="cart-column quantity-control">
+                            <button class="quantity-btn decrease" aria-label="Decrease quantity">-</button>
+                            <input type="number" class="quantity-input" value="1" min="1" aria-label="Quantity">
+                            <button class="quantity-btn increase" aria-label="Increase quantity">+</button>
+                        </div>
+                        <div class="cart-column shipping-cost">$5.00</div>
+                        <div class="cart-column subtotal">$115.00</div>
+                        <div class="cart-column action">
+                            <button class="delete-btn" aria-label="Delete item"><img src="../images/cart_images/deletecon.svg" alt="Delete"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-total" role="region" aria-label="Cart Totals">
+                    <div class="total-block">
+                        <span>Sub Total:</span>
+                        <span class="subtotal-amount">$400.00</span>
+                    </div>
+                    <div class="total-block">
+                        <span>Shipping:</span>
+                        <span class="shipping-amount">$10.00</span>
+                    </div>
+                    <div class="total-block">
+                        <span>Total:</span>
+                        <span class="total-amount">$410.00</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        
     </main>
+
     <footer class="footer" aria-label="Site footer">
         <div class="footer__container">
             <div class="footer__column">
