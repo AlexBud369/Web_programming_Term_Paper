@@ -110,494 +110,150 @@
             </section>
         
 
-         <section class="filter-section">
-            <h3 class="filter-title">Sort By</h3>
-            <select id="sort-by" class="sort-select">
-                <option value="default">Default</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-                <option value="name-asc">Name: A to Z</option>
-                <option value="name-desc">Name: Z to A</option>
-                <option value="rating-desc">Rating: High to Low</option>
-                <option value="newest">Newest First</option>
-            </select>
+            <section class="filter-section">
+                <h3 class="filter-title">Sort By</h3>
+                <select id="sort-by" class="sort-select">
+                    <option value="default">Default</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="name-asc">Name: A to Z</option>
+                    <option value="name-desc">Name: Z to A</option>
+                    <option value="rating-desc">Rating: High to Low</option>
+                </select>
+            </section>
+
+            <section class="filter-section">
+                <h3 class="filter-title">Search</h3>
+                <input type="text" id="search-input" class="search-input" placeholder="Search by name, description...">
+            </section>
+
+            <section class="filter-section">
+                <h3 class="filter-title">Category</h3>
+                <ul class="filter-list" id="category-filter">
+                    <li>
+                        <input type="checkbox" id="category-tops-tshirts" name="category" value="Tops & T-Shirts">
+                        <label for="category-tops-tshirts">Tops & T-Shirts</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="category-printed-tshirts" name="category" value="Printed T-Shirts">
+                        <label for="category-printed-tshirts">Printed T-Shirts</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="category-plain-tshirts" name="category" value="Plain T-Shirts">
+                        <label for="category-plain-tshirts">Plain T-Shirts</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="category-kurti" name="category" value="Kurti">
+                        <label for="category-kurti">Kurti</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="category-boxers" name="category" value="Boxers">
+                        <label for="category-boxers">Boxers</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="category-full-sleeve-tshirts" name="category" value="Full Sleeve T-Shirts">
+                        <label for="category-full-sleeve-tshirts">Full Sleeve T-Shirts</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="category-joggers" name="category" value="Joggers">
+                        <label for="category-joggers">Joggers</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="category-pajamas" name="category" value="Pajamas">
+                        <label for="category-pajamas">Pajamas</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="category-jeans" name="category" value="Jeans">
+                        <label for="category-jeans">Jeans</label>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="filter-section">
+                <h3 class="filter-title">Price</h3>
+                <div class="price-range">
+                    <input type="range" min="20" max="250" value="20" class="price-slider" id="price-range-min">
+                    <input type="range" min="20" max="250" value="250" class="price-slider" id="price-range-max">
+                    <div class="price-values">
+                        <span>$<span id="min-price-value">20</span></span>
+                        <span>$<span id="max-price-value">250</span></span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="filter-section">
+                <h3 class="filter-title">Colors</h3>
+                <div class="color-options" id="color-filter">
+                    <div class="color-option" data-color="purple" style="background-color: purple;"></div>
+                    <div class="color-option" data-color="black" style="background-color: black;"></div>
+                    <div class="color-option" data-color="white" style="background-color: white;"></div>
+                    <div class="color-option" data-color="red" style="background-color: red;"></div>
+                    <div class="color-option" data-color="orange" style="background-color: orange;"></div>
+                    <div class="color-option" data-color="navy" style="background-color: navy;"></div>
+                    <div class="color-option" data-color="brown" style="background-color: brown;"></div>
+                    <div class="color-option" data-color="green" style="background-color: green;"></div>
+                    <div class="color-option" data-color="yellow" style="background-color: yellow;"></div>
+                    <div class="color-option" data-color="grey" style="background-color: grey;"></div>
+                    <div class="color-option" data-color="pink" style="background-color: pink;"></div>
+                    <div class="color-option" data-color="blue" style="background-color: blue;"></div>
+                </div>
+            </section>
+
+            <section class="filter-section">
+                <h3 class="filter-title">Size</h3>
+                <div class="size-options" id="size-filter">
+                    <button class="size-option" data-size="XS">XS</button>
+                    <button class="size-option" data-size="S">S</button>
+                    <button class="size-option" data-size="M">M</button>
+                    <button class="size-option" data-size="L">L</button>
+                    <button class="size-option" data-size="XL">XL</button>
+                    <button class="size-option" data-size="XXS">XXS</button>
+                    <button class="size-option" data-size="XXL">XXL</button>
+                    <button class="size-option" data-size="3XL">3XL</button>
+                    <button class="size-option" data-size="4XL">4XL</button>
+                </div>
+            </section>
+
+            <section class="filter-section">
+                <h3 class="filter-title">Dress Style</h3>
+                <select class="style-select" id="style-filter">
+                    <option value="">All Styles</option>
+                    <option value="Classic">Classic</option>
+                    <option value="Casual">Casual</option>
+                    <option value="Formal">Formal</option>
+                    <option value="Sport">Sport</option>
+                    <option value="Elegant">Elegant</option>
+                    <option value="Formal Evening">Formal Evening</option>
+                </select>
+            </section>
+
+        </aside>
+        
+        <section class="products-main">
+                <div class="products-header">
+                    <h1>All Clothing</h1>
+                    <div class="products-count" id="products-count">15 items</div>
+                </div>
+
+                <div class="products-grid" id="products-grid">
+                    
+                </div>
+
+                <div class="pagination" id="pagination">
+                    <button class="page-btn prev-btn" disabled>Previous</button>
+                    <div class="page-numbers" id="page-numbers">
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                    </div>
+                    <button class="page-btn next-btn">Next</button>
+                </div>
+        
+                <div class="no-results" id="no-results" style="display: none;">
+                    <p>No products found matching your criteria.</p>
+                </div>
+                
         </section>
-
-        <section class="filter-section">
-            <h3 class="filter-title">Search</h3>
-            <input type="text" id="search-input" class="search-input" placeholder="Search by name, description...">
-        </section>
-
-        <section class="filter-section">
-            <h3 class="filter-title">Category</h3>
-            <ul class="filter-list" id="category-filter">
-                <li>
-                    <input type="checkbox" id="category-tops-tshirts" name="category" value="Tops & T-Shirts">
-                    <label for="category-tops-tshirts">Tops & T-Shirts</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="category-printed-tshirts" name="category" value="Printed T-Shirts">
-                    <label for="category-printed-tshirts">Printed T-Shirts</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="category-plain-tshirts" name="category" value="Plain T-Shirts">
-                    <label for="category-plain-tshirts">Plain T-Shirts</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="category-kurti" name="category" value="Kurti">
-                    <label for="category-kurti">Kurti</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="category-boxers" name="category" value="Boxers">
-                    <label for="category-boxers">Boxers</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="category-full-sleeve-tshirts" name="category" value="Full Sleeve T-Shirts">
-                    <label for="category-full-sleeve-tshirts">Full Sleeve T-Shirts</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="category-joggers" name="category" value="Joggers">
-                    <label for="category-joggers">Joggers</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="category-pajamas" name="category" value="Pajamas">
-                    <label for="category-pajamas">Pajamas</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="category-jeans" name="category" value="Jeans">
-                    <label for="category-jeans">Jeans</label>
-                </li>
-            </ul>
-        </section>
-
-         <section class="filter-section">
-            <h3 class="filter-title">Price</h3>
-            <div class="price-range">
-                <input type="range" min="0" max="600" value="0" class="price-slider" id="price-range-min">
-                <input type="range" min="0" max="600" value="600" class="price-slider" id="price-range-max">
-                <div class="price-values">
-                    <span>$<span id="min-price-value">0</span></span>
-                    <span>$<span id="max-price-value">600</span></span>
-                </div>
-            </div>
-        </section>
-
-         <section class="filter-section">
-            <h3 class="filter-title">Colors</h3>
-            <div class="color-options" id="color-filter">
-                <div class="color-option" data-color="purple" style="background-color: purple;"></div>
-                <div class="color-option" data-color="black" style="background-color: black;"></div>
-                <div class="color-option" data-color="white" style="background-color: white;"></div>
-                <div class="color-option" data-color="red" style="background-color: red;"></div>
-                <div class="color-option" data-color="orange" style="background-color: orange;"></div>
-                <div class="color-option" data-color="navy" style="background-color: navy;"></div>
-                <div class="color-option" data-color="brown" style="background-color: brown;"></div>
-                <div class="color-option" data-color="green" style="background-color: green;"></div>
-                <div class="color-option" data-color="yellow" style="background-color: yellow;"></div>
-                <div class="color-option" data-color="grey" style="background-color: grey;"></div>
-                <div class="color-option" data-color="pink" style="background-color: pink;"></div>
-                <div class="color-option" data-color="blue" style="background-color: blue;"></div>
-            </div>
-        </section>
-
-        <section class="filter-section">
-            <h3 class="filter-title">Size</h3>
-            <div class="size-options" id="size-filter">
-                <button class="size-option" data-size="XS">XS</button>
-                <button class="size-option" data-size="S">S</button>
-                <button class="size-option" data-size="M">M</button>
-                <button class="size-option" data-size="L">L</button>
-                <button class="size-option" data-size="XL">XL</button>
-                <button class="size-option" data-size="XXS">XXS</button>
-                <button class="size-option" data-size="XXL">XXL</button>
-                <button class="size-option" data-size="3XL">3XL</button>
-                <button class="size-option" data-size="4XL">4XL</button>
-            </div>
-        </section>
-
-         <section class="filter-section">
-            <h3 class="filter-title">Dress Style</h3>
-            <select class="style-select" id="style-filter">
-                <option value="">All Styles</option>
-                <option value="Classic">Classic</option>
-                <option value="Casual">Casual</option>
-                <option value="Formal">Formal</option>
-                <option value="Sport">Sport</option>
-                <option value="Elegant">Elegant</option>
-                <option value="Formal Evening">Formal Evening</option>
-            </select>
-        </section>
-
-    </aside>
-    
-    <section class="products-main">
-            <div class="products-header">
-                <h1>Women's Clothing</h1>
-                <div class="products-count" id="products-count">15 items</div>
-            </div>
-
-            <div class="products-grid" id="products-grid">
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="../images/catalog_images/catalog_card1.png" alt="Black Sweatshirt" class="product-image">
-                        <button class="quick-view">Quick View</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Black Sweatshirt with Logo</h3>
-                        <p class="product-brand">Jewel's Brand</p>
-                        <div class="product-rating">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <span class="rating-count">(128)</span>
-                        </div>
-                        <div class="product-price">$122.00</div>
-                        <div class="product-colors">3 colors</div>
-                        <div class="product-category">Tops & T-Shirts</div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-    
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="../images/catalog_images/catalog_card2.png" alt="White T-shirt" class="product-image">
-                        <button class="quick-view">Quick View</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">White Graphic T-shirt</h3>
-                        <p class="product-brand">Helm's Brand</p>
-                        <div class="product-rating">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <span class="rating-count">(95)</span>
-                        </div>
-                        <div class="product-price">$111.00</div>
-                        <div class="product-colors">5 colors</div>
-                        <div class="product-category">Printed T-Shirts</div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-    
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="../images/catalog_images/catalog_card3.png" alt="Gray Hoodie" class="product-image">
-                        <button class="quick-view">Quick View</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Gray Hoodie with Zip</h3>
-                        <p class="product-brand">Peak's Brand</p>
-                        <div class="product-rating">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/half_star_icon.svg" alt="Half Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <span class="rating-count">(73)</span>
-                        </div>
-                        <div class="product-price">$89.00</div>
-                        <div class="product-colors">4 colors</div>
-                        <div class="product-category">Full Sleeve T-Shirts</div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-    
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="../images/catalog_images/catalog_card4.png" alt="Blue Jeans" class="product-image">
-                        <button class="quick-view">Quick View</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Blue Slim Fit Jeans</h3>
-                        <p class="product-brand">River's Brand</p>
-                        <div class="product-rating">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <span class="rating-count">(56)</span>
-                        </div>
-                        <div class="product-price">$99.00</div>
-                        <div class="product-colors">2 colors</div>
-                        <div class="product-category">Jeans</div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-    
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="../images/catalog_images/catalog_card5.png" alt="Red Dress" class="product-image">
-                        <button class="quick-view">Quick View</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Red Summer Dress</h3>
-                        <p class="product-brand">Flora's Brand</p>
-                        <div class="product-rating">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <span class="rating-count">(110)</span>
-                        </div>
-                        <div class="product-price">$145.00</div>
-                        <div class="product-colors">3 colors</div>
-                        <div class="product-category">Casual</div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-    
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="../images/catalog_images/catalog_card6.png" alt="Black Jacket" class="product-image">
-                        <button class="quick-view">Quick View</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Black Leather Jacket</h3>
-                        <p class="product-brand">Edge's Brand</p>
-                        <div class="product-rating">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/half_star_icon.svg" alt="Half Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <span class="rating-count">(87)</span>
-                        </div>
-                        <div class="product-price">$199.00</div>
-                        <div class="product-colors">1 color</div>
-                        <div class="product-category">Formal</div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-    
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="../images/catalog_images/catalog_card7.png" alt="Green T-shirt" class="product-image">
-                        <button class="quick-view">Quick View</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Green Printed T-shirt</h3>
-                        <p class="product-brand">Leaf's Brand</p>
-                        <div class="product-rating">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <span class="rating-count">(65)</span>
-                        </div>
-                        <div class="product-price">$75.00</div>
-                        <div class="product-colors">4 colors</div>
-                        <div class="product-category">Printed T-Shirts</div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-    
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="../images/catalog_images/catalog_card8.png" alt="Brown Boots" class="product-image">
-                        <button class="quick-view">Quick View</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Brown Leather Boots</h3>
-                        <p class="product-brand">Terra's Brand</p>
-                        <div class="product-rating">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/half_star_icon.svg" alt="Half Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <span class="rating-count">(91)</span>
-                        </div>
-                        <div class="product-price">$160.00</div>
-                        <div class="product-colors">2 colors</div>
-                        <div class="product-category">Accessories</div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-    
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="../images/catalog_images/catalog_card9.png" alt="Pink Top" class="product-image">
-                        <button class="quick-view">Quick View</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Pink Crop Top</h3>
-                        <p class="product-brand">Blush's Brand</p>
-                        <div class="product-rating">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <span class="rating-count">(102)</span>
-                        </div>
-                        <div class="product-price">$85.00</div>
-                        <div class="product-colors">3 colors</div>
-                        <div class="product-category">Tops & T-Shirts</div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-    
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="../images/catalog_images/catalog_card10.png" alt="Gray Trousers" class="product-image">
-                        <button class="quick-view">Quick View</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Gray Casual Trousers</h3>
-                        <p class="product-brand">Stone's Brand</p>
-                        <div class="product-rating">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <span class="rating-count">(78)</span>
-                        </div>
-                        <div class="product-price">$110.00</div>
-                        <div class="product-colors">2 colors</div>
-                        <div class="product-category">Casual</div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-    
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="../images/catalog_images/catalog_card11.png" alt="Yellow Sweater" class="product-image">
-                        <button class="quick-view">Quick View</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Yellow Knit Sweater</h3>
-                        <p class="product-brand">Sun's Brand</p>
-                        <div class="product-rating">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/half_star_icon.svg" alt="Half Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <span class="rating-count">(63)</span>
-                        </div>
-                        <div class="product-price">$95.00</div>
-                        <div class="product-colors">3 colors</div>
-                        <div class="product-category">Full Sleeve T-Shirts</div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-    
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="../images/catalog_images/catalog_card12.png" alt="Navy Coat" class="product-image">
-                        <button class="quick-view">Quick View</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Navy Wool Coat</h3>
-                        <p class="product-brand">Ocean's Brand</p>
-                        <div class="product-rating">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <span class="rating-count">(115)</span>
-                        </div>
-                        <div class="product-price">$180.00</div>
-                        <div class="product-colors">1 color</div>
-                        <div class="product-category">Formal</div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-    
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="../images/catalog_images/catalog_card13.png" alt="Purple Blouse" class="product-image">
-                        <button class="quick-view">Quick View</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Purple Silk Blouse</h3>
-                        <p class="product-brand">Violet's Brand</p>
-                        <div class="product-rating">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/half_star_icon.svg" alt="Half Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <span class="rating-count">(89)</span>
-                        </div>
-                        <div class="product-price">$130.00</div>
-                        <div class="product-colors">2 colors</div>
-                        <div class="product-category">Elegant</div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-    
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="../images/catalog_images/catalog_card14.png" alt="Khaki Pants" class="product-image">
-                        <button class="quick-view">Quick View</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Khaki Chino Pants</h3>
-                        <p class="product-brand">Earth's Brand</p>
-                        <div class="product-rating">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <span class="rating-count">(70)</span>
-                        </div>
-                        <div class="product-price">$105.00</div>
-                        <div class="product-colors">2 colors</div>
-                        <div class="product-category">Casual</div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-    
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="../images/catalog_images/catalog_card15.png" alt="Pattern Hoodie" class="product-image">
-                        <button class="quick-view">Quick View</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Pattern Black Hoodie</h3>
-                        <p class="product-brand">AS Brand</p>
-                        <div class="product-rating">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/full_star_icon.svg" alt="Full Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <img src="../images/home_page_icons/star_outline_icon.svg" alt="Outline Star" class="rating-icon">
-                            <span class="rating-count">(42)</span>
-                        </div>
-                        <div class="product-price">$57.00</div>
-                        <div class="product-colors">2 colors</div>
-                        <div class="product-category">Full Sleeve T-Shirts</div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-
-             <div class="pagination" id="pagination">
-                <button class="page-btn prev-btn" disabled>Previous</button>
-                <div class="page-numbers" id="page-numbers">
-                    <button class="page-btn active">1</button>
-                    <button class="page-btn">2</button>
-                </div>
-                <button class="page-btn next-btn">Next</button>
-            </div>
-    
-            <div class="no-results" id="no-results" style="display: none;">
-                <p>No products found matching your criteria.</p>
-            </div>
-            
-    </section>
-
+         
     </main>
     <footer class="footer" aria-label="Site footer">
         <div class="footer__container">
@@ -650,5 +306,6 @@
             <p class="footer__copyright">Copyright © 2023 Euphoria Folks Pvt Ltd. All rights reserved.</p>
         </div>
     </footer>
+    
 </body>
 </html>
