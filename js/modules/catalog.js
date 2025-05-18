@@ -1,4 +1,4 @@
-import { fetchProducts } from './productsManager.js';
+import { fetchProducts, filterProducts, sortProducts } from './productsManager.js';
 import { showModal } from './modal.js';
 
 export async function initCatalog() {
@@ -7,11 +7,32 @@ export async function initCatalog() {
   let currentPage = 1;
   const itemsPerPage = 9;
 
+  const filters = {
+    search: '',
+    categories: [],
+    priceMin: 20,
+    priceMax: 250,
+    colors: [],
+    sizes: [],
+    style: ''
+  };
+
   const elements = {
+    searchInput: document.querySelector('#search-input'),
+    sortSelect: document.querySelector('#sort-by'),
+    categoryFilter: document.querySelector('#category-filter'),
+    priceMinSlider: document.querySelector('#price-range-min'),
+    priceMaxSlider: document.querySelector('#price-range-max'),
+    minPriceValue: document.querySelector('#min-price-value'),
+    maxPriceValue: document.querySelector('#max-price-value'),
+    colorFilter: document.querySelector('#color-filter'),
+    sizeFilter: document.querySelector('#size-filter'),
+    styleFilter: document.querySelector('#style-filter'),
+    clearFilters: document.querySelector('.clear-filters'),
     productsGrid: document.querySelector('#products-grid'),
     productsCount: document.querySelector('#products-count'),
-    noResults: document.querySelector('#no-results'),
-    pagination: document.querySelector('#pagination')
+    pagination: document.querySelector('#pagination'),
+    noResults: document.querySelector('#no-results')
   };
 
   function renderProducts() {
@@ -77,6 +98,108 @@ export async function initCatalog() {
     elements.pagination.querySelector('.prev-btn').disabled = currentPage === 1;
     elements.pagination.querySelector('.next-btn').disabled = currentPage === totalPages;
   }
+
+  function applyFilters() {
+    filteredProducts = filterProducts(products, filters);
+    filteredProducts = sortProducts(filteredProducts, elements.sortSelect.value);
+    currentPage = 1;
+    renderProducts();
+  }
+
+  elements.searchInput.addEventListener('input', (e) => {
+    filters.search = e.target.value;
+    applyFilters();
+  });
+
+  elements.sortSelect.addEventListener('change', () => {
+    applyFilters();
+  });
+
+  elements.categoryFilter.addEventListener('change', (e) => {
+    if (e.target.name === 'category') {
+      filters.categories = Array.from(elements.categoryFilter.querySelectorAll('input:checked'))
+        .map(input => input.value);
+      applyFilters();
+    }
+  });
+
+  elements.priceMinSlider.addEventListener('input', () => {
+    filters.priceMin = parseInt(elements.priceMinSlider.value);
+    elements.minPriceValue.textContent = filters.priceMin;
+    if (filters.priceMin > filters.priceMax) {
+      filters.priceMax = filters.priceMin;
+      elements.priceMaxSlider.value = filters.priceMax;
+      elements.maxPriceValue.textContent = filters.priceMax;
+    }
+    applyFilters();
+  });
+
+  elements.priceMaxSlider.addEventListener('input', () => {
+    filters.priceMax = parseInt(elements.priceMaxSlider.value);
+    elements.maxPriceValue.textContent = filters.priceMax;
+    if (filters.priceMax < filters.priceMin) {
+      filters.priceMin = filters.priceMax;
+      elements.priceMinSlider.value = filters.priceMin;
+      elements.minPriceValue.textContent = filters.priceMin;
+    }
+    applyFilters();
+  });
+
+  elements.colorFilter.addEventListener('click', (e) => {
+    const colorOption = e.target.closest('.color-option');
+    if (colorOption) {
+      const color = colorOption.dataset.color;
+      colorOption.classList.toggle('active');
+      if (colorOption.classList.contains('active')) {
+        filters.colors.push(color);
+      } else {
+        filters.colors = filters.colors.filter(c => c !== color);
+      }
+      applyFilters();
+    }
+  });
+
+  elements.sizeFilter.addEventListener('click', (e) => {
+    const sizeOption = e.target.closest('.size-option');
+    if (sizeOption) {
+      const size = sizeOption.dataset.size;
+      sizeOption.classList.toggle('active');
+      if (sizeOption.classList.contains('active')) {
+        filters.sizes.push(size);
+      } else {
+        filters.sizes = filters.sizes.filter(s => s !== size);
+      }
+      applyFilters();
+    }
+  });
+
+  elements.styleFilter.addEventListener('change', () => {
+    filters.style = elements.styleFilter.value;
+    applyFilters();
+  });
+
+  elements.clearFilters.addEventListener('click', () => {
+    filters.search = '';
+    filters.categories = [];
+    filters.priceMin = 20;
+    filters.priceMax = 250;
+    filters.colors = [];
+    filters.sizes = [];
+    filters.style = '';
+
+    elements.searchInput.value = '';
+    elements.sortSelect.value = 'default';
+    elements.categoryFilter.querySelectorAll('input').forEach(input => input.checked = false);
+    elements.priceMinSlider.value = 20;
+    elements.priceMaxSlider.value = 250;
+    elements.minPriceValue.textContent = '20';
+    elements.maxPriceValue.textContent = '250';
+    elements.colorFilter.querySelectorAll('.color-option').forEach(option => option.classList.remove('active'));
+    elements.sizeFilter.querySelectorAll('.size-option').forEach(option => option.classList.remove('active'));
+    elements.styleFilter.value = '';
+
+    applyFilters();
+  });
 
   elements.pagination.addEventListener('click', (e) => {
     const btn = e.target.closest('.page-btn');
