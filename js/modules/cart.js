@@ -4,7 +4,8 @@ export async function initCart() {
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
   const elements = {
     cartItems: document.querySelector('.cart-items'),
-    cartTotal: document.querySelector('.cart-total')
+    cartTotal: document.querySelector('.cart-total'),
+    checkoutForm: document.querySelector('#checkout-form')
   };
 
   function renderCart() {
@@ -117,5 +118,31 @@ export async function initCart() {
     }
   });
 
+  function initializePickupPoint() {
+    const pickupInput = document.querySelector('#pickup-point');
+    const pickupRadio = document.querySelector('input[name="delivery"][value="pickup"]');
+    if (pickupRadio.checked) {
+      pickupInput.setAttribute('required', 'true');
+      pickupInput.setAttribute('aria-required', 'true');
+    } else {
+      pickupInput.removeAttribute('required');
+      pickupInput.removeAttribute('aria-required');
+    }
+  }
+
+  document.querySelectorAll('input[name="delivery"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const pickupInput = document.querySelector('#pickup-point');
+      if (radio.value === 'pickup') {
+        pickupInput.setAttribute('required', 'true');
+        pickupInput.setAttribute('aria-required', 'true');
+      } else {
+        pickupInput.removeAttribute('required');
+        pickupInput.removeAttribute('aria-required');
+      }
+    });
+  });
+
   renderCart();
+  initializePickupPoint();
 }
