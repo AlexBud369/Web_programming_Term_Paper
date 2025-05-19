@@ -63,5 +63,59 @@ export async function initCart() {
     `;
   }
 
+  function updateCartItemQuantity(itemId, newQuantity) {
+    const item = cart.find(item => item.id === itemId);
+    if (item) {
+      if (newQuantity > item.quantity) {
+        const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+        if (totalQuantity >= 10) {
+          showModal('Error', 'Cannot add more items. The cart is limited to 10 items in total.');
+          return false;
+        }
+      }
+      if (newQuantity <= 0) {
+        cart = cart.filter(i => i.id !== itemId);
+      } else {
+        item.quantity = newQuantity;
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+      return true;
+    }
+    return false;
+  }
+
+  function removeFromCart(itemId) {
+    cart = cart.filter(item => item.id !== itemId);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+    return true;
+  }
+
+  elements.cartItems.addEventListener('click', async (e) => {
+    const cartItem = e.target.closest('.cart-item');
+    if (!cartItem) return;
+    const itemId = parseInt(cartItem.dataset.id);
+    if (!itemId) return;
+
+    if (e.target.closest('.decrease')) {
+      const item = cart.find(item => item.id === itemId);
+      if (item) {
+        updateCartItemQuantity(itemId, item.quantity - 1);
+      }
+    }
+
+    if (e.target.closest('.increase')) {
+      const item = cart.find(item => item.id === itemId);
+      if (item) {
+        updateCartItemQuantity(itemId, item.quantity + 1);
+      }
+    }
+
+    if (e.target.closest('.delete-btn')) {
+      removeFromCart(itemId);
+    }
+  });
+
   renderCart();
 }
