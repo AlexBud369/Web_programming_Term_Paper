@@ -1,11 +1,12 @@
 import { showModal } from './modal.js';
+import { clearCart } from './cartManager.js';
 
 export async function initCart() {
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
   const elements = {
     cartItems: document.querySelector('.cart-items'),
     cartTotal: document.querySelector('.cart-total'),
-    checkoutForm: document.querySelector('#checkout-form')
+    checkoutForm: document.querySelector('#checkout-form'),
   };
 
   function renderCart() {
@@ -117,7 +118,7 @@ export async function initCart() {
       removeFromCart(itemId);
     }
   });
-
+  
   function initializePickupPoint() {
     const pickupInput = document.querySelector('#pickup-point');
     const pickupRadio = document.querySelector('input[name="delivery"][value="pickup"]');
@@ -141,6 +142,54 @@ export async function initCart() {
         pickupInput.removeAttribute('aria-required');
       }
     });
+  });
+
+  elements.checkoutForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(elements.checkoutForm);
+    const requiredFields = [
+      { name: 'first-name', label: 'First Name' },
+      { name: 'last-name', label: 'Last Name' },
+      { name: 'country', label: 'Country/Region' },
+      { name: 'street-address', label: 'Street Address' },
+      { name: 'city', label: 'City' },
+      { name: 'state', label: 'State' },
+      { name: 'postal-code', label: 'Postal Code' },
+      { name: 'phone', label: 'Phone' },
+    ];
+
+    const deliveryMethod = formData.get('delivery');
+    if (deliveryMethod === 'pickup') {
+      requiredFields.push({ name: 'pickup-point', label: 'Pickup Point' });
+    }
+
+    const missingFields = requiredFields.filter(field => !formData.get(field.name)?.trim());
+    if (missingFields.length > 0) {
+      const missingLabels = missingFields.map(field => field.label).join(', ');
+      showModal('Error', `Please fill in the following fields: ${missingLabels}`);
+      return;
+    }
+
+    const phone = formData.get('phone');
+    if (!/^\+375[0-9]{9}$/.test(phone)) {
+      showModal('Error', 'Phone number must be in the format +375XXXXXXXXX');
+      return;
+    }
+
+    const paymentMethod = formData.get('payment');
+    if (paymentMethod === 'credit-card' && !formData.get('card-type')) {
+      showModal('Error', 'Please select a card type for credit card payment');
+      return;
+    }
+
+    if (cart.length === 0) {
+      showModal('Error', 'Your cart is empty.');
+      return;
+    }
+
+    await clearCart();
+    alert('Order Successfully Placed!');
+    renderCart();
   });
 
   renderCart();
