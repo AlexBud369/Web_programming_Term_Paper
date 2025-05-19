@@ -91,5 +91,27 @@ export async function initProductDetails() {
     return stars;
   }
 
+  elements.productSizes.addEventListener('click', (e) => {
+    const sizeOption = e.target.closest('.size-option');
+    if (sizeOption) {
+      selectedSize = sizeOption.value;
+      elements.productSizes.querySelectorAll('.size-option').forEach(btn => btn.classList.remove('active'));
+      sizeOption.classList.add('active');
+    }
+  });
+
+  elements.productColors.addEventListener('click', (e) => {
+    const colorOption = e.target.closest('.color-option');
+    if (colorOption) {
+      selectedColor = colorOption.dataset.color;
+      elements.productColors.querySelectorAll('.color-option').forEach(btn => btn.classList.remove('active'));
+      colorOption.classList.add('active');
+    }
+  });
+
+  elements.addToCartBtn.addEventListener('click', async () => {
+    await addToCart(product, selectedColor, selectedSize);
+  });
+
   renderProductDetails();
 }
