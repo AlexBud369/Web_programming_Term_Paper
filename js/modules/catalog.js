@@ -106,6 +106,48 @@ export async function initCatalog() {
     renderProducts();
   }
 
+  async function addToCart(product, color, size) {
+    try {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+      if (totalQuantity >= 10) {
+        showModal('Error', 'Cannot add more items. The cart is limited to 10 items in total.');
+        return false;
+      }
+
+      const cartItem = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        color,
+        size,
+        quantity: 1
+      };
+
+      const existingItem = cart.find(item => 
+        item.id === product.id && item.color === color && item.size === size
+      );
+      if (existingItem) {
+        if (totalQuantity + 1 > 10) {
+          showModal('Error', 'Cannot add more items. The cart is limited to 10 items in total.');
+          return false;
+        }
+        existingItem.quantity += 1;
+      } else {
+        cart.push(cartItem);
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      showModal('Success', `${product.name} has been added to your cart!`);
+      return true;
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      showModal('Error', 'Failed to add item to cart.');
+      return false;
+    }
+  }
+
   elements.searchInput.addEventListener('input', (e) => {
     filters.search = e.target.value;
     applyFilters();
@@ -199,6 +241,22 @@ export async function initCatalog() {
     elements.styleFilter.value = '';
 
     applyFilters();
+  });
+
+  elements.productsGrid.addEventListener('click', async (e) => {
+    const quickView = e.target.closest('.quick-view');
+    const addToCartBtn = e.target.closest('.add-to-cart');
+
+    if (quickView) {
+      const productId = quickView.closest('.product-card').dataset.id;
+      window.location.href = `/pages/product.html?id=${productId}`;
+    }
+
+    if (addToCartBtn) {
+      const productId = parseInt(addToCartBtn.dataset.id);
+      const product = products.find(p => p.id === productId);
+      await addToCart(product, product.colors[0], product.sizes[0]);
+    }
   });
 
   elements.pagination.addEventListener('click', (e) => {
