@@ -1,3 +1,4 @@
+
 import { fetchProducts, getProductById } from './productsManager.js';
 import { addToCart } from './cartManager.js';
 
@@ -22,7 +23,8 @@ export async function initProductDetails() {
     addToCartBtn: document.querySelector('.add-to-cart'),
     description: document.querySelector('.description-content p'),
     featuresTable: document.querySelector('.features-table'),
-    productVideo: document.querySelector('.product-video source')
+    productVideo: document.querySelector('.product-video source'),
+    similarGrid: document.querySelector('.similar-grid')
   };
 
   let selectedColor = product.colors[0];
@@ -91,6 +93,42 @@ export async function initProductDetails() {
     return stars;
   }
 
+  function renderSimilarProducts() {
+    const similarProducts = products
+      .filter(p => p.id !== product.id)
+      .map(p => {
+        const categoryMatch = p.category === product.category ? 3 : 0;
+        const colorMatches = p.colors.filter(c => product.colors.includes(c)).length;
+        const sizeMatches = p.sizes.filter(s => product.sizes.includes(s)).length;
+        const score = categoryMatch + colorMatches + sizeMatches;
+        return { product: p, score };
+      })
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 4)
+      .map(item => item.product);
+
+    elements.similarGrid.innerHTML = similarProducts.map(p => `
+      <div class="product-card" data-id="${p.id}">
+        <div class="product-image-container">
+          <img src="${p.image}" alt="${p.name}" class="product-image">
+          <button class="quick-view">Quick View</button>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">${p.name}</h3>
+          <p class="product-brand">${p.brand}</p>
+          <div class="product-rating">
+            ${renderStars(p.rating)}
+            <span class="rating-count">(${Math.floor(Math.random() * 100 + 50)})</span>
+          </div>
+          <div class="product-price">$${p.price.toFixed(2)}</div>
+          <div class="product-colors">${p.colors.length} colors</div>
+          <div class="product-category">${p.category}</div>
+          <button class="add-to-cart" data-id="${p.id}">Add to Cart</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
   elements.productSizes.addEventListener('click', (e) => {
     const sizeOption = e.target.closest('.size-option');
     if (sizeOption) {
@@ -113,5 +151,22 @@ export async function initProductDetails() {
     await addToCart(product, selectedColor, selectedSize);
   });
 
+  elements.similarGrid.addEventListener('click', async (e) => {
+    const quickView = e.target.closest('.quick-view');
+    const addToCartBtn = e.target.closest('.add-to-cart');
+
+    if (quickView) {
+      const productId = quickView.closest('.product-card').dataset.id;
+      window.location.href = `/pages/product.html?id=${productId}`;
+    }
+
+    if (addToCartBtn) {
+      const productId = parseInt(addToCartBtn.dataset.id);
+      const similarProduct = products.find(p => p.id === productId);
+      await addToCart(similarProduct, similarProduct.colors[0], similarProduct.sizes[0]);
+    }
+  });
+
   renderProductDetails();
+  renderSimilarProducts();
 }
