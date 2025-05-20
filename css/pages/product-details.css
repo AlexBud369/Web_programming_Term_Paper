@@ -55,6 +55,7 @@ body, html {
     font-weight: 500;
     line-height: normal;
     color: var(--text-color);
+    font-size: clamp(0.875rem, 2vw, 1rem); 
 }
 
 .breadcrumbs a,
@@ -111,7 +112,11 @@ body, html {
 }
 
 .section-title {
+    color: var(--secondary-color);
+    font-family: var(--font-heading);
     font-weight: 600;
+    line-height: 33.5px;
+    letter-spacing: 0.56px;
     margin-bottom: 15px;
 }
 
@@ -362,15 +367,6 @@ body, html {
     flex-shrink: 0;
 }
 
-.section-title {
-    color: var(--secondary-color);
-    font-family: var(--font-heading);
-    font-size: clamp(1.5rem, 2vw, 2rem);
-    font-weight: 600;
-    line-height: 33.5px;
-    letter-spacing: 0.56px;
-    margin: 0;
-}
 
 .feedback-list {
     display: flex;
@@ -564,6 +560,11 @@ body, html {
     background: #6d28c4;
 }
 
+.size-option.active {
+    background: var(--secondary-color);
+    color: var(--primary-color);
+    border-color: var(--secondary-color);
+}
 
 
 @media (max-width: 1439px) {
