@@ -446,5 +446,11 @@
     .login-btn, .logout-btn {
         display: none;
     }
-
+    .form-section {
+        padding: 0 1rem;
+    }
+    .input-container {
+        height: auto;
+        padding: 12px 16px;
+    }
 }
