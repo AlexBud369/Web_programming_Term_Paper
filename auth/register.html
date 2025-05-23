@@ -46,8 +46,96 @@
             </div>
         </div>
     </header>
-    <main>
-
+    <main class="main-container">
+        <div class="form-section">
+            <h1 class="form-title">Sign Up</h1>
+            <form id="signupForm" class="form">
+                <div class="form-group">
+                    <label class="form-label">Phone number (Belarus) <span class="required">*</span></label>
+                    <div class="input-container">
+                        <input type="tel" id="phoneNumber" placeholder="+375 (XX) XXX-XX-XX" class="input-field" required>
+                    </div>
+                    <p id="phoneNumberError" class="error-message"></p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email <span class="required">*</span></label>
+                    <div class="input-container">
+                        <input type="email" id="email" placeholder="Email" class="input-field" required>
+                    </div>
+                    <p id="emailError" class="error-message"></p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Date of birth <span class="required">*</span></label>
+                    <div class="input-container">
+                        <input type="date" id="birthDate" class="input-field" required>
+                    </div>
+                    <p id="birthDateError" class="error-message"></p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password method <span class="required">*</span></label>
+                    <div class="input-container radio-container">
+                        <label class="password-option">
+                            <input type="radio" name="passwordMethod" value="manual" checked> Manual
+                        </label>
+                        <label class="password-option">
+                            <input type="radio" name="passwordMethod" value="auto"> Auto-generate
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group password-group" id="manualPasswordGroup">
+                    <label class="form-label">Password <span class="required">*</span></label>
+                    <div class="input-container">
+                        <input type="password" id="password" placeholder="Password" class="input-field" required>
+                        <button type="button" id="togglePassword" class="toggle-password">Hide</button>
+                    </div>
+                    <p id="passwordError" class="error-message"></p>
+                    <label class="form-label">Confirm password <span class="required">*</span></label>
+                    <div class="input-container">
+                        <input type="password" id="confirmPassword" placeholder="Confirm password" class="input-field" required>
+                        <button type="button" id="toggleConfirmPassword" class="toggle-password">Hide</button>
+                    </div>
+                    <p id="confirmPasswordError" class="error-message"></p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">First name <span class="required">*</span></label>
+                    <div class="input-container">
+                        <input type="text" id="firstName" placeholder="First name" class="input-field" required>
+                    </div>
+                    <p id="firstNameError" class="error-message"></p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Last name <span class="required">*</span></label>
+                    <div class="input-container">
+                        <input type="text" id="lastName" placeholder="Last name" class="input-field" required>
+                    </div>
+                    <p id="lastNameError" class="error-message"></p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Middle name</label>
+                    <div class="input-container">
+                        <input type="text" id="middleName" placeholder="Middle name" class="input-field">
+                    </div>
+                    <p id="middleNameError" class="error-message"></p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nickname <span class="required">*</span></label>
+                    <div class="input-container">
+                        <input type="text" id="nickname" placeholder="Nickname" class="input-field" required>
+                        <button type="button" id="generateNickname" class="generate-btn">Generate</button>
+                    </div>
+                    <p id="nicknameError" class="error-message"></p>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="termsAgreement" required>
+                        I agree to the <a href="#">Terms of Service</a> <span class="required">*</span>
+                    </label>
+                    <p id="termsAgreementError" class="error-message"></p>
+                </div>
+                <button type="button" id="submitBtn" class="submit-btn" disabled>Sign Up</button>
+            </form>
+            <p class="signin-link">Already have an account? <a href="signin.html">Sign in</a></p>
+        </div>
     </main>
     <footer class="footer" aria-label="Site footer">
         <div class="footer__container">
