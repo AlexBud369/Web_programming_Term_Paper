@@ -268,3 +268,140 @@ body, html {
 }
 
 
+@media (max-width: 1200px) {
+    .account-container {
+        max-width: 960px;
+    }
+
+    .account-info, .wishlist {
+        max-width: 960px;
+    }
+
+    .account-field, .divider {
+        width: 700px;
+    }
+
+    .account-info h1 {
+        margin-left: calc((960px - 700px) / 2);
+    }
+
+    .wishlist h2 {
+        margin-left: calc((960px - (282px * 3 + 20px * 2)) / 2);
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(3, 282px);
+    }
+}
+
+@media (max-width: 992px) {
+    .account-container {
+        max-width: 720px;
+        padding: 15px;
+    }
+
+    .account-info, .wishlist {
+        max-width: 720px;
+    }
+
+    .account-field, .divider {
+        width: 540px;
+    }
+
+    .account-info h1 {
+        margin-left: calc((720px - 540px) / 2);
+    }
+
+    .wishlist h2 {
+        margin-left: calc((720px - (282px * 2 + 20px)) / 2);
+    }
+
+    .account-info h1 {
+        font-size: 2rem;
+    }
+
+    .wishlist h2 {
+        font-size: 1.5rem;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(2, 282px);
+    }
+}
+
+@media (max-width: 768px) {
+    .account-container {
+        max-width: 540px;
+    }
+
+    .account-info, .wishlist {
+        max-width: 540px;
+    }
+
+    .account-field, .divider {
+        width: 100%;
+    }
+
+    .account-info h1 {
+        margin-left: 0; 
+    }
+
+    .wishlist h2 {
+        margin-left: 0;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fit, 282px);
+    }
+
+    .product-card {
+        width: 282px;
+    }
+
+    .field-content {
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .change-btn {
+        align-self: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .account-container {
+        padding: 10px;
+    }
+
+    .account-info, .wishlist {
+        max-width: 100%;
+    }
+
+    .account-info h1 {
+        font-size: 1.75rem;
+    }
+
+    .field-label, .field-content, .change-btn {
+        font-size: 16px;
+    }
+
+    .wishlist h2 {
+        font-size: 1.25rem;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+    }
+
+    .page-numbers {
+        order: 1;
+        width: 100%;
+        justify-content: center;
+        margin: 10px 0;
+    }
+
+    .prev-btn, .next-btn {
+        order: 2;
+    }
+}
