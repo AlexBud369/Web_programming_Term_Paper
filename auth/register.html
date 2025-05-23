@@ -14,8 +14,37 @@
 
 </head>
 <body class="body-container">
-    <header>
-
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <img src="../images/logo.png" alt="Euphoria Logo" class="logo-img">
+            </a>
+            <div class="header-controls">
+                <div class="language-selector">
+                    <button class="language-toggle" aria-expanded="false">
+                        <span class="current-language">English</span>
+                        <img src="../images/home_page_icons/Vector.svg" alt="" class="drop-icon">
+                    </button>
+                    <ul class="language-dropdown">
+                        <li><button type="button" data-lang="en">English</button></li>
+                        <li><button type="button" data-lang="ru">Русский</button></li>
+                    </ul>
+                </div>
+                <div class="custom-toggle">
+                    <input type="checkbox" id="theme-toggle" class="toggle-input">
+                    <label for="theme-toggle" class="toggle-label">
+                        <span class="toggle-track">
+                            <span class="toggle-knob"></span>
+                        </span>
+                    </label>
+                </div>
+                <button class="login-btn">Login</button>
+                <button class="logout-btn">Sign Out</button>
+                <button class="burger-menu">
+                    <span class="burger-icon"></span>
+                </button>
+            </div>
+        </div>
     </header>
     <main>
 
