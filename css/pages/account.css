@@ -1,0 +1,79 @@
+body, html {
+    font-size: 16px;
+    max-width: 90rem;
+    margin: 0 auto;
+    font-family: var(--font-main);
+}
+
+.account-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.account-info {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.account-info h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin-bottom: 40px;
+    font-family: var(--font-heading);
+    margin-left: calc((1240px - 894px) / 2); 
+}
+
+.account-field {
+    width: 894px;
+    height: 54px;
+    margin: 0 auto 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.field-label {
+    color: var(--text-color);
+    font-family: var(--font-main);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 10px;
+}
+
+.field-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--secondary-color);
+    font-family: var(--font-main);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.change-btn {
+    color: var(--secondary-color);
+    font-family: var(--font-main);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: normal;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.change-btn:hover {
+    color: var(--secondary-color);
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid #EDEEF2;
+    margin: 20px auto;
+    width: 894px;
+}
+
