@@ -45,6 +45,31 @@
             </div>
         </div>
     </header>
+     <main class="main-container">
+        <div class="form-section">
+            <h1 class="form-title">Sign In Page</h1>
+            <form id="signupForm" class="form">
+                <div class="form-group">
+                    <label class="form-label">User name or email address</label>
+                    <div class="input-container">
+                        <input type="text" id="usernameEmail" placeholder="User name or email address" class="input-field" required>
+                    </div>
+                    <p id="usernameEmailError" class="error-message"></p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <div class="input-container">
+                        <input type="password" id="password" placeholder="Password" class="input-field" required>
+                        <button type="button" id="togglePassword" class="toggle-password">Hide</button>
+                    </div>
+                    <p class="forgot-password"><a href="#">Forget your password</a></p>
+                    <p id="passwordError" class="error-message"></p>
+                </div>
+                <button type="button" id="submitBtn" class="submit-btn" disabled>Sign In</button>
+            </form>
+            <p class="signup-link">Don’t have an account? <a href="signup.html">Sign up</a></p>
+        </div>
+    </main>
 
     <footer class="footer" aria-label="Site footer">
         <div class="footer__container">
