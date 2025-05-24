@@ -443,6 +443,10 @@ body, html {
         gap: 10px;
     }
 
+    .add-product-btn {
+        width: 100%;
+        text-align: center;
+    }
 }
 
 @media (max-width: 480px) {
@@ -469,7 +473,10 @@ body, html {
         order: 2;
     }
 
-
+    .edit-btn, .delete-btn {
+        font-size: 0.75rem;
+        padding: 6px;
+    }
 }
 
 @keyframes fadeIn {
