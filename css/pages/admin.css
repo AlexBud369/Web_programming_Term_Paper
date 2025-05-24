@@ -205,7 +205,21 @@ body, html {
     border-bottom: 1px solid var(--text-color);
 }
 
+.add-product-btn {
+    padding: 8px 16px;
+    background: #8A33FD;
+    color: #FFF;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-family: var(--font-main);
+    transition: var(--transition-base);
+}
 
+.add-product-btn:hover {
+    background: #7e22ce;
+}
 
 .products-grid {
     display: grid;
@@ -321,8 +335,40 @@ body, html {
     margin: 5px 0;
 }
 
+.admin-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
 
+.edit-btn, .delete-btn {
+    width: 48%;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-family: var(--font-main);
+    transition: var(--transition-base);
+}
 
+.edit-btn {
+    background: #10B981;
+    color: #FFF;
+}
+
+.edit-btn:hover {
+    background: #059669;
+}
+
+.delete-btn {
+    background: #EF4444;
+    color: #FFF;
+}
+
+.delete-btn:hover {
+    background: #DC2626;
+}
 
 .pagination {
     display: flex;
