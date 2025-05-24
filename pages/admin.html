@@ -214,7 +214,38 @@
             </section>
         </aside>
         <section class="products-main">
-           
+            <div class="products-header">
+                <h1>Admin Product Management</h1>
+                <button class="add-product-btn">Add New Product</button>
+            </div>
+            <div class="products-grid" id="products-grid">
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="../images/product.jpg" alt="Product" class="product-image">
+                        <button class="quick-view">Quick View</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Sample T-Shirt</h3>
+                        <p class="product-brand">Brand Name</p>
+                        <div class="product-rating">
+                            <img src="../images/star-filled.svg" alt="Star" class="rating-icon">
+                            <img src="../images/star-filled.svg" alt="Star" class="rating-icon">
+                            <img src="../images/star-filled.svg" alt="Star" class="rating-icon">
+                            <img src="../images/star-empty.svg" alt="Star" class="rating-icon">
+                            <img src="../images/star-empty.svg" alt="Star" class="rating-icon">
+                            <span class="rating-count">(10)</span>
+                        </div>
+                        <p class="product-price">$29.99</p>
+                        <p class="product-colors">Colors: Black, White</p>
+                        <p class="product-category">Category: T-Shirts</p>
+                        <div class="admin-actions">
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="pagination" id="pagination">
                 <button class="page-btn prev-btn" disabled>Previous</button>
                 <div class="page-numbers" id="page-numbers">
