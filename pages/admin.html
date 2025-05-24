@@ -96,7 +96,138 @@
             </div>
         </div>
     </header>
-    
+    <main class="admin-container">
+        <aside class="filters-sidebar">
+            <section class="filters-header">
+                <h2>Filter & Sort</h2>
+                <button class="clear-filters">Clear all</button>
+            </section>
+            <section class="filter-section">
+                <h3 class="filter-title">Sort By</h3>
+                <select id="sort-by" class="sort-select">
+                    <option value="default">Default</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="name-asc">Name: A to Z</option>
+                    <option value="name-desc">Name: Z to A</option>
+                    <option value="rating-desc">Rating: High to Low</option>
+                </select>
+            </section>
+            <section class="filter-section">
+                <h3 class="filter-title">Search</h3>
+                <input type="text" id="search-input" class="search-input" placeholder="Search by name, description...">
+            </section>
+            <section class="filter-section">
+                <h3 class="filter-title">Category</h3>
+                <ul class="filter-list" id="category-filter">
+                    <li>
+                        <input type="checkbox" id="category-tops-tshirts" name="category" value="Tops & T-Shirts">
+                        <label for="category-tops-tshirts">Tops & T-Shirts</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="category-printed-tshirts" name="category" value="Printed T-Shirts">
+                        <label for="category-printed-tshirts">Printed T-Shirts</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="category-plain-tshirts" name="category" value="Plain T-Shirts">
+                        <label for="category-plain-tshirts">Plain T-Shirts</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="category-kurti" name="category" value="Kurti">
+                        <label for="category-kurti">Kurti</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="category-boxers" name="category" value="Boxers">
+                        <label for="category-boxers">Boxers</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="category-full-sleeve-tshirts" name="category" value="Full Sleeve T-Shirts">
+                        <label for="category-full-sleeve-tshirts">Full Sleeve T-Shirts</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="category-joggers" name="category" value="Joggers">
+                        <label for="category-joggers">Joggers</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="category-pajamas" name="category" value="Pajamas">
+                        <label for="category-pajamas">Pajamas</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="category-jeans" name="category" value="Jeans">
+                        <label for="category-jeans">Jeans</label>
+                    </li>
+                </ul>
+            </section>
+            <section class="filter-section">
+                <h3 class="filter-title">Price</h3>
+                <div class="price-range">
+                    <input type="range" min="20" max="250" value="20" class="price-slider" id="price-range-min">
+                    <input type="range" min="20" max="250" value="250" class="price-slider" id="price-range-max">
+                    <div class="price-values">
+                        <span>$<span id="min-price-value">20</span></span>
+                        <span>$<span id="max-price-value">250</span></span>
+                    </div>
+                </div>
+            </section>
+            <section class="filter-section">
+                <h3 class="filter-title">Colors</h3>
+                <div class="color-options" id="color-filter">
+                    <div class="color-option" data-color="purple" style="background-color: purple;"></div>
+                    <div class="color-option" data-color="black" style="background-color: black;"></div>
+                    <div class="color-option" data-color="white" style="background-color: white;"></div>
+                    <div class="color-option" data-color="red" style="background-color: red;"></div>
+                    <div class="color-option" data-color="orange" style="background-color: orange;"></div>
+                    <div class="color-option" data-color="navy" style="background-color: navy;"></div>
+                    <div class="color-option" data-color="brown" style="background-color: brown;"></div>
+                    <div class="color-option" data-color="green" style="background-color: green;"></div>
+                    <div class="color-option" data-color="yellow" style="background-color: yellow;"></div>
+                    <div class="color-option" data-color="grey" style="background-color: grey;"></div>
+                    <div class="color-option" data-color="pink" style="background-color: pink;"></div>
+                    <div class="color-option" data-color="blue" style="background-color: blue;"></div>
+                </div>
+            </section>
+            <section class="filter-section">
+                <h3 class="filter-title">Size</h3>
+                <div class="size-options" id="size-filter">
+                    <button class="size-option" data-size="XS">XS</button>
+                    <button class="size-option" data-size="S">S</button>
+                    <button class="size-option" data-size="M">M</button>
+                    <button class="size-option" data-size="L">L</button>
+                    <button class="size-option" data-size="XL">XL</button>
+                    <button class="size-option" data-size="XXS">XXS</button>
+                    <button class="size-option" data-size="XXL">XXL</button>
+                    <button class="size-option" data-size="3XL">3XL</button>
+                    <button class="size-option" data-size="4XL">4XL</button>
+                </div>
+            </section>
+            <section class="filter-section">
+                <h3 class="filter-title">Dress Style</h3>
+                <select class="style-select" id="style-filter">
+                    <option value="">All Styles</option>
+                    <option value="Classic">Classic</option>
+                    <option value="Casual">Casual</option>
+                    <option value="Formal">Formal</option>
+                    <option value="Sport">Sport</option>
+                    <option value="Elegant">Elegant</option>
+                    <option value="Formal Evening">Formal Evening</option>
+                </select>
+            </section>
+        </aside>
+        <section class="products-main">
+           
+            <div class="pagination" id="pagination">
+                <button class="page-btn prev-btn" disabled>Previous</button>
+                <div class="page-numbers" id="page-numbers">
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                </div>
+                <button class="page-btn next-btn">Next</button>
+            </div>
+            <div class="no-results" id="no-results" style="display: none;">
+                <p>No products found matching your criteria.</p>
+            </div>
+        </section>
+    </main>
     <footer class="footer" aria-label="Site footer">
         <div class="footer__container">
             <div class="footer__column">
