@@ -22,68 +22,71 @@
             </a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="catalog.html">Catalog</a></li>
                     <li class="auth-only"><a href="account.html" class="account-link">Account</a></li>
                     <li class="auth-only"><a href="cart.html" class="cart-link">Cart</a></li>
                 </ul>
             </nav>
-            <div class="search-bar">
-                <button class="search-btn">
-                    <img src="../images/home_page_icons/search_icon.svg" alt="Search" class="icon">
-                </button>
-                <input type="text" placeholder="Search">
-                
-            </div>
             <div class="header-controls">
+                <div class="accessibility-toggle">
+                    <input type="checkbox" id="a11y-toggle-desktop" class="toggle-input">
+                    <label for="a11y-toggle-desktop" class="toggle-label">
+                        <img src="../images/home_page_icons/accessibility_icon.svg" alt="Accessibility" class="toggle-icon">
+                    </label>
+                </div>
                 <div class="language-selector">
-                    <button class="language-toggle" aria-expanded="false">
-                    <span class="current-language">English</span>
-                    <img src="../images/home_page_icons/Vector.svg" alt="" class="drop-icon">
-                    </button>
-                    <ul class="language-dropdown">
-                    <li><button type="button" data-lang="en">English</button></li>
-                    <li><button type="button" data-lang="ru">Русский</button></li>
-                    </ul>
+                    <div class="language-toggle" aria-expanded="false">
+                        <span class="current-language">English</span>
+                        <span class="drop-icon">▼</span>
+                    </div>
+                    <div class="language-dropdown">
+                        <select class="language-select" aria-label="Select language">
+                            <option value="en">English</option>
+                            <option value="ru">Русский</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="custom-toggle">
-                    <input type="checkbox" id="a11y-toggle" class="toggle-input">
-                    <label for="a11y-toggle" class="toggle-label">
+                    <input type="checkbox" id="theme-toggle" class="toggle-input">
+                    <label for="theme-toggle" class="toggle-label">
                         <span class="toggle-track">
                             <span class="toggle-knob"></span>
                         </span>
                     </label>
                 </div>
                 <button class="burger-menu" aria-label="Menu">
-                    <img src="../images/home_page_icons/burger-menu-icon.svg" alt="" class="burger-menu-icon">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
                 </button>
             </div>
         </div>
+        <div class="menu-overlay"></div>
         <div class="mobile-menu">
-            <div class="auth-section">
-                <button class="login-btn">Login</button>
-                <button class="register-btn">Register</button>
-                <div class="user-profile" style="display:none;">
-                    <span class="username"></span>
-                    <button class="logout-btn">Logout</button>
-                </div>
-            </div>
-                
+            <button class="close-menu" aria-label="Close menu">✕</button>
+            <h2 class="menu-title">Menu Navigation</h2>
+            <nav class="mobile-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="catalog.html">Catalog</a></li>
+                    <li class="auth-only"><a href="account.html" class="account-link">Account</a></li>
+                    <li class="auth-only"><a href="cart.html" class="cart-link">Cart</a></li>
+                </ul>
+            </nav>
             <div class="accessibility-menu">
                 <h3>Accessibility</h3>
                 <div class="accessibility-option">
                     <label>
-                        <input type="checkbox" id="a11y-toggle"> Accessibility Mode
+                        <input type="checkbox" id="a11y-toggle-mobile"> Accessibility Mode
                     </label>
                 </div>
-                    
                 <div class="a11y-options" style="display:none;">
                     <div class="option-group">
                         <label>Text Size:</label>
                         <input type="range" id="font-size" min="100" max="200" step="50" value="100">
                         <span id="font-size-value">100%</span>
                     </div>
-                        
                     <div class="option-group">
                         <label>Color Scheme:</label>
                         <div class="color-schemes">
@@ -92,12 +95,42 @@
                             <label><input type="radio" name="color-scheme" value="scheme-3"> Blue+Navy</label>
                         </div>
                     </div>
-                        
                     <div class="option-group">
                         <label>
                             <input type="checkbox" id="images-toggle"> Show Images
                         </label>
                     </div>
+                </div>
+                <button class="reset-settings">Reset Settings</button>
+            </div>
+            <div class="mobile-controls">
+                <div class="language-selector">
+                    <div class="language-toggle" aria-expanded="false">
+                        <span class="current-language">English</span>
+                        <span class="drop-icon">▼</span>
+                    </div>
+                    <div class="language-dropdown">
+                        <select class="language-select" aria-label="Select language">
+                            <option value="en">English</option>
+                            <option value="ru">Русский</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="custom-toggle">
+                    <input type="checkbox" id="theme-toggle-mobile" class="toggle-input">
+                    <label for="theme-toggle-mobile" class="toggle-label">
+                        <span class="toggle-track">
+                            <span class="toggle-knob"></span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <div class="auth-section">
+                <button class="login-btn">Login</button>
+                <button class="register-btn">Register</button>
+                <div class="user-profile" style="display:none;">
+                    <span class="username"></span>
+                    <button class="logout-btn">Logout</button>
                 </div>
             </div>
         </div>
@@ -469,53 +502,53 @@
     </main>
     <footer class="footer" aria-label="Site footer">
         <div class="footer__container">
-          <div class="footer__column">
-            <h2 class="footer__title">Shop</h2>
-            <ul class="footer__list">
-              <li><a href="index.html" class="footer__link">Home</a></li>
-              <li><a href="catalog.html" class="footer__link">Catalog</a></li>
-              <li><a href="cart.html" class="footer__link auth-link">Cart</a></li>
-              <li><a href="account.html" class="footer__link auth-link">My Account</a></li>
-            </ul>
-          </div>
+            <div class="footer__column">
+                <h2 class="footer__title">Shop</h2>
+                <ul class="footer__list">
+                <li><a href="index.html" class="footer__link">Home</a></li>
+                <li><a href="catalog.html" class="footer__link">Catalog</a></li>
+                <li><a href="cart.html" class="footer__link auth-link">Cart</a></li>
+                <li><a href="account.html" class="footer__link auth-link">My Account</a></li>
+                </ul>
+            </div>
       
-          <div class="footer__column">
-            <h2 class="footer__title">Contacts</h2>
-            <ul class="footer__list">
-              <li><a href="index.html#map" class="footer__link">Store Location</a></li>
-              <li><span class="footer__link">+1 (234) 567-89-00</span></li>
-              <li><a href="mailto:info@euphoria.com" class="footer__link">info@euphoria.com</a></li>
-            </ul>
-          </div>
-      
-          <section class="footer__subscribe" aria-label="Email subscription">
-            <h2 class="footer__title">Newsletter</h2>
-            <p class="footer__text">Subscribe for exclusive offers and updates</p>
-            <form class="footer__form">
-              <div class="footer__form-group">
-                <input 
-                  type="email" 
-                  placeholder="Your email address" 
-                  class="footer__input"
-                  aria-label="Email for newsletter"
-                  required
-                >
-                <button type="submit" class="footer__button">
-                  <span>Subscribe</span>
-                </button>
-              </div>
-              <p class="footer__disclaimer">We respect your privacy. Unsubscribe at any time.</p>
-            </form>
-          </section>
+            <div class="footer__column">
+                <h2 class="footer__title">Contacts</h2>
+                <ul class="footer__list">
+                <li><a href="index.html#map" class="footer__link">Store Location</a></li>
+                <li><span class="footer__link">+1 (234) 567-89-00</span></li>
+                <li><a href="mailto:info@euphoria.com" class="footer__link">info@euphoria.com</a></li>
+                </ul>
+            </div>
+        
+            <section class="footer__subscribe" aria-label="Email subscription">
+                <h2 class="footer__title">Newsletter</h2>
+                <p class="footer__text">Subscribe for exclusive offers and updates</p>
+                <form class="footer__form">
+                <div class="footer__form-group">
+                    <input 
+                    type="email" 
+                    placeholder="Your email address" 
+                    class="footer__input"
+                    aria-label="Email for newsletter"
+                    required
+                    >
+                    <button type="submit" class="footer__button">
+                    <span>Subscribe</span>
+                    </button>
+                </div>
+                <p class="footer__disclaimer">We respect your privacy. Unsubscribe at any time.</p>
+                </form>
+            </section>
         </div>
       
         <div class="footer__bottom">
-          <div class="footer__social" aria-label="Social media links">
-            <a href="#" aria-label="Facebook"><img src="../images/home_page_icons/facebook_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
-            <a href="#" aria-label="Instagram"><img src="../images/home_page_icons/instagram_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
-            <a href="#" aria-label="Twitter"><img src="../images/home_page_icons/twitter_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
-          </div>
-          <p class="footer__copyright">Copyright © 2023 Euphoria Folks Pvt Ltd. All rights reserved.</p>
+            <div class="footer__social" aria-label="Social media links">
+                <a href="#" aria-label="Facebook"><img src="../images/home_page_icons/facebook_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
+                <a href="#" aria-label="Instagram"><img src="../images/home_page_icons/instagram_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
+                <a href="#" aria-label="Twitter"><img src="../images/home_page_icons/twitter_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
+            </div>
+            <p class="footer__copyright">Copyright © 2023 Euphoria Folks Pvt Ltd. All rights reserved.</p>
         </div>
       </footer>
     <script type="module" src="../js/main.js"></script>
