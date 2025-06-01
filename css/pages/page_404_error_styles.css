@@ -91,3 +91,59 @@ body, html {
     background: #7e22ce;
 }
 
+@media (max-width: 768px) {
+    .error-image-container {
+        width: auto;
+        height: auto;
+    }
+
+    .error-digit {
+        font-size: 150px;
+        margin: 0 3px;
+    }
+
+    .error-title {
+        font-size: 28px;
+    }
+
+    .error-message {
+        font-size: 14px;
+    }
+
+    .back-home-btn {
+        width: 200px;
+        height: 40px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .error-container {
+        padding: 10px;
+    }
+
+    .error-image-container {
+        width: auto;
+        height: auto;
+    }
+
+    .error-digit {
+        font-size: 100px;
+        margin: 0 2px;
+    }
+
+    .error-title {
+        font-size: 24px;
+    }
+
+    .error-message {
+        font-size: 12px;
+        line-height: 120%;
+    }
+
+    .back-home-btn {
+        width: 90%;
+        height: 36px;
+        font-size: 14px;
+    }
+}
