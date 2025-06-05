@@ -1,4 +1,4 @@
-import { showModal } from './modal.js';
+import { showModal } from './modules/modal.js';
 import { clearCart } from './cartManager.js';
 
 export async function initCart() {
