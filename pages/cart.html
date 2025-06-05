@@ -118,17 +118,28 @@
                     <div class="cart-column" role="columnheader">Action</div>
                 </div>
                 <div class="cart-items" role="list"></div>
-                    
-                <div class="cart-total" role="region" aria-label="Cart Totals"></div>
+                <div class="cart-total" role="region" aria-label="Cart Totals">
+                    <div class="total-row">
+                        <span>Subtotal</span>
+                        <span id="cart-subtotal">$0.00</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Shipping</span>
+                        <span id="cart-shipping">$0.00</span>
+                    </div>
+                    <div class="total-row total">
+                        <span>Total</span>
+                        <span id="cart-total">$0.00</span>
+                    </div>
+                </div>
             </div>
         </section>
-
         <section class="checkout-section" aria-label="Checkout Form">
             <div class="section-header">
                 <div class="vertical-line"></div>
                 <h2 class="section-title">Checkout</h2>
             </div>
-            <form id="checkout-form" class="checkout-form" novalidate>
+            <form id="checkout-form" class="checkout-form" action="#" novalidate>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="first-name">First Name*</label>
@@ -214,62 +225,59 @@
                             </div>
                         </div>
                         <div class="option-block">
-                            <label><input type="radio" name="payment" value="cash"> Cash on delivery <span>Pay with cash upon delivery.</span></label>
+                            <label><input type="radio" name="payment" value="cash"> Cash on delivery</label>
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="place-order-btn" aria-label="Place Order">Order Now</button>
+                <button type="submit" class="modal-btn confirm-btn" aria-label="Place Order">Order Now</button>
             </form>
         </section>
-
-        <div class="success-notification" id="success-notification" role="alertdialog" aria-labelledby="success-message">
-            <p id="success-message">Order Successfully Placed!</p>
-            <button id="close-notification" aria-label="Close notification">Close</button>
+        <div class="modal-overlay" id="success-notification" style="display: none;" role="dialog" aria-labelledby="order-success-message">
+            <div class="modal-content">
+                <p id="order-success-message">Order Successfully Placed!</p>
+                <button class="modal-ok-btn" aria-label="Close notification">Close</button>
+            </div>
         </div>
     </main>
-
-    <footer class="footer" aria-label="Site footer">
+    <footer class="footer" aria-label="footer">
         <div class="footer__container">
             <div class="footer__column">
                 <h2 class="footer__title">Shop</h2>
                 <ul class="footer__list">
-                <li><a href="index.html" class="footer__link">Home</a></li>
-                <li><a href="catalog.html" class="footer__link">Catalog</a></li>
-                <li><a href="cart.html" class="footer__link auth-link">Cart</a></li>
-                <li><a href="account.html" class="footer__link auth-link">My Account</a></li>
+                    <li><a href="index.html" class="footer__link">Home</a></li>
+                    <li><a href="catalog.html" class="footer__link">Catalog</a></li>
+                    <li><a href="cart.html" class="footer__link auth-link">Cart</a></li>
+                    <li><a href="account.html" class="footer__link auth-link">My Account</a></li>
                 </ul>
             </div>
-      
             <div class="footer__column">
                 <h2 class="footer__title">Contacts</h2>
                 <ul class="footer__list">
-                <li><a href="index.html#map" class="footer__link">Store Location</a></li>
-                <li><span class="footer__link">+1 (234) 567-89-00</span></li>
-                <li><a href="mailto:info@euphoria.com" class="footer__link">info@euphoria.com</a></li>
+                    <li><a href="index.html#map" class="footer__link">Store Location</a></li>
+                    <li><span class="footer__link">+1 (234) 567-89-00</span></li>
+                    <li><a href="mailto:info@euphoria.com" class="footer__link">info@euphoria.com</a></li>
                 </ul>
             </div>
-        
             <section class="footer__subscribe" aria-label="Email subscription">
                 <h2 class="footer__title">Newsletter</h2>
                 <p class="footer__text">Subscribe for exclusive offers and updates</p>
                 <form class="footer__form">
-                <div class="footer__form-group">
-                    <input 
-                    type="email" 
-                    placeholder="Your email address" 
-                    class="footer__input"
-                    aria-label="Email for newsletter"
-                    required
-                    >
-                    <button type="submit" class="footer__button">
-                    <span>Subscribe</span>
-                    </button>
-                </div>
-                <p class="footer__disclaimer">We respect your privacy. Unsubscribe at any time.</p>
+                    <div class="footer__form-group">
+                        <input 
+                            type="email" 
+                            placeholder="Your email address" 
+                            class="footer__input"
+                            aria-label="Email for newsletter"
+                            required
+                        >
+                        <button type="submit" class="footer__button">
+                            <span>Subscribe</span>
+                        </button>
+                    </div>
+                    <p class="footer__disclaimer">We respect your privacy. Unsubscribe at any time.</p>
                 </form>
             </section>
         </div>
-      
         <div class="footer__bottom">
             <div class="footer__social" aria-label="Social media links">
                 <a href="#" aria-label="Facebook"><img src="../images/home_page_icons/facebook_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
@@ -280,5 +288,6 @@
         </div>
     </footer>
     <div id="modal-container"></div>
+    <script type="module" src="../js/cart.js"></script>
 </body>
 </html>
