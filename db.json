@@ -7,10 +7,16 @@
       "category": "Printed T-Shirts",
       "price": 35,
       "rating": 4.5,
-      "image": "/images/catalog_images/tshirt1.png",
+      "image": "/images/catalog_images/tshirt1.pn",
       "description": "Stylish black T-shirt with graphic print.",
-      "colors": ["black", "white", "grey"],
-      "sizes": ["S", "M", "L", "XL"],
+      "colors": [
+        "black"
+      ],
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -28,11 +34,18 @@
       "brand": "Flora's Brand",
       "category": "Kurti",
       "price": 80,
-      "rating": 5.0,
+      "rating": 5,
       "image": "/images/catalog_images/kurti1.png",
       "description": "Elegant white kurti for daily wear.",
-      "colors": ["white", "pink", "yellow"],
-      "sizes": ["XS", "S", "M"],
+      "colors": [
+        "white",
+        "pink",
+        "yellow"
+      ],
+      "sizes": [
+        "XS",
+        "S"
+      ],
       "style": "Elegant",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -50,11 +63,19 @@
       "brand": "Sporty Brand",
       "category": "Joggers",
       "price": 60,
-      "rating": 4.0,
+      "rating": 4,
       "image": "/images/catalog_images/joggers1.png",
       "description": "Comfortable navy joggers for active lifestyle.",
-      "colors": ["navy", "black", "grey"],
-      "sizes": ["M", "L", "XL"],
+      "colors": [
+        "navy",
+        "black",
+        "grey"
+      ],
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
       "style": "Sport",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -75,8 +96,15 @@
       "rating": 3.5,
       "image": "/images/catalog_images/fullsleeve1.png",
       "description": "Warm red full sleeve T-shirt.",
-      "colors": ["red", "black"],
-      "sizes": ["S", "M", "L"],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -97,8 +125,16 @@
       "rating": 4.5,
       "image": "/images/catalog_images/jeans1.png",
       "description": "Classic blue jeans for all occasions.",
-      "colors": ["blue", "black"],
-      "sizes": ["S", "M", "L", "XL"],
+      "colors": [
+        "blue",
+        "black"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -116,11 +152,17 @@
       "brand": "EcoWear",
       "category": "Pajamas",
       "price": 70,
-      "rating": 4.0,
+      "rating": 4,
       "image": "/images/catalog_images/pajamas1.png",
       "description": "Cozy purple pajamas for sleep.",
-      "colors": ["purple", "grey"],
-      "sizes": ["M", "L"],
+      "colors": [
+        "purple",
+        "grey"
+      ],
+      "sizes": [
+        "M",
+        "L"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -141,8 +183,16 @@
       "rating": 3.5,
       "image": "/images/catalog_images/boxers1.png",
       "description": "Comfortable green boxers.",
-      "colors": ["green", "black", "blue"],
-      "sizes": ["S", "M", "L"],
+      "colors": [
+        "green",
+        "black",
+        "blue"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -160,11 +210,19 @@
       "brand": "Helm's Brand",
       "category": "Plain T-Shirts",
       "price": 30,
-      "rating": 4.0,
+      "rating": 4,
       "image": "/images/catalog_images/plain1.png",
       "description": "Simple yellow T-shirt for casual wear.",
-      "colors": ["yellow", "white", "grey"],
-      "sizes": ["XS", "S", "M"],
+      "colors": [
+        "yellow",
+        "white",
+        "grey"
+      ],
+      "sizes": [
+        "XS",
+        "S",
+        "M"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -182,11 +240,19 @@
       "brand": "Flora's Brand",
       "category": "Kurti",
       "price": 100,
-      "rating": 5.0,
+      "rating": 5,
       "image": "/images/catalog_images/kurti2.png",
       "description": "Elegant pink kurti for festive occasions.",
-      "colors": ["pink", "white", "red"],
-      "sizes": ["S", "M", "L"],
+      "colors": [
+        "pink",
+        "white",
+        "red"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
       "style": "Formal Evening",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -207,8 +273,15 @@
       "rating": 4.5,
       "image": "/images/catalog_images/tops1.png",
       "description": "Black T-shirt for formal settings.",
-      "colors": ["black", "navy"],
-      "sizes": ["M", "L", "XL"],
+      "colors": [
+        "black",
+        "navy"
+      ],
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
       "style": "Formal",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -226,11 +299,18 @@
       "brand": "Sporty Brand",
       "category": "Joggers",
       "price": 65,
-      "rating": 4.0,
+      "rating": 4,
       "image": "/images/catalog_images/joggers2.png",
       "description": "Vibrant orange joggers for workouts.",
-      "colors": ["orange", "black"],
-      "sizes": ["S", "M", "L"],
+      "colors": [
+        "orange",
+        "black"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
       "style": "Sport",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -248,11 +328,18 @@
       "brand": "CozyFit",
       "category": "Full Sleeve T-Shirts",
       "price": 48,
-      "rating": 4.0,
+      "rating": 4,
       "image": "/images/catalog_images/fullsleeve2.png",
       "description": "Comfortable white full sleeve T-shirt.",
-      "colors": ["white", "grey"],
-      "sizes": ["M", "L", "XL"],
+      "colors": [
+        "white",
+        "grey"
+      ],
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -273,8 +360,15 @@
       "rating": 4.5,
       "image": "/images/catalog_images/jeans2.png",
       "description": "Stylish brown jeans for casual looks.",
-      "colors": ["brown", "black"],
-      "sizes": ["S", "M", "L"],
+      "colors": [
+        "brown",
+        "black"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -295,8 +389,15 @@
       "rating": 4.5,
       "image": "/images/catalog_images/pajamas2.png",
       "description": "Soft grey pajamas for relaxation.",
-      "colors": ["grey", "navy"],
-      "sizes": ["M", "L", "XL"],
+      "colors": [
+        "grey",
+        "navy"
+      ],
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -317,8 +418,15 @@
       "rating": 3.5,
       "image": "/images/catalog_images/boxers2.png",
       "description": "Light blue boxers for comfort.",
-      "colors": ["blue", "black"],
-      "sizes": ["S", "M", "L"],
+      "colors": [
+        "blue",
+        "black"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -339,8 +447,16 @@
       "rating": 4.5,
       "image": "/images/catalog_images/tshirt2.png",
       "description": "Bold red T-shirt with unique print.",
-      "colors": ["red", "black", "white"],
-      "sizes": ["S", "M", "L"],
+      "colors": [
+        "red",
+        "black",
+        "white"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -358,11 +474,18 @@
       "brand": "Flora's Brand",
       "category": "Kurti",
       "price": 85,
-      "rating": 5.0,
+      "rating": 5,
       "image": "/images/catalog_images/kurti3.png",
       "description": "Vibrant green kurti for elegance.",
-      "colors": ["green", "white"],
-      "sizes": ["XS", "S", "M"],
+      "colors": [
+        "green",
+        "white"
+      ],
+      "sizes": [
+        "XS",
+        "S",
+        "M"
+      ],
       "style": "Elegant",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -380,11 +503,18 @@
       "brand": "Sporty Brand",
       "category": "Joggers",
       "price": 55,
-      "rating": 4.0,
+      "rating": 4,
       "image": "/images/catalog_images/joggers3.png",
       "description": "Sleek black joggers for sports.",
-      "colors": ["black", "navy"],
-      "sizes": ["M", "L", "XL"],
+      "colors": [
+        "black",
+        "navy"
+      ],
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
       "style": "Sport",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -405,8 +535,15 @@
       "rating": 4.5,
       "image": "/images/catalog_images/fullsleeve3.png",
       "description": "Navy full sleeve T-shirt for cool weather.",
-      "colors": ["navy", "black"],
-      "sizes": ["S", "M", "L"],
+      "colors": [
+        "navy",
+        "black"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -427,8 +564,15 @@
       "rating": 4.5,
       "image": "/images/catalog_images/jeans3.png",
       "description": "Modern grey jeans for casual wear.",
-      "colors": ["grey", "black"],
-      "sizes": ["S", "M", "L"],
+      "colors": [
+        "grey",
+        "black"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -449,8 +593,15 @@
       "rating": 4.5,
       "image": "/images/catalog_images/pajamas3.png",
       "description": "Soft white pajamas for comfort.",
-      "colors": ["white", "grey"],
-      "sizes": ["M", "L", "XL"],
+      "colors": [
+        "white",
+        "grey"
+      ],
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -471,8 +622,15 @@
       "rating": 3.5,
       "image": "/images/catalog_images/boxers3.png",
       "description": "Bold red boxers for daily wear.",
-      "colors": ["red", "black"],
-      "sizes": ["S", "M", "L"],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -490,11 +648,18 @@
       "brand": "Helm's Brand",
       "category": "Plain T-Shirts",
       "price": 28,
-      "rating": 4.0,
+      "rating": 4,
       "image": "/images/catalog_images/plain2.png",
       "description": "Simple purple T-shirt for versatility.",
-      "colors": ["purple", "white"],
-      "sizes": ["XS", "S", "M"],
+      "colors": [
+        "purple",
+        "white"
+      ],
+      "sizes": [
+        "XS",
+        "S",
+        "M"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -512,11 +677,18 @@
       "brand": "Flora's Brand",
       "category": "Kurti",
       "price": 120,
-      "rating": 5.0,
+      "rating": 5,
       "image": "/images/catalog_images/kurti4.png",
       "description": "Bright yellow kurti for special occasions.",
-      "colors": ["yellow", "white"],
-      "sizes": ["S", "M", "L"],
+      "colors": [
+        "yellow",
+        "white"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
       "style": "Formal Evening",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -534,11 +706,18 @@
       "brand": "Sporty Brand",
       "category": "Joggers",
       "price": 70,
-      "rating": 4.0,
+      "rating": 4,
       "image": "/images/catalog_images/joggers4.png",
       "description": "Green joggers for active wear.",
-      "colors": ["green", "black"],
-      "sizes": ["M", "L", "XL"],
+      "colors": [
+        "green",
+        "black"
+      ],
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
       "style": "Sport",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -559,8 +738,16 @@
       "rating": 4.5,
       "image": "/images/catalog_images/tops2.png",
       "description": "Classic white T-shirt for all occasions.",
-      "colors": ["white", "black", "grey"],
-      "sizes": ["S", "M", "L"],
+      "colors": [
+        "white",
+        "black",
+        "grey"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
       "style": "Classic",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -581,8 +768,15 @@
       "rating": 4.5,
       "image": "/images/catalog_images/fullsleeve4.png",
       "description": "Blue full sleeve T-shirt for cool days.",
-      "colors": ["blue", "black"],
-      "sizes": ["M", "L", "XL"],
+      "colors": [
+        "blue",
+        "black"
+      ],
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -595,28 +789,6 @@
       }
     },
     {
-      "id": 28,
-      "name": "Black Jeans",
-      "brand": "River's Brand",
-      "category": "Jeans",
-      "price": 110,
-      "rating": 4.5,
-      "image": "/images/catalog_images/jeans4.png",
-      "description": "Sleek black jeans for modern looks.",
-      "colors": ["black", "grey"],
-      "sizes": ["S", "M", "L"],
-      "style": "Casual",
-      "video": "/videos/product-video.mp4",
-      "tableData": {
-        "Fabric": "Denim",
-        "Pattern": "Solid",
-        "Fit": "Slim",
-        "Waist": "Mid-rise",
-        "Length": "Full",
-        "Style": "Casual"
-      }
-    },
-    {
       "id": 29,
       "name": "Navy Pajamas",
       "brand": "EcoWear",
@@ -625,8 +797,15 @@
       "rating": 4.5,
       "image": "/images/catalog_images/pajamas4.png",
       "description": "Navy pajamas for ultimate comfort.",
-      "colors": ["navy", "grey"],
-      "sizes": ["M", "L", "XL"],
+      "colors": [
+        "navy",
+        "grey"
+      ],
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
       "style": "Casual",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -644,11 +823,18 @@
       "brand": "Flora's Brand",
       "category": "Kurti",
       "price": 250,
-      "rating": 5.0,
+      "rating": 5,
       "image": "/images/catalog_images/kurti5.png",
       "description": "Luxurious white kurti for formal events.",
-      "colors": ["white", "gold"],
-      "sizes": ["S", "M", "L"],
+      "colors": [
+        "white",
+        "gold"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
       "style": "Formal Evening",
       "video": "/videos/product-video.mp4",
       "tableData": {
@@ -661,5 +847,81 @@
       }
     }
   ],
-  "cart": []
+  "cart": [
+    {
+      "productId": 1,
+      "name": "Black Graphic T-Shirt",
+      "price": 35,
+      "image": "/images/catalog_images/tshirt1.pn",
+      "color": "black",
+      "size": "M",
+      "quantity": 1,
+      "shipping": 5,
+      "id": 1
+    },
+    {
+      "productId": 1,
+      "name": "Black Graphic T-Shirt",
+      "price": 35,
+      "image": "/images/catalog_images/tshirt1.png",
+      "color": "black",
+      "size": "S",
+      "quantity": 2,
+      "shipping": 5,
+      "id": 2
+    }
+  ],
+  "favorites": [
+    {
+      "userId": 1,
+      "productId": 1,
+      "product": {
+        "id": 1,
+        "name": "Black Graphic T-Shirt",
+        "brand": "Jewel's Brand",
+        "category": "Printed T-Shirts",
+        "price": 35,
+        "rating": 4.5,
+        "image": "/images/catalog_images/tshirt1.png",
+        "description": "Stylish black T-shirt with graphic print.",
+        "colors": [
+          "black",
+          "white",
+          "grey"
+        ],
+        "sizes": [
+          "S",
+          "M",
+          "L",
+          "XL"
+        ],
+        "style": "Casual",
+        "video": "/videos/product-video.mp4",
+        "tableData": {
+          "Fabric": "Cotton",
+          "Pattern": "Printed",
+          "Fit": "Regular",
+          "Neck": "Crew Neck",
+          "Sleeve": "Short Sleeve",
+          "Style": "Casual"
+        }
+      },
+      "id": 1
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "phoneNumber": "+375291234567",
+      "email": "user@example.com",
+      "birthDate": "1990-01-01",
+      "password": "SecurePass123!",
+      "firstName": "John",
+      "lastName": "Doe",
+      "middleName": null,
+      "nickname": "CoolStar123",
+      "username": "user",
+      "date-of birth": "01/011990"
+    }
+  ]
 }
