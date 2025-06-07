@@ -227,3 +227,70 @@
     margin-top: 15px;
 }
 
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+@media (max-width: 768px) {
+    .modal-content {
+        max-width: 90%;
+        max-height: 90vh;
+        padding: 15px;
+    }
+
+    .product-form-modal {
+        max-width: 95%;
+        gap: 15px;
+    }
+
+    .modal-title {
+        font-size: 1.25rem;
+    }
+
+    .modal-btn {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .color-option {
+        width: 20px;
+        height: 20px;
+    }
+
+    .size-option {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        width: 95%;
+        max-height: 85vh;
+        padding: 10px;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+        font-size: 14px;
+    }
+}
