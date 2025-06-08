@@ -12,50 +12,43 @@
     <link rel="stylesheet" href="../css/layouts/header.css">
     <link rel="stylesheet" href="../css/pages/home.css">
     <link rel="stylesheet" href="../css/layouts/footer.css">
-    <title>Home page</title>
+    <title data-i18n="page_title">Home page</title>
 </head>
-<body>
-    <header>
+<body data-page-type="home">
+    <header class="header">
         <div class="header-container">
-            <a href="index.html" class="logo">
-                <img src="../images/logo.png" alt="Euphoria Logo">
+            <a href="index.html" class="logo" aria-label="Euphoria Home">
+                <img src="../images/Logo.png" alt="Euphoria Logo">
             </a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="catalog.html">Catalog</a></li>
-                    <li class="auth-only"><a href="account.html" class="account-link">Account</a></li>
-                    <li class="auth-only"><a href="cart.html" class="cart-link">Cart</a></li>
+                    <li><a href="./index.html" data-i18n="nav_home">Home</a></li>
+                    <li><a href="../pages/catalog.html" data-i18n="nav_catalog">Catalog</a></li>
+                    <li class="auth-only"><a href="../pages/account.html" class="account-link" data-i18n="nav_account">Account</a></li>
+                    <li class="auth-only"><a href="../pages/cart.html" class="cart-link" data-i18n="nav_cart">Cart</a></li>
+                    <li class="admin-only"><a href="./admin.html" class="admin-link" data-i18n="nav_admin_panel">Admin Panel</a></li>
                 </ul>
             </nav>
             <div class="header-controls">
-                <div class="accessibility-toggle">
-                    <input type="checkbox" id="a11y-toggle-desktop" class="toggle-input">
-                    <label for="a11y-toggle-desktop" class="toggle-label">
-                        <img src="../images/home_page_icons/accessibility_icon.svg" alt="Accessibility" class="toggle-icon">
-                    </label>
-                </div>
                 <div class="language-selector">
-                    <div class="language-toggle" aria-expanded="false">
-                        <span class="current-language">English</span>
+                    <button class="language-toggle" aria-expanded="false" aria-label="Select language">
+                        <span class="current-language" data-i18n="lang_current">English</span>
                         <span class="drop-icon">▼</span>
-                    </div>
+                    </button>
                     <div class="language-dropdown">
-                        <select class="language-select" aria-label="Select language">
-                            <option value="en">English</option>
-                            <option value="ru">Русский</option>
-                        </select>
+                        <button data-lang="en" data-i18n="lang_en">English</button>
+                        <button data-lang="ru" data-i18n="lang_ru">Русский</button>
                     </div>
                 </div>
                 <div class="custom-toggle">
-                    <input type="checkbox" id="theme-toggle" class="toggle-input">
+                    <input type="checkbox" id="theme-toggle" class="toggle-input" aria-label="Toggle dark theme">
                     <label for="theme-toggle" class="toggle-label">
                         <span class="toggle-track">
                             <span class="toggle-knob"></span>
                         </span>
                     </label>
                 </div>
-                <button class="burger-menu" aria-label="Menu">
+                <button class="burger-menu" aria-label="Open menu" aria-expanded="false">
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -64,73 +57,44 @@
         </div>
         <div class="menu-overlay"></div>
         <div class="mobile-menu">
-            <button class="close-menu" aria-label="Close menu">✕</button>
-            <h2 class="menu-title">Menu Navigation</h2>
-            <nav class="mobile-nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="catalog.html">Catalog</a></li>
-                    <li class="auth-only"><a href="account.html" class="account-link">Account</a></li>
-                    <li class="auth-only"><a href="cart.html" class="cart-link">Cart</a></li>
-                </ul>
-            </nav>
-            <div class="accessibility-menu">
-                <h3>Accessibility</h3>
-                <div class="accessibility-option">
-                    <label>
-                        <input type="checkbox" id="a11y-toggle-mobile"> Accessibility Mode
-                    </label>
-                </div>
-                <div class="a11y-options" style="display:none;">
-                    <div class="option-group">
-                        <label>Text Size:</label>
-                        <input type="range" id="font-size" min="100" max="200" step="50" value="100">
-                        <span id="font-size-value">100%</span>
-                    </div>
-                    <div class="option-group">
-                        <label>Color Scheme:</label>
-                        <div class="color-schemes">
-                            <label><input type="radio" name="color-scheme" value="scheme-1"> Black+Green</label>
-                            <label><input type="radio" name="color-scheme" value="scheme-2"> Beige+Brown</label>
-                            <label><input type="radio" name="color-scheme" value="scheme-3"> Blue+Navy</label>
-                        </div>
-                    </div>
-                    <div class="option-group">
-                        <label>
-                            <input type="checkbox" id="images-toggle"> Show Images
-                        </label>
-                    </div>
-                </div>
-                <button class="reset-settings">Reset Settings</button>
-            </div>
-            <div class="mobile-controls">
+            <div class="menu-container">
+                <button class="close-menu" aria-label="Close menu">✕</button>
+                <h2 class="menu-title" data-i18n="menu_title">Menu Navigation</h2>
+                <nav class="mobile-nav">
+                    <ul>
+                        <li><a href="./index.html" data-i18n="nav_home">Home</a></li>
+                        <li><a href="../pages/catalog.html" data-i18n="nav_catalog">Catalog</a></li>
+                        <li class="auth-only"><a href="../pages/account.html" class="account-link" data-i18n="nav_account">Account</a></li>
+                        <li class="auth-only"><a href="../pages/cart.html" class="cart-link" data-i18n="nav_cart">Cart</a></li>
+                        <li class="admin-only"><a href="./admin.html" class="admin-link" data-i18n="nav_admin_panel">Admin Panel</a></li>
+                    </ul>
+                </nav>
                 <div class="language-selector">
-                    <div class="language-toggle" aria-expanded="false">
-                        <span class="current-language">English</span>
+                    <button class="language-toggle" aria-expanded="false" aria-label="Select language">
+                        <span class="current-language" data-i18n="lang_current">English</span>
                         <span class="drop-icon">▼</span>
-                    </div>
+                    </button>
                     <div class="language-dropdown">
-                        <select class="language-select" aria-label="Select language">
-                            <option value="en">English</option>
-                            <option value="ru">Русский</option>
-                        </select>
+                        <button data-lang="en" data-i18n="lang_en">English</button>
+                        <button data-lang="ru" data-i18n="lang_ru">Русский</button>
                     </div>
                 </div>
                 <div class="custom-toggle">
-                    <input type="checkbox" id="theme-toggle-mobile" class="toggle-input">
+                    <input type="checkbox" id="theme-toggle-mobile" class="toggle-input" aria-label="Toggle dark theme">
                     <label for="theme-toggle-mobile" class="toggle-label">
                         <span class="toggle-track">
                             <span class="toggle-knob"></span>
                         </span>
                     </label>
                 </div>
-            </div>
-            <div class="auth-section">
-                <button class="login-btn">Login</button>
-                <button class="register-btn">Register</button>
-                <div class="user-profile" style="display:none;">
-                    <span class="username"></span>
-                    <button class="logout-btn">Logout</button>
+                <button class="reset-btn" aria-label="Reset all settings" data-i18n="reset_btn">Reset</button>
+                <div class="auth-section">
+                    <button class="login-btn" data-i18n="login_btn">Login</button>
+                    <button class="register-btn" data-i18n="register_btn">Register</button>
+                    <div class="user-profile auth-only">
+                        <span class="username">User</span>
+                        <button class="logout-btn" data-i18n="logout_btn">Logout</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -138,74 +102,17 @@
     <main>
         <section class="hero">
             <div class="hero-slider">
-                <button class="slider-arrow slider-prev" aria-label="Previous slide">
+                <button class="slider-arrow slider-prev" aria-label="Previous slide" tabindex="0">
                     <img src="../images/home_page_icons/carousel-control-prev.svg" alt="Previous">
                 </button>
-                
                 <div class="slider-container">
                     <div class="hero-images">
-                        <div class="hero-slide active" data-index="0">
-                            <img src="../images/home_page_person1.jpg" alt="Slide 1" class="slide-image">
-                            <div class="hero-content">
-                                <h2>T-Shirt / Tops</h2>
-                                <h3>Summer Value Pack</h3>
-                                <p>cool / colorful / comfy</p>
-                                <button class="shop-btn">Shop Now</button>
-                            </div>
-                        </div>
-                        <div class="hero-slide" data-index="1">
-                            <img src="../images/home_page_person2.jpg" alt="Slide 2" class="slide-image">
-                            <div class="hero-content">
-                                <h2>Accessories</h2>
-                                <h3>Perfect Details</h3>
-                                <p>Elegance / Individuality</p>
-                                <button class="shop-btn">Shop Now</button>
-                            </div>
-                        </div>
-                        <div class="hero-slide" data-index="2">
-                            <img src="../images/home_page_person3.jpg" alt="Slide 3" class="slide-image">
-                            <div class="hero-content">
-                                <h2>Sale Up To 50%</h2>
-                                <h3>Special Offers</h3>
-                                <p>Limited Time Only</p>
-                                <button class="shop-btn">Shop Now</button>
-                            </div>
-                        </div>
-                        <div class="hero-slide" data-index="3">
-                            <img src="../images/home_page_person4.jpg" alt="Slide 4" class="slide-image">
-                            <div class="hero-content">
-                                <h2>Evening Wear</h2>
-                                <h3>Luxury Collection</h3>
-                                <p>Sophistication / Glamour</p>
-                                <button class="shop-btn">Shop Now</button>
-                            </div>
-                        </div>
-                        <div class="hero-slide" data-index="4">
-                            <img src="../images/home_page_person5.jpg" alt="Slide 5" class="slide-image">
-                            <div class="hero-content">
-                                <h2>Street Style</h2>
-                                <h3>Urban Fashion</h3>
-                                <p>Bold / Expressive</p>
-                                <button class="shop-btn">Shop Now</button>
-                            </div>
-                        </div>
-                        <div class="hero-slide" data-index="5">
-                            <img src="../images/home_page_person6.jpg" alt="Slide 6" class="slide-image">
-                            <div class="hero-content">
-                                <h2>Premium Collection</h2>
-                                <h3>Exceptional Quality</h3>
-                                <p>For Fashion Connoisseurs</p>
-                                <button class="shop-btn">Shop Now</button>
-                            </div>
-                        </div>
                     </div>
-                    
                     <div class="slider-progress">
                         <div class="progress-bar"></div>
                     </div>
                 </div>
-                
-                <button class="slider-arrow slider-next" aria-label="Next slide">
+                <button class="slider-arrow slider-next" aria-label="Next slide" tabindex="0">
                     <img src="../images/home_page_icons/carousel-control-next.svg" alt="Next">
                 </button>
             </div>
@@ -214,178 +121,93 @@
             <div class="promo-container">
                 <div class="promo-block promo-block-1">
                     <div class="promo-content promo-content-1">
-                        <span class="promo-label">Low Price</span>
-                        <h2 class="promo-heading">High Coziness</h2>
-                        <span class="promo-discount">UPTO 50% OFF</span>
-                        <span><a href="#" class="promo-link">Explore Items</a></span>
+                        <span class="promo-label" data-i18n="promo_1_label">Low Price</span>
+                        <h2 class="promo-heading" data-i18n="promo_1_heading">High Coziness</h2>
+                        <span class="promo-discount" data-i18n="promo_1_discount">UPTO 50% OFF</span>
+                        <span><a href="../pages/catalog.html" class="promo-link" data-i18n="promo_1_link">Explore Items</a></span>
                     </div>
                 </div>
-
                 <div class="promo-block promo-block-2">
                     <div class="promo-content promo-content-2">
-                        <span class="promo-label">Beyoung Presents</span>
-                        <h2 class="promo-heading">Breezy Summer Style</h2>
-                        <span class="promo-discount">UPTO 50% OFF</span>
-                        <span><a href="#" class="promo-link">Explore Items</a></span>
+                        <span class="promo-label" data-i18n="promo_2_label">Beyoung Presents</span>
+                        <h2 class="promo-heading" data-i18n="promo_2_heading">Breezy Summer Style</h2>
+                        <span class="promo-discount" data-i18n="promo_2_discount">UPTO 50% OFF</span>
+                        <span><a href="../pages/catalog.html" class="promo-link" data-i18n="promo_2_link">Explore Items</a></span>
                     </div>
                 </div>
-            </div>
-        </section>
-        <section class="new-arrivals">
-            <div class="section-header">
-                <div class="vertical-line"></div>
-                <h2 class="section-title">New Arrival</h2>
-            </div>
-    
-            <div class="slider-container-new-arrivals">
-                <button class="swiper-button swiper-button-prev">
-                    <img src="../images/home_page_icons/left_arrow.svg" alt="Previous">
-                </button>
-    
-                <div class="swiper">
-                    <div class="swiper-wrapper">
-                       
-                        <div class="swiper-slide">
-                            <div class="product-card">
-                                <img src="../images/Knitted_Joggers.png" alt="Knitted Joggers" class="product-image">
-                                <p class="product-name">Knitted Joggers</p>
-                            </div>
-                        </div>
-                        
-                        <div class="swiper-slide">
-                            <div class="product-card">
-                                <img src="../images/Full_Sleeve.png" alt="Full Sleeve" class="product-image">
-                                <p class="product-name">Full Sleeve</p>
-                            </div>
-                        </div>
-                        
-                        <div class="swiper-slide">
-                            <div class="product-card">
-                                <img src="../images/Active_Tshirts.png" alt="Active T-Shirts" class="product-image">
-                                <p class="product-name">Active T-Shirts</p>
-                            </div>
-                        </div>
-                        
-                        <div class="swiper-slide">
-                            <div class="product-card">
-                                <img src="../images/Urban_shirts.png" alt="Urban Shirts" class="product-image">
-                                <p class="product-name">Urban Shirts</p>
-                            </div>
-                        </div>
-                        
-                        <div class="swiper-slide">
-                            <div class="product-card">
-                                <img src="../images/Active_Tshirts.png" alt="Designer Jeans" class="product-image">
-                                <p class="product-name">Designer Jeans</p>
-                            </div>
-                        </div>
-                        
-                        <div class="swiper-slide">
-                            <div class="product-card">
-                                <img src="../images/Active_Tshirts.png" alt="Premium Jackets" class="product-image">
-                                <p class="product-name">Premium Jackets</p>
-                            </div>
-                        </div>
-
-                        <div class="swiper-slide">
-                            <div class="product-card">
-                                <img src="../images/Active_Tshirts.png" alt="Casual T-Shirts" class="product-image">
-                                <p class="product-name">Casual T-Shirts</p>
-                            </div>
-                        </div>
-                        
-                        <div class="swiper-slide">
-                            <div class="product-card">
-                                <img src="../images/Active_Tshirts.png" alt="Sport Pants" class="product-image">
-                                <p class="product-name">Sport Pants</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    
-                <button class="swiper-button swiper-button-next">
-                    <img src="../images/home_page_icons/right_arrow.svg" alt="Next">
-                </button>
             </div>
         </section>
         <section class="saving-zone">
             <div class="section-header">
               <div class="vertical-line"></div>
-              <h2 class="section-title">Big Saving Zone</h2>
+              <h2 class="section-title" data-i18n="saving_zone_title">Big Saving Zone</h2>
             </div>
-          
             <div class="saving-zone__grid">
               <div class="saving-zone__card card-hawaiian">
                 <div class="card-content">
-                  <h3>Hawaiian Shirts</h3>
-                  <p>Dress up in summer vibe</p>
-                  <p class="discount">UPTO 50% OFF</p>
+                  <h3 data-i18n="saving_hawaiian_title">Hawaiian Shirts</h3>
+                  <p data-i18n="saving_hawaiian_desc">Dress up in summer vibe</p>
+                  <p class="discount" data-i18n="saving_hawaiian_discount">UPTO 50% OFF</p>
                   <div class="arrow-container">
                     <img src="../images/home_page_icons/arrow_down.svg" alt="" class="arrow-down">
                   </div>
-                  <button>SHOP NOW</button>
+                  <a href="../pages/catalog.html" class="shop-now-btn" data-i18n="saving_shop_now">Shop Now</a>
                 </div>
               </div>
-
               <div class="saving-zone__card card-printed">
                 <div class="card-content">
-                  <h3>Printed <br>T-Shirt</h3>
-                  <p>New Designs Every Week</p>
-                  <p class="discount">UPTO 40% OFF</p>
+                  <h3 data-i18n="saving_printed_title">Printed T-Shirt</h3>
+                  <p data-i18n="saving_printed_desc">New Designs Every Week</p>
+                  <p class="discount" data-i18n="saving_printed_discount">UPTO 40% OFF</p>
                   <div class="arrow-container">
                     <img src="../images/home_page_icons/arrow_down.svg" alt="" class="arrow-down">
                   </div>
-                  <button>SHOP NOW</button>
+                  <a href="../pages/catalog.html" class="shop-now-btn" data-i18n="saving_shop_now">Shop Now</a>
                 </div>
               </div>
-
               <div class="saving-zone__card card-cargo">
                 <div class="card-content">
-                  <h3>Cargo Joggers</h3>
-                  <p>Move with style & comfort</p>
-                  <p class="discount">UPTO 50% OFF</p>
+                  <h3 data-i18n="saving_cargo_title">Cargo Joggers</h3>
+                  <p data-i18n="saving_cargo_desc">Move with style & comfort</p>
+                  <p class="discount" data-i18n="saving_cargo_discount">UPTO 50% OFF</p>
                   <div class="arrow-container">
                     <img src="../images/home_page_icons/black_down_arow_icon.svg" alt="" class="arrow-down">
                   </div>
-                  <button>SHOP NOW</button>
+                  <a href="../pages/catalog.html" class="shop-now-btn" data-i18n="saving_shop_now">Shop Now</a>
                 </div>
               </div>
-             
               <div class="saving-zone__card card-urban">
                 <div class="card-content">
-                  <h3>Urban Shirts</h3>
-                  <p>Live in Comfort</p>
-                  <p class="discount">FLAT 60% OFF</p>
+                  <h3 data-i18n="saving_urban_title">Urban Shirts</h3>
+                  <p data-i18n="saving_urban_desc">Live in Comfort</p>
+                  <p class="discount" data-i18n="saving_urban_discount">FLAT 60% OFF</p>
                   <div class="arrow-container">
                     <img src="../images/home_page_icons/black_down_arow_icon.svg" alt="" class="arrow-down">
                   </div>
-                  <button>SHOP NOW</button>
+                  <a href="../pages/catalog.html" class="shop-now-btn" data-i18n="saving_shop_now">Shop Now</a>
                 </div>
               </div>
-          
               <div class="saving-zone__card card-oversized">
                 <div class="card-content">
-                  <h3>Oversized <br>T-Shirts</h3>
-                  <p>Street Style Icon</p>
-                  <p class="discount">FLAT 60% OFF</p>
+                  <h3 data-i18n="saving_oversized_title">Oversized T-Shirts</h3>
+                  <p data-i18n="saving_oversized_desc">Street Style Icon</p>
+                  <p class="discount" data-i18n="saving_oversized_discount">FLAT 60% OFF</p>
                   <div class="arrow-container">
                     <img src="../images/home_page_icons/black_down_arow_icon.svg" alt="" class="arrow-down">
                   </div>
-                  <button>SHOP NOW</button>
+                  <a href="../pages/catalog.html" class="shop-now-btn" data-i18n="saving_shop_now">Shop Now</a>
                 </div>
               </div>
             </div>
-          </section>
-          <section class="everyday-fashion-section">
+        </section>
+        <section class="everyday-fashion-section">
             <div class="everyday-banner">
                 <div class="everyday-text-content">
                     <img src="../images/leaves_background.png" alt="Leaves background" class="everyday-bg-image">
                     <div class="text-wrapper">
-                        <h2 class="everyday-title">WE MADE YOUR EVERYDAY<br> FASHION BETTER!</h2>
-                        <p class="everyday-description">In our journey to improve everyday fashion,<br>
-                        euphoria presents EVERYDAY wear range -<br>
-                        Comfortable & Affordable fashion 24/7</p>
-                        <button class="everyday-shop-btn">Shop Now</button>
+                        <h2 class="everyday-title" data-i18n="everyday_title">WE MADE YOUR EVERYDAY FASHION BETTER!</h2>
+                        <p class="everyday-description" data-i18n="everyday_desc">In our journey to improve everyday fashion, euphoria presents EVERYDAY wear range - Comfortable & Affordable fashion 24/7</p>
+                        <a href="../pages/catalog.html" class="everyday-shop-btn" data-i18n="everyday_shop_btn">Shop Now</a>
                     </div>
                 </div>
                 <div class="everyday-image-content">
@@ -396,81 +218,73 @@
         <section class="featured-categories-section">
             <div class="section-header">
                 <div class="vertical-line"></div>
-                <h2 class="section-title">Categories For Men</h2>
+                <h2 class="section-title" data-i18n="categories_title">Categories For Men</h2>
             </div>
-            
             <div class="featured-categories-grid">
-                <div class="featured-category-card">
+                <a href="../pages/catalog.html" class="featured-category-card">
                     <img src="../images/Shirts.png" alt="Shirts" class="featured-category-img">
                     <div class="featured-category-content">
-                        <p class="featured-category-name">Shirts</p>
-                        <p class="featured-category-desc">Explore Now!</p>
+                        <p class="featured-category-name" data-i18n="category_shirts">Shirts</p>
+                        <p class="featured-category-desc" data-i18n="category_explore">Explore Now!</p>
                     </div>
                     <img src="../images/home_page_icons/category_arrow.svg" alt="Arrow" class="featured-category-arrow">
-                </div>
-                
-                <div class="featured-category-card">
+                </a>
+                <a href="../pages/catalog.html" class="featured-category-card">
                     <img src="../images/printed.png" alt="Printed T-Shirts" class="featured-category-img">
                     <div class="featured-category-content">
-                        <p class="featured-category-name">Printed T-Shirts</p>
-                        <p class="featured-category-desc">Explore Now!</p>
+                        <p class="featured-category-name" data-i18n="category_printed">Printed T-Shirts</p>
+                        <p class="featured-category-desc" data-i18n="category_explore">Explore Now!</p>
                     </div>
                     <img src="../images/home_page_icons/category_arrow.svg" alt="Arrow" class="featured-category-arrow">
-                </div>
-                
-                <div class="featured-category-card">
+                </a>
+                <a href="../pages/catalog.html" class="featured-category-card">
                     <img src="../images/plain.png" alt="Plain T-Shirts" class="featured-category-img">
                     <div class="featured-category-content">
-                        <p class="featured-category-name">Plain T-Shirt</p>
-                        <p class="featured-category-desc">Explore Now!</p>
+                        <p class="featured-category-name" data-i18n="category_plain">Plain T-Shirt</p>
+                        <p class="featured-category-desc" data-i18n="category_explore">Explore Now!</p>
                     </div>
                     <img src="../images/home_page_icons/category_arrow.svg" alt="Arrow" class="featured-category-arrow">
-                </div>
-                
-                <div class="featured-category-card">
+                </a>
+                <a href="../pages/catalog.html" class="featured-category-card">
                     <img src="../images/polo_tshirt.png" alt="Polo Shirts" class="featured-category-img">
                     <div class="featured-category-content">
-                        <p class="featured-category-name">Polo T-Shirt</p>
-                        <p class="featured-category-desc">Explore Now!</p>
+                        <p class="featured-category-name" data-i18n="category_polo">Polo T-Shirt</p>
+                        <p class="featured-category-desc" data-i18n="category_explore">Explore Now!</p>
                     </div>
                     <img src="../images/home_page_icons/category_arrow.svg" alt="Arrow" class="featured-category-arrow">
-                </div>
-                
-                <div class="featured-category-card">
+                </a>
+                <a href="../pages/catalog.html" class="featured-category-card">
                     <img src="../images/Hoodies_sweetshirt.png" alt="Hoodies & Sweatshirts" class="featured-category-img">
                     <div class="featured-category-content">
-                        <p class="featured-category-name">Hoodies & Sweatshirt</p>
-                        <p class="featured-category-desc">Explore Now!</p>
+                        <p class="featured-category-name" data-i18n="category_hoodies">Hoodies & Sweatshirt</p>
+                        <p class="featured-category-desc" data-i18n="category_explore">Explore Now!</p>
                     </div>
                     <img src="../images/home_page_icons/category_arrow.svg" alt="Arrow" class="featured-category-arrow">
-                </div>
-                
-                <div class="featured-category-card">
+                </a>
+                <a href="../pages/catalog.html" class="featured-category-card">
                     <img src="../images/jeans.png" alt="Jeans" class="featured-category-img">
                     <div class="featured-category-content">
-                        <p class="featured-category-name">Jeans</p>
-                        <p class="featured-category-desc">Explore Now!</p>
+                        <p class="featured-category-name" data-i18n="category_jeans">Jeans</p>
+                        <p class="featured-category-desc" data-i18n="category_explore">Explore Now!</p>
                     </div>
                     <img src="../images/home_page_icons/category_arrow.svg" alt="Arrow" class="featured-category-arrow">
-                </div>
-                
-                <div class="featured-category-card">
+                </a>
+                <a href="../pages/catalog.html" class="featured-category-card">
                     <img src="../images/activewear.png" alt="Activewear" class="featured-category-img">
                     <div class="featured-category-content">
-                        <p class="featured-category-name">Activewear</p>
-                        <p class="featured-category-desc">Explore Now!</p>
+                        <p class="featured-category-name" data-i18n="category_activewear">Activewear</p>
+                        <p class="featured-category-desc" data-i18n="category_explore">Explore Now!</p>
                     </div>
                     <img src="../images/home_page_icons/category_arrow.svg" alt="Arrow" class="featured-category-arrow">
-                </div>
-                
-                <div class="featured-category-card">
+                </a>
+                <a href="../pages/catalog.html" class="featured-category-card">
                     <img src="../images/boxers.png" alt="Boxers" class="featured-category-img">
                     <div class="featured-category-content">
-                        <p class="featured-category-name">Boxers</p>
-                        <p class="featured-category-desc">Explore Now!</p>
+                        <p class="featured-category-name" data-i18n="category_boxers">Boxers</p>
+                        <p class="featured-category-desc" data-i18n="category_explore">Explore Now!</p>
                     </div>
                     <img src="../images/home_page_icons/category_arrow.svg" alt="Arrow" class="featured-category-arrow">
-                </div>
+                </a>
             </div>
         </section>
         <section class="map-section">
@@ -478,23 +292,20 @@
                 <div class="map-content">
                     <div class="section-header">
                     <div class="vertical-line"></div>
-                    <h2 class="map-title">Our Shops</h2>
+                    <h2 class="map-title" data-i18n="map_title">Our Shops</h2>
                     </div>
-                    <p class="map-description">
-                    Discover the latest trends at our flagship store located in the heart of the city. 
-                    Our expert stylists will help you create the perfect look.
-                    </p>
+                    <p class="map-description" data-i18n="map_desc">Discover the latest trends at our flagship store located in the heart of the city. Our expert stylists will help you create the perfect look.</p>
                     <div class="map-contacts">
-                    <p><strong>Address:</strong> 15 Fashion Street, Suite 101</p>
-                    <p><strong>Hours:</strong> Mon-Sun 10:00-22:00</p>
-                    <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+                    <p><strong data-i18n="map_address_label">Address:</strong> <span data-i18n="map_address">15 Fashion Street, Suite 101</span></p>
+                    <p><strong data-i18n="map_hours_label">Hours:</strong> <span data-i18n="map_hours">Mon-Sun 10:00-22:00</span></p>
+                    <p><strong data-i18n="map_phone_label">Phone:</strong> <span data-i18n="map_phone">+1 (555) 123-4567</span></p>
                     </div>
                 </div>
                 <div class="map-iframe-wrapper">
                     <div class="map-iframe-container">
                     <div id="map"></div>
                     <script type="text/javascript" charset="utf-8" async 
-                            src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Ab891462ddddf4de5b50b12813a1ce9b371c0ee617b983244e96cce8a706662a2&amp;width=550&amp;height=482&amp;lang=en_US&amp;scroll=true"></script>
+                            src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Ab891462ddddf4de5b50b12813a1ce9b371c0ee617b983244e96cce8a706662a2&width=550&height=482&lang=en_US&scroll=true"></script>
                     </div>
                 </div>
             </div>
@@ -502,57 +313,54 @@
     </main>
     <footer class="footer" aria-label="Site footer">
         <div class="footer__container">
-            <div class="footer__column">
-                <h2 class="footer__title">Shop</h2>
-                <ul class="footer__list">
-                <li><a href="index.html" class="footer__link">Home</a></li>
-                <li><a href="catalog.html" class="footer__link">Catalog</a></li>
-                <li><a href="cart.html" class="footer__link auth-link">Cart</a></li>
-                <li><a href="account.html" class="footer__link auth-link">My Account</a></li>
-                </ul>
-            </div>
-      
-            <div class="footer__column">
-                <h2 class="footer__title">Contacts</h2>
-                <ul class="footer__list">
-                <li><a href="index.html#map" class="footer__link">Store Location</a></li>
-                <li><span class="footer__link">+1 (234) 567-89-00</span></li>
-                <li><a href="mailto:info@euphoria.com" class="footer__link">info@euphoria.com</a></li>
-                </ul>
-            </div>
-        
-            <section class="footer__subscribe" aria-label="Email subscription">
-                <h2 class="footer__title">Newsletter</h2>
-                <p class="footer__text">Subscribe for exclusive offers and updates</p>
-                <form class="footer__form">
-                <div class="footer__form-group">
-                    <input 
-                    type="email" 
-                    placeholder="Your email address" 
-                    class="footer__input"
-                    aria-label="Email for newsletter"
-                    required
-                    >
-                    <button type="submit" class="footer__button">
-                    <span>Subscribe</span>
-                    </button>
-                </div>
-                <p class="footer__disclaimer">We respect your privacy. Unsubscribe at any time.</p>
-                </form>
-            </section>
+          <div class="footer__column">
+            <h2 class="footer__title" data-i18n="footer_shop_title">Shop</h2>
+            <ul class="footer__list">
+              <li><a href="index.html" class="footer__link" data-i18n="nav_home">Home</a></li>
+              <li><a href="./pages/catalog.html" class="footer__link" data-i18n="nav_catalog">Catalog</a></li>
+              <li><a href="./pages/cart.html" class="footer__link auth-link" data-i18n="nav_cart">Cart</a></li>
+              <li><a href="./pages/account.html" class="footer__link auth-link" data-i18n="nav_account">My Account</a></li>
+            </ul>
+          </div>
+          <div class="footer__column">
+            <h2 class="footer__title" data-i18n="footer_contacts_title">Contacts</h2>
+            <ul class="footer__list">
+              <li><a href="index.html#map" class="footer__link" data-i18n="footer_store_location">Store Location</a></li>
+              <li><span class="footer__link" data-i18n="footer_phone">+1 (234) 567-89-00</span></li>
+              <li><a href="mailto:info@euphoria.com" class="footer__link" data-i18n="footer_email">info@euphoria.com</a></li>
+            </ul>
+          </div>
+          <section class="footer__subscribe" aria-label="Email subscription">
+            <h2 class="footer__title" data-i18n="footer_newsletter_title">Newsletter</h2>
+            <p class="footer__text" data-i18n="footer_newsletter_desc">Subscribe for exclusive offers and updates</p>
+            <form class="footer__form">
+              <div class="footer__form-group">
+                <input 
+                  type="email" 
+                  placeholder="Your email address" 
+                  class="footer__input"
+                  aria-label="Email for newsletter"
+                  data-i18n-placeholder="footer_email_placeholder"
+                  required
+                >
+                <button type="submit" class="footer__button">
+                  <span data-i18n="footer_subscribe_btn">Subscribe</span>
+                </button>
+              </div>
+              <p class="footer__disclaimer" data-i18n="footer_disclaimer">We respect your privacy. Unsubscribe at any time.</p>
+            </form>
+          </section>
         </div>
-      
         <div class="footer__bottom">
-            <div class="footer__social" aria-label="Social media links">
-                <a href="#" aria-label="Facebook"><img src="../images/home_page_icons/facebook_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
-                <a href="#" aria-label="Instagram"><img src="../images/home_page_icons/instagram_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
-                <a href="#" aria-label="Twitter"><img src="../images/home_page_icons/twitter_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
-            </div>
-            <p class="footer__copyright">Copyright © 2023 Euphoria Folks Pvt Ltd. All rights reserved.</p>
+          <div class="footer__social" aria-label="Social media links">
+            <a href="#" aria-label="Facebook"><img src="../images/home_page_icons/facebook_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
+            <a href="#" aria-label="Instagram"><img src="../images/home_page_icons/instagram_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
+            <a href="#" aria-label="Twitter"><img src="../images/home_page_icons/twitter_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
+          </div>
+          <p class="footer__copyright" data-i18n="footer_copyright">Copyright © 2023 Euphoria Folks Pvt Ltd. All rights reserved.</p>
         </div>
       </footer>
-    <script type="module" src="../js/main.js"></script>
+    <script type="module" src="../js/index.js"></script>
     <script src="https://unpkg.com/swiper@11.2.6/swiper-bundle.min.js"></script>
-    
 </body>
 </html>
