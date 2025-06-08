@@ -12,46 +12,45 @@
     <link rel="stylesheet" href="../css/layouts/header.css">
     <link rel="stylesheet" href="../css/pages/user_catalog.css">
     <link rel="stylesheet" href="../css/layouts/footer.css">
-    <link rel="stylesheet" href="../css/layouts/modal.css">
+    <link rel="stylesheet" href="../css/layouts/modal-output.css">
 
-    <title>Euphoria - Catalog</title>
+    <title data-i18n="page_title">Euphoria - Catalog</title>
 </head>
-<body>
-   <header>
+<body data-page-type="catalog">
+    <header class="header">
         <div class="header-container">
-            <a href="index.html" class="logo">
-                <img src="../images/logo.png" alt="Euphoria Logo">
+            <a href="index.html" class="logo" aria-label="Euphoria Home">
+                <img src="../images/Logo.png" alt="Euphoria Logo">
             </a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="catalog.html">Catalog</a></li>
-                    <li class="auth-only"><a href="account.html" class="account-link">Account</a></li>
-                    <li class="auth-only"><a href="cart.html" class="cart-link">Cart</a></li>
+                    <li><a href="./index.html" data-i18n="nav_home">Home</a></li>
+                    <li><a href="../pages/catalog.html" data-i18n="nav_catalog">Catalog</a></li>
+                    <li class="auth-only"><a href="../pages/account.html" class="account-link" data-i18n="nav_account">Account</a></li>
+                    <li class="auth-only"><a href="../pages/cart.html" class="cart-link" data-i18n="nav_cart">Cart</a></li>
+                    <li class="admin-only"><a href="./admin.html" class="admin-link" data-i18n="nav_admin_panel">Admin Panel</a></li>
                 </ul>
             </nav>
             <div class="header-controls">
                 <div class="language-selector">
-                    <div class="language-toggle" aria-expanded="false">
-                        <span class="current-language">English</span>
+                    <button class="language-toggle" aria-expanded="false" aria-label="Select language">
+                        <span class="current-language" data-i18n="lang_current">English</span>
                         <span class="drop-icon">▼</span>
-                    </div>
+                    </button>
                     <div class="language-dropdown">
-                        <select class="language-select" aria-label="Select language">
-                            <option value="en">English</option>
-                            <option value="ru">Русский</option>
-                        </select>
+                        <button data-lang="en" data-i18n="lang_en">English</button>
+                        <button data-lang="ru" data-i18n="lang_ru">Русский</button>
                     </div>
                 </div>
                 <div class="custom-toggle">
-                    <input type="checkbox" id="theme-toggle" class="toggle-input">
+                    <input type="checkbox" id="theme-toggle" class="toggle-input" aria-label="Toggle dark theme">
                     <label for="theme-toggle" class="toggle-label">
                         <span class="toggle-track">
                             <span class="toggle-knob"></span>
                         </span>
                     </label>
                 </div>
-                <button class="burger-menu" aria-label="Menu">
+                <button class="burger-menu" aria-label="Open menu" aria-expanded="false">
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -60,44 +59,44 @@
         </div>
         <div class="menu-overlay"></div>
         <div class="mobile-menu">
-            <button class="close-menu" aria-label="Close menu">✕</button>
-            <h2 class="menu-title">Menu Navigation</h2>
-            <nav class="mobile-nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="catalog.html">Catalog</a></li>
-                    <li class="auth-only"><a href="account.html" class="account-link">Account</a></li>
-                    <li class="auth-only"><a href="cart.html" class="cart-link">Cart</a></li>
-                </ul>
-            </nav>
-            <div class="mobile-controls">
+            <div class="menu-container">
+                <button class="close-menu" aria-label="Close menu">✕</button>
+                <h2 class="menu-title" data-i18n="menu_title">Menu Navigation</h2>
+                <nav class="mobile-nav">
+                    <ul>
+                        <li><a href="./index.html" data-i18n="nav_home">Home</a></li>
+                        <li><a href="../pages/catalog.html" data-i18n="nav_catalog">Catalog</a></li>
+                        <li class="auth-only"><a href="../pages/account.html" class="account-link" data-i18n="nav_account">Account</a></li>
+                        <li class="auth-only"><a href="../pages/cart.html" class="cart-link" data-i18n="nav_cart">Cart</a></li>
+                        <li class="admin-only"><a href="./admin.html" class="admin-link" data-i18n="nav_admin_panel">Admin Panel</a></li>
+                    </ul>
+                </nav>
                 <div class="language-selector">
-                    <div class="language-toggle" aria-expanded="false">
-                        <span class="current-language">English</span>
+                    <button class="language-toggle" aria-expanded="false" aria-label="Select language">
+                        <span class="current-language" data-i18n="lang_current">English</span>
                         <span class="drop-icon">▼</span>
-                    </div>
+                    </button>
                     <div class="language-dropdown">
-                        <select class="language-select" aria-label="Select language">
-                            <option value="en">English</option>
-                            <option value="ru">Русский</option>
-                        </select>
+                        <button data-lang="en" data-i18n="lang_en">English</button>
+                        <button data-lang="ru" data-i18n="lang_ru">Русский</button>
                     </div>
                 </div>
                 <div class="custom-toggle">
-                    <input type="checkbox" id="theme-toggle-mobile" class="toggle-input">
+                    <input type="checkbox" id="theme-toggle-mobile" class="toggle-input" aria-label="Toggle dark theme">
                     <label for="theme-toggle-mobile" class="toggle-label">
                         <span class="toggle-track">
                             <span class="toggle-knob"></span>
                         </span>
                     </label>
                 </div>
-            </div>
-            <div class="auth-section">
-                <button class="login-btn">Login</button>
-                <button class="logout-btn">Sign Out</button>
-                <div class="user-profile" style="display:none;">
-                    <span class="username"></span>
-                    <button class="logout-btn">Logout</button>
+                <button class="reset-btn" aria-label="Reset all settings" data-i18n="reset_btn">Reset</button>
+                <div class="auth-section">
+                    <button class="login-btn" data-i18n="login_btn">Login</button>
+                    <button class="register-btn" data-i18n="register_btn">Register</button>
+                    <div class="user-profile auth-only">
+                        <span class="username">User</span>
+                        <button class="logout-btn" data-i18n="logout_btn">Logout</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -105,72 +104,71 @@
     <main class="catalog-container">
         <aside class="filters-sidebar">
             <section class="filters-header">
-                <h2>Filter & Sort</h2>
-                <button class="clear-filters">Clear all</button>
+                <h2 data-i18n="filter_sort_title">Filter & Sort</h2>
+                <button class="clear-filters" data-i18n="clear_filters">Clear all</button>
             </section>
-        
 
             <section class="filter-section">
-                <h3 class="filter-title">Sort By</h3>
+                <h3 class="filter-title" data-i18n="sort_by_title">Sort By</h3>
                 <select id="sort-by" class="sort-select">
-                    <option value="default">Default</option>
-                    <option value="price-asc">Price: Low to High</option>
-                    <option value="price-desc">Price: High to Low</option>
-                    <option value="name-asc">Name: A to Z</option>
-                    <option value="name-desc">Name: Z to A</option>
-                    <option value="rating-desc">Rating: High to Low</option>
+                    <option value="default" data-i18n="sort_default">Default</option>
+                    <option value="price-asc" data-i18n="sort_price_asc">Price: Low to High</option>
+                    <option value="price-desc" data-i18n="sort_price_desc">Price: High to Low</option>
+                    <option value="name-asc" data-i18n="sort_name_asc">Name: A to Z</option>
+                    <option value="name-desc" data-i18n="sort_name_desc">Name: Z to A</option>
+                    <option value="rating-desc" data-i18n="sort_rating_desc">Rating: High to Low</option>
                 </select>
             </section>
 
             <section class="filter-section">
-                <h3 class="filter-title">Search</h3>
-                <input type="text" id="search-input" class="search-input" placeholder="Search by name, description...">
+                <h3 class="filter-title" data-i18n="search_title">Search</h3>
+                <input type="text" id="search-input" class="search-input" data-i18n-placeholder="search_placeholder" placeholder="Search by name, description...">
             </section>
 
             <section class="filter-section">
-                <h3 class="filter-title">Category</h3>
+                <h3 class="filter-title" data-i18n="category_title">Category</h3>
                 <ul class="filter-list" id="category-filter">
                     <li>
                         <input type="checkbox" id="category-tops-tshirts" name="category" value="Tops & T-Shirts">
-                        <label for="category-tops-tshirts">Tops & T-Shirts</label>
+                        <label for="category-tops-tshirts" data-i18n="category_tops_tshirts">Tops & T-Shirts</label>
                     </li>
                     <li>
                         <input type="checkbox" id="category-printed-tshirts" name="category" value="Printed T-Shirts">
-                        <label for="category-printed-tshirts">Printed T-Shirts</label>
+                        <label for="category-printed-tshirts" data-i18n="category_printed">Printed T-Shirts</label>
                     </li>
                     <li>
                         <input type="checkbox" id="category-plain-tshirts" name="category" value="Plain T-Shirts">
-                        <label for="category-plain-tshirts">Plain T-Shirts</label>
+                        <label for="category-plain-tshirts" data-i18n="category_plain">Plain T-Shirts</label>
                     </li>
                     <li>
                         <input type="checkbox" id="category-kurti" name="category" value="Kurti">
-                        <label for="category-kurti">Kurti</label>
+                        <label for="category-kurti" data-i18n="category_kurti">Kurti</label>
                     </li>
                     <li>
                         <input type="checkbox" id="category-boxers" name="category" value="Boxers">
-                        <label for="category-boxers">Boxers</label>
+                        <label for="category-boxers" data-i18n="category_boxers">Boxers</label>
                     </li>
                     <li>
                         <input type="checkbox" id="category-full-sleeve-tshirts" name="category" value="Full Sleeve T-Shirts">
-                        <label for="category-full-sleeve-tshirts">Full Sleeve T-Shirts</label>
+                        <label for="category-full-sleeve-tshirts" data-i18n="category_full_sleeve_tshirts">Full Sleeve T-Shirts</label>
                     </li>
                     <li>
                         <input type="checkbox" id="category-joggers" name="category" value="Joggers">
-                        <label for="category-joggers">Joggers</label>
+                        <label for="category-joggers" data-i18n="category_joggers">Joggers</label>
                     </li>
                     <li>
                         <input type="checkbox" id="category-pajamas" name="category" value="Pajamas">
-                        <label for="category-pajamas">Pajamas</label>
+                        <label for="category-pajamas" data-i18n="category_pajamas">Pajamas</label>
                     </li>
                     <li>
                         <input type="checkbox" id="category-jeans" name="category" value="Jeans">
-                        <label for="category-jeans">Jeans</label>
+                        <label for="category-jeans" data-i18n="category_jeans">Jeans</label>
                     </li>
                 </ul>
             </section>
 
             <section class="filter-section">
-                <h3 class="filter-title">Price</h3>
+                <h3 class="filter-title" data-i18n="price_title">Price</h3>
                 <div class="price-range">
                     <div class="range-container">
                         <div class="range-track"></div>
@@ -185,7 +183,7 @@
             </section>
 
             <section class="filter-section">
-                <h3 class="filter-title">Colors</h3>
+                <h3 class="filter-title" data-i18n="colors_title">Colors</h3>
                 <div class="color-options" id="color-filter">
                     <div class="color-option" data-color="purple" style="background-color: purple;"></div>
                     <div class="color-option" data-color="black" style="background-color: black;"></div>
@@ -203,7 +201,7 @@
             </section>
 
             <section class="filter-section">
-                <h3 class="filter-title">Size</h3>
+                <h3 class="filter-title" data-i18n="size_title">Size</h3>
                 <div class="size-options" id="size-filter">
                     <button class="size-option" data-size="XS">XS</button>
                     <button class="size-option" data-size="S">S</button>
@@ -218,24 +216,23 @@
             </section>
 
             <section class="filter-section">
-                <h3 class="filter-title">Dress Style</h3>
+                <h3 class="filter-title" data-i18n="dress_style_title">Dress Style</h3>
                 <select class="style-select" id="style-filter">
-                    <option value="">All Styles</option>
-                    <option value="Classic">Classic</option>
-                    <option value="Casual">Casual</option>
-                    <option value="Formal">Formal</option>
-                    <option value="Sport">Sport</option>
-                    <option value="Elegant">Elegant</option>
-                    <option value="Formal Evening">Formal Evening</option>
+                    <option value="" data-i18n="style_all">All Styles</option>
+                    <option value="Classic" data-i18n="style_classic">Classic</option>
+                    <option value="Casual" data-i18n="style_casual">Casual</option>
+                    <option value="Formal" data-i18n="style_formal">Formal</option>
+                    <option value="Sport" data-i18n="style_sport">Sport</option>
+                    <option value="Elegant" data-i18n="style_elegant">Elegant</option>
+                    <option value="Formal Evening" data-i18n="style_formal_evening">Formal Evening</option>
                 </select>
             </section>
-
         </aside>
         
         <section class="products-main">
             <div class="products-header">
-                <h1>All Clothing</h1>
-                <span id="products-count" class="products-count">0 items</span>
+                <h1 data-i18n="all_clothing">All Clothing</h1>
+                <span id="products-count" class="products-count" data-i18n="products_count" data-i18n-data='{"count": 0}'>0 items</span>
             </div>
 
             <div class="products-grid" id="products-grid"></div>
@@ -243,60 +240,48 @@
             <div class="pagination" id="pagination"></div>
 
             <div class="no-results" id="no-results" style="display: none;">
-                <p>No products found matching your criteria.</p>
+                <p data-i18n="no_results">No products found matching your criteria.</p>
             </div>
         </section>
-         
     </main>
     <footer class="footer" aria-label="Site footer">
         <div class="footer__container">
             <div class="footer__column">
-                <h2 class="footer__title">Shop</h2>
+                <h2 class="footer__title" data-i18n="footer_shop_title">Shop</h2>
                 <ul class="footer__list">
-                <li><a href="index.html" class="footer__link">Home</a></li>
-                <li><a href="catalog.html" class="footer__link">Catalog</a></li>
-                <li><a href="cart.html" class="footer__link auth-link">Cart</a></li>
-                <li><a href="account.html" class="footer__link auth-link">My Account</a></li>
+                    <li><a href="./index.html" class="footer__link" data-i18n="nav_home">Home</a></li>
+                    <li><a href="catalog.html" class="footer__link" data-i18n="nav_catalog">Catalog</a></li>
+                    <li><a href="./cart.html" class="footer__link auth-link" data-i18n="nav_cart">Cart</a></li>
+                    <li><a href="./account.html" class="footer__link auth-link" data-i18n="nav_account">My Account</a></li>
                 </ul>
             </div>
-      
             <div class="footer__column">
-                <h2 class="footer__title">Contacts</h2>
+                <h2 class="footer__title" data-i18n="footer_contacts_title">Contacts</h2>
                 <ul class="footer__list">
-                <li><a href="index.html#map" class="footer__link">Store Location</a></li>
-                <li><span class="footer__link">+1 (234) 567-89-00</span></li>
-                <li><a href="mailto:info@euphoria.com" class="footer__link">info@euphoria.com</a></li>
+                    <li><a href="./index.html#map" class="footer__link" data-i18n="footer_store_location">Store Location</a></li>
+                    <li><span class="footer-text" data-i18n="footer_phone">+1 (234) 567-89-00</span></li>
+                    <li><a href="mailto:info@euphoria.com" class="footer__link" data-i18n="footer_email">info@euphoria.com</a></li>
                 </ul>
             </div>
-        
             <section class="footer__subscribe" aria-label="Email subscription">
-                <h2 class="footer__title">Newsletter</h2>
-                <p class="footer__text">Subscribe for exclusive offers and updates</p>
+                <h2 class="footer__title" data-i18n="footer_newsletter_title">Newsletter</h2>
+                <p class="footer__text" data-i18n="footer_newsletter_desc">Subscribe for exclusive offers and updates</p>
                 <form class="footer__form">
-                <div class="footer__form-group">
-                    <input 
-                    type="email" 
-                    placeholder="Your email address" 
-                    class="footer__input"
-                    aria-label="Email for newsletter"
-                    required
-                    >
-                    <button type="submit" class="footer__button">
-                    <span>Subscribe</span>
-                    </button>
-                </div>
-                <p class="footer__disclaimer">We respect your privacy. Unsubscribe at any time.</p>
+                    <div class="footer__form-group">
+                        <input type="email" id="email-subscribe" data-i18n-placeholder="email_placeholder" placeholder="Your email address" class="footer__input" aria-label="Email for newsletter" required>
+                        <button type="submit" class="footer__button" data-i18n="subscribe_btn"><span>Subscribe</span></button>
+                    </div>
+                    <p class="footer__disclaimer" data-i18n="footer_disclaimer">We respect your privacy. Unsubscribe at any time.</p>
                 </form>
             </section>
         </div>
-      
         <div class="footer__bottom">
             <div class="footer__social" aria-label="Social media links">
-                <a href="#" aria-label="Facebook"><img src="../images/home_page_icons/facebook_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
-                <a href="#" aria-label="Instagram"><img src="../images/home_page_icons/instagram_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
-                <a href="#" aria-label="Twitter"><img src="../images/home_page_icons/twitter_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
+                <a href="#" aria-label="MSI"><img src="../images/home_page_icons/mai.svg" alt="" class="logo__footer" width="auto" height="30"></a>
+                <a href="#" aria-label="Instagram"><img src="../images/home_page_icons/instagram-logo.svg" alt="" class="logo__footer" width="auto" height="30"></a>
+                <a href="#" aria-label="Telegram"><img src="../images/home_page_icons/telegram-logo.svg" alt="" class="logo__footer" width="auto" height="30"></a>
             </div>
-            <p class="footer__copyright">Copyright © 2023 Euphoria Folks Pvt Ltd. All rights reserved.</p>
+            <p class="footer__content" data-i18n="footer_copyright">Copyright © 2024 Euphoria. All rights reserved.</p>
         </div>
     </footer>
     <div id="modal-container"></div>
