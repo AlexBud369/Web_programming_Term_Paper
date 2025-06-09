@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="signup_title">Sign Up - Euphoria</title>
+    <link rel="preload" href="../fonts/CoreSansC-55Medium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../fonts/CoreSansC-65Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../fonts/CoreSansC-85Heavy.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/layouts/auth-header.css">
+    <link rel="stylesheet" href="../css/pages/auth-form.css">
+    <link rel="stylesheet" href="../css/layouts/modal-form.css">
+    <link rel="stylesheet" href="../css/layouts/modal-output.css">
+    <link rel="stylesheet" href="../css/layouts/footer.css">
+</head>
+<body class="body-container" data-page-type="auth" data-theme="light">
+    <header class="header">
+        <div class="header-container">
+            <a href="../pages/index.html" class="logo" aria-label="Euphoria Home">
+                <img src="../images/Logo.png" alt="Euphoria Logo" class="logo-img">
+            </a>
+            <nav class="main-nav">
+                <a href="../pages/index.html" class="nav-link" data-i18n="nav_home">Home</a>
+                <a href="../pages/catalog.html" class="nav-link" data-i18n="nav_catalog">Catalog</a>
+                <a href="../pages/admin.html" class="nav-link admin-only" data-i18n="nav_admin_panel">Admin Panel</a>
+            </nav>
+            <div class="header-controls">
+                <div class="language-selector">
+                    <button class="language-toggle" aria-expanded="false" aria-label="Select language">
+                        <span class="current-language" data-i18n="lang_current">EN</span>
+                        <span class="drop-icon">▼</span>
+                    </button>
+                    <div class="language-dropdown">
+                        <button data-lang="en" data-i18n="lang_en">English</button>
+                        <button data-lang="ru" data-i18n="lang_ru">Русский</button>
+                    </div>
+                </div>
+                <div class="custom-toggle">
+                    <input type="checkbox" id="theme-toggle" class="toggle-input" aria-label="Toggle dark theme" data-theme-toggle>
+                    <label for="theme-toggle" class="toggle-label">
+                        <span class="toggle-track">
+                            <span class="toggle-knob"></span>
+                        </span>
+                    </label>
+                </div>
+                <button class="login-btn" data-i18n="login_btn">Login</button>
+                <button class="reset-btn" data-i18n="reset_btn" aria-label="Reset all settings">Reset Settings</button>
+                <button class="burger-menu" aria-label="Open menu" aria-expanded="false">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+        <div class="menu-overlay"></div>
+        <div class="mobile-menu">
+            <div class="menu-container">
+                <button class="close-menu" aria-label="Close menu">✕</button>
+                <h2 class="menu-title" data-i18n="menu_title">Menu Navigation</h2>
+                <nav class="mobile-nav">
+                    <a href="../pages/index.html" class="nav-link" data-i18n="nav_home">Home</a>
+                    <a href="../pages/catalog.html" class="nav-link" data-i18n="nav_catalog">Catalog</a>
+                    <a href="../pages/admin.html" class="nav-link admin-only" data-i18n="nav_admin_panel">Admin Panel</a>
+                </nav>
+                <div class="language-selector">
+                    <button class="language-toggle" aria-expanded="false" aria-label="Select language">
+                        <span class="current-language" data-i18n="lang_current">EN</span>
+                        <span class="drop-icon">▼</span>
+                    </button>
+                    <div class="language-dropdown">
+                        <button data-lang="en" data-i18n="lang_en">English</button>
+                        <button data-lang="ru" data-i18n="lang_ru">Русский</button>
+                    </div>
+                </div>
+                <div class="custom-toggle">
+                    <input type="checkbox" id="theme-toggle-mobile" class="toggle-input" aria-label="Toggle dark theme" data-theme-toggle>
+                    <label for="theme-toggle-mobile" class="toggle-label">
+                        <span class="toggle-track">
+                            <span class="toggle-knob"></span>
+                        </span>
+                    </label>
+                </div>
+                <button class="reset-btn" data-i18n="reset_btn" aria-label="Reset all settings">Reset Settings</button>
+                <div class="auth-section">
+                    <button class="login-btn" data-i18n="login_btn">Login</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="main-container">
+        <div class="form-section">
+            <h1 class="form-title" data-i18n="signup_form_title">Sign Up</h1>
+            <form id="signupForm" class="form">
+                <div class="form-group">
+                    <label class="form-label" data-i18n="phone_number_label">Phone number (Belarus) <span class="required">*</span></label>
+                    <div class="input-container">
+                        <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+375 (XX) XXX-XX-XX" class="input-field" required data-i18n-placeholder="phone_number_placeholder">
+                    </div>
+                    <p id="phoneNumberError" class="error-message" data-i18n="phone_number_error"></p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" data-i18n="email_label">Email <span class="required">*</span></label>
+                    <div class="input-container">
+                        <input type="email" id="email" name="email" placeholder="Email" class="input-field" required data-i18n-placeholder="email_placeholder">
+                    </div>
+                    <p id="emailError" class="error-message" data-i18n="email_error"></p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" data-i18n="birth_date_label">Date of birth <span class="required">*</span></label>
+                    <div class="input-container">
+                        <input type="date" id="birthDate" name="birthDate" class="input-field" required data-i18n-placeholder="birth_date_placeholder">
+                    </div>
+                    <p id="birthDateError" class="error-message" data-i18n="birth_date_error"></p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" data-i18n="password_method_label">Password method <span class="required">*</span></label>
+                    <div class="input-container radio-container">
+                        <label class="password-option">
+                            <input type="radio" name="passwordMethod" value="manual" checked> <span data-i18n="password_method_manual">Manual</span>
+                        </label>
+                        <label class="password-option">
+                            <input type="radio" name="passwordMethod" value="auto"> <span data-i18n="password_method_auto">Auto-generate</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group password-group" id="manualPasswordGroup">
+                    <label class="form-label" data-i18n="password_label">Password <span class="required">*</span></label>
+                    <div class="input-container">
+                        <input type="password" id="password" name="password" placeholder="Password" class="input-field" required data-i18n-placeholder="password_placeholder">
+                        <button type="button" id="togglePassword" class="toggle-password" data-i18n="toggle_password_hide">Hide</button>
+                    </div>
+                    <p id="passwordError" class="error-message" data-i18n="password_error"></p>
+                    <label class="form-label" data-i18n="confirm_password_label">Confirm password <span class="required">*</span></label>
+                    <div class="input-container">
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" class="input-field" required data-i18n-placeholder="confirm_password_placeholder">
+                        <button type="button" id="toggleConfirmPassword" class="toggle-password" data-i18n="toggle_password_hide">Hide</button>
+                    </div>
+                    <p id="confirmPasswordError" class="error-message" data-i18n="confirm_password_error"></p>
+                </div>
+                <div class="form-group password-group" id="autoPasswordGroup" style="display: none;">
+                    <label class="form-label" data-i18n="auto_password_label">Generated password <span class="required">*</span></label>
+                    <div class="input-container">
+                        <input type="password" id="autoPassword" name="autoPassword" placeholder="Generated password" class="input-field" readonly data-i18n-placeholder="auto_password_placeholder">
+                        <button type="button" id="toggleAutoPassword" class="toggle-password" data-i18n="toggle_password_hide">Hide</button>
+                        <button type="button" id="generatePassword" class="generate-btn" data-i18n="generate_password">Generate</button>
+                    </div>
+                    <p id="autoPasswordError" class="error-message" data-i18n="auto_password_error"></p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" data-i18n="first_name_label">First name <span class="required">*</span></label>
+                    <div class="input-container">
+                        <input type="text" id="firstName" name="firstName" placeholder="First name" class="input-field" required data-i18n-placeholder="first_name_placeholder">
+                    </div>
+                    <p id="firstNameError" class="error-message" data-i18n="first_name_error"></p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" data-i18n="last_name_label">Last name <span class="required">*</span></label>
+                    <div class="input-container">
+                        <input type="text" id="lastName" name="lastName" placeholder="Last name" class="input-field" required data-i18n-placeholder="last_name_placeholder">
+                    </div>
+                    <p id="lastNameError" class="error-message" data-i18n="last_name_error"></p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" data-i18n="middle_name_label">Middle name</label>
+                    <div class="input-container">
+                        <input type="text" id="middleName" name="middleName" placeholder="Middle name" class="input-field" data-i18n-placeholder="middle_name_placeholder">
+                    </div>
+                    <p id="middleNameError" class="error-message" data-i18n="middle_name_error"></p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" data-i18n="nickname_label">Nickname <span class="required">*</span></label>
+                    <div class="input-container">
+                        <input type="text" id="nickname" name="nickname" placeholder="Nickname" class="input-field" required data-i18n-placeholder="nickname_placeholder">
+                        <button type="button" id="generateNickname" class="generate-btn" data-i18n="generate_nickname">Generate</button>
+                    </div>
+                    <p id="nicknameError" class="error-message" data-i18n="nickname_error"></p>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="termsAgreement" name="termsAgreement" required>
+                        <span data-i18n="terms_agreement_label">I agree to the <a href="#">Terms of Service</a> <span class="required">*</span></span>
+                    </label>
+                    <p id="termsAgreementError" class="error-message" data-i18n="terms_agreement_error"></p>
+                </div>
+                <button type="submit" id="submitBtn" class="submit-btn" disabled data-i18n="signup_button">Sign Up</button>
+            </form>
+            <p class="signin-link" data-i18n="already_have_account">Already have an account? <a href="signin.html" data-i18n="signin_link">Sign in</a></p>
+        </div>
+    </main>
+    <footer class="footer" aria-label="Site footer">
+        <div class="footer__container">
+            <div class="footer__column">
+                <h2 class="footer__title" data-i18n="footer_shop_title">Shop</h2>
+                <ul class="footer__list">
+                    <li><a href="../pages/index.html" class="footer__link" data-i18n="nav_home">Home</a></li>
+                    <li><a href="../pages/catalog.html" class="footer__link" data-i18n="nav_catalog">Catalog</a></li>
+                    <li><a href="./pages/cart.html" class="footer__link auth-link" data-i18n="nav_cart">Cart</a></li>
+                    <li><a href="../pages/account.html" class="footer__link auth-link" data-i18n="nav_account">My Account</a></li>
+                </ul>
+            </div>
+            <div class="footer__column">
+                <h2 class="footer__title" data-i18n="footer_contacts_title">Contacts</h2>
+                <ul class="footer__list">
+                    <li><a href="../pages/index.html#map" class="footer__link" data-i18n="footer_store_location">Store Location</a></li>
+                    <li><span class="footer__link" data-i18n="footer_phone">+1 (234) 567-89-00</span></li>
+                    <li><a href="mailto:info@euphoria.com" class="footer__link" data-i18n="footer_email">info@euphoria.com</a></li>
+                </ul>
+            </div>
+            <section class="footer__subscribe" aria-label="Email subscription">
+                <h2 class="footer__title" data-i18n="footer_newsletter_title">Newsletter</h2>
+                <p class="footer__text" data-i18n="footer_newsletter_desc">Subscribe for exclusive offers and updates</p>
+                <form class="footer__form">
+                    <div class="footer__form-group">
+                        <input 
+                            type="email" 
+                            class="footer__input"
+                            aria-label="Email for newsletter"
+                            required
+                            data-i18n-placeholder="footer_email_placeholder"
+                            placeholder="Your email address"
+                        >
+                        <button type="submit" class="footer__button">
+                            <span data-i18n="footer_subscribe_btn">Subscribe</span>
+                        </button>
+                    </div>
+                    <p class="footer__disclaimer" data-i18n="footer_disclaimer">We respect your privacy. Unsubscribe at any time.</p>
+                </form>
+            </section>
+        </div>
+        <div class="footer__bottom">
+            <div class="footer__social" aria-label="Social media links">
+                <a href="#" aria-label="Facebook"><img src="../images/home_page_icons/facebook_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
+                <a href="#" aria-label="Instagram"><img src="../images/home_page_icons/instagram_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
+                <a href="#" aria-label="Twitter"><img src="../images/home_page_icons/twitter_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
+            </div>
+            <p class="footer__copyright" data-i18n="footer_copyright">Copyright © 2023 Euphoria Folks Pvt Ltd. All rights reserved.</p>
+        </div>
+    </footer>
+    <div id="modal-container"></div>
+    <script type="module" src="../js/modules/modal.js"></script>
+    <script type="module" src="../js/auth/signup.js"></script>
+</body>
+</html>
