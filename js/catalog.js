@@ -9,12 +9,41 @@ import { checkAuth, updateUserProfile } from './modules/auth.js';
 import { initBurgerMenu } from './modules/burgerMenu.js';
 import { initLanguageSwitcher } from './modules/languageSwitcher.js';
 import { initThemeSwitcher } from './modules/themeSwitcher.js';
+import { translations } from './modules/pages-translations/catalog_translations.js';
+import { translations as homeTranslations } from './modules/pages-translations/home_translations.js';
 
 const productsGrid = document.getElementById('products-grid');
 const productsCount = document.getElementById('products-count');
 const noResults = document.getElementById('no-results');
 let currentPage = 1;
 let allProducts = [];
+
+const categoryTranslationKeys = {
+  'Tops & T-Shirts': 'category_tops_tshirts',
+  'Printed T-Shirts': 'category_printed',
+  'Plain T-Shirts': 'category_plain',
+  'Kurti': 'category_kurti',
+  'Boxers': 'category_boxers',
+  'Full Sleeve T-Shirts': 'category_full_sleeve_tshirts',
+  'Joggers': 'category_joggers',
+  'Pajamas': 'category_pajamas',
+  'Jeans': 'category_jeans'
+};
+
+const colorTranslationKeys = {
+  purple: 'color_purple',
+  black: 'color_black',
+  white: 'color_white',
+  red: 'color_red',
+  orange: 'color_orange',
+  navy: 'color_navy',
+  brown: 'color_brown',
+  green: 'color_green',
+  yellow: 'color_yellow',
+  grey: 'color_grey',
+  pink: 'color_pink',
+  blue: 'color_blue'
+};
 
 async function fetchProducts(sortOption, page = 1) {
     const checkedCategories = document.querySelectorAll('#category-filter input[name="category"]:checked');
@@ -69,7 +98,7 @@ async function fetchProducts(sortOption, page = 1) {
         let totalProducts = filteredProducts.length;
         try {
             const countRes = await fetch(countUrl, { headers: { 'Accept': 'application/json' } });
-            if (!countRes.ok) throw new Error(`HTTP error: ${countRes.status} for ${countUrl}`);
+            if (!countRes.ok) throw new Error(`HTTP error: ${res.status} for ${countUrl}`);
             totalProducts = (await countRes.json()).length;
         } catch (countError) {
             console.warn('Failed to fetch total count:', countError.message);
@@ -77,7 +106,7 @@ async function fetchProducts(sortOption, page = 1) {
 
         console.log('Fetched products:', filteredProducts.length, 'Total products:', totalProducts);
         allProducts = filteredProducts;
-        renderProducts(filteredProducts, totalProducts);
+        renderProducts(filteredProducts, totalProducts, localStorage.getItem('language') || 'en');
     } catch (error) {
         console.error('Error fetching products:', error.message);
         noResults.textContent = 'Failed to load products. Please check the server or try again later.';
@@ -97,7 +126,7 @@ function generateStars(rating) {
     `;
 }
 
-function renderProducts(products, totalProducts) {
+function renderProducts(products, totalProducts, lang = localStorage.getItem('language') || 'en') {
     if (!productsGrid || !noResults || !productsCount) {
         console.error('Required elements not found:', {
             productsGrid: !!productsGrid,
@@ -107,19 +136,25 @@ function renderProducts(products, totalProducts) {
         return;
     }
 
-    console.log('Rendering products:', products.length, 'Total:', totalProducts);
+    console.log(`Rendering products: ${products.length} items, Total: ${totalProducts}, Language: ${lang}`);
     productsGrid.innerHTML = '';
     noResults.style.display = products.length === 0 ? 'block' : 'none';
-    productsCount.textContent = `${totalProducts} items`;
+    noResults.innerHTML = `<span data-i18n="no_results">${translations.no_results[lang]}</span>`;
+    productsCount.innerHTML = `<span data-i18n="products_count" data-i18n-data='{"count": ${totalProducts}}'>${translations.products_count[lang].replace('{count}', totalProducts)}</span>`;
 
     products.forEach(product => {
+        const categoryKey = categoryTranslationKeys[product.category] || product.category.toLowerCase().replace(/ & /g, '_').replace(/\s+/g, '_');
+        const translatedCategory = homeTranslations[categoryKey]?.[lang] || product.category;
+
+        const translatedColors = product.colors.map(color => translations[`color_${color.toLowerCase()}`]?.[lang] || color).join(', ');
+
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
         productCard.dataset.id = product.id;
         productCard.innerHTML = `
             <div class="product-image-container">
                 <img src="${product.image}" alt="${product.name}" class="product-image">
-                <button class="quick-view" data-product-id="${product.id}">Quick View</button>
+                <button class="quick-view" data-product-id="${product.id}" data-i18n="quick_view">${translations.quick_view[lang]}</button>
                 <button class="favorite-btn" data-product-id="${product.id}">
                     <img src="../images/home_page_icons/heart_icon.svg" alt="Add to Favorites" class="favorite-icon">
                 </button>
@@ -132,9 +167,9 @@ function renderProducts(products, totalProducts) {
                     <span class="rating-count">(${product.rating.toFixed(1)})</span>
                 </div>
                 <p class="product-price">$${product.price.toFixed(2)}</p>
-                <p class="product-colors">Colors: ${product.colors.join(', ')}</p>
-                <p class="product-category">${product.category}</p>
-                <button class="add-to-cart-btn" data-product-id="${product.id}">Add to Cart</button>
+                <p class="product-colors">${translations.colors_title[lang]}: ${translatedColors}</p>
+                <p class="product-category">${translatedCategory}</p>
+                <button class="add-to-cart-btn" data-product-id="${product.id}" data-i18n="add_to_cart">${translations.add_to_cart[lang]}</button>
             </div>
         `;
         productsGrid.appendChild(productCard);
@@ -158,8 +193,12 @@ function renderProducts(products, totalProducts) {
     } else {
         productsGrid.querySelectorAll('.favorite-btn').forEach(button => {
             button.addEventListener('click', () => {
-                showSimpleModal('Login Required', 'Please log in to add items to favorites.', 'modal-error');
-                setTimeout(() => window.location.href = '../auth/signin.html', 1000);
+                showSimpleModal(
+                    translations.modal_login_required[lang],
+                    translations.modal_favorites_message[lang],
+                    'modal-error'
+                );
+                setTimeout(() => window.location.assign('../auth/signin.html'), 1500);
             });
         });
     }
@@ -167,22 +206,34 @@ function renderProducts(products, totalProducts) {
     productsGrid.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', () => {
             if (!auth.isAuthenticated) {
-                showSimpleModal('Login Required', 'Please log in to add items to cart.', 'modal-error');
-                setTimeout(() => window.location.href = '../auth/signin.html', 1000);
+                showSimpleModal(
+                    translations.modal_login_required[lang],
+                    translations.modal_login_message[lang],
+                    'modal-error'
+                );
+                setTimeout(() => window.location.assign('../auth/signin.html'), 1500);
                 return;
             }
         });
     });
 
     initAddToCart('catalog', '.add-to-cart-btn', products);
-    console.log('Initializing pagination with totalProducts:', totalProducts);
     initPagination(totalProducts || 0, currentPage, 9, (page) => {
         currentPage = page;
         fetchProducts(document.getElementById('sort-by')?.value || 'default', page);
+    }, translations, lang);
+
+
+    productsGrid.querySelectorAll('.quick-view').forEach(button => {
+        button.addEventListener('click', () => {
+            const productId = button.dataset.productId;
+            window.location.assign(`../pages/product.html?id=${productId}`);
+        });
     });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('catalog.js loaded');
     updateUserProfile();
     initFilters(sortOption => {
         currentPage = 1;
@@ -194,15 +245,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     fetchProducts('default', currentPage);
     showSuccessModalAfterReload();
-    initBurgerMenu(false); 
-
-    const headerLanguageSelector = document.querySelector('.header-controls .language-selector');
-    if (headerLanguageSelector) {
-        initLanguageSwitcher(headerLanguageSelector);
-    }
-
-    const headerThemeToggle = document.querySelector('.header-controls .theme-toggle');
+    initBurgerMenu(false);
+    initLanguageSwitcher('.header-controls .language-selector');
+    const headerThemeToggle = document.querySelector('.header-controls .custom-toggle .toggle-input');
+    const mobileThemeToggle = document.querySelector('.mobile-menu .custom-toggle .toggle-input');
     if (headerThemeToggle) {
+        console.log('Header theme toggle found:', headerThemeToggle);
         initThemeSwitcher(headerThemeToggle);
     }
+    if (mobileThemeToggle) {
+        console.log('Mobile theme toggle found:', mobileThemeToggle);
+        initThemeSwitcher(mobileThemeToggle);
+    }
+    window.addEventListener('languageChanged', (e) => {
+        const newLang = e.detail.lang;
+        renderProducts(allProducts, allProducts.length, newLang);
+    });
 });
