@@ -20,7 +20,7 @@ body, html {
 .vertical-line {
     width: 6px;
     height: 28px;
-    background: #8A33FD;
+    background: var(--accent-color);
     border-radius: 10px;
     flex-shrink: 0;
 }
@@ -36,7 +36,7 @@ body, html {
 }
 
 .cart-container {
-    border: 1px solid #E0E0E0;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     overflow: hidden;
     display: flex;
@@ -58,11 +58,11 @@ body, html {
     font-size: 1rem;
     font-weight: 700;
     color: var(--secondary-color);
-    border-bottom: 1px solid #E0E0E0;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .cart-item {
-    border-bottom: 1px solid #E0E0E0;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .cart-item:last-child {
@@ -119,7 +119,7 @@ body, html {
 .quantity-btn {
     width: 30px;
     height: 30px;
-    background: #8A33FD;
+    background: var(--accent-color);
     color: var(--primary-color);
     border: none;
     border-radius: 4px;
@@ -129,7 +129,7 @@ body, html {
 }
 
 .quantity-btn:hover {
-    background: #6d28c4;
+    background: var(--accent-color-hover);
 }
 
 .quantity-label {
@@ -172,21 +172,21 @@ body, html {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    font-family: 'Lato', sans-serif;
+    font-family: var(--font-main);
     font-size: 1.125rem;
     color: var(--secondary-color);
     text-align: center;
 }
 
 .empty-cart a {
-    color: #8A33FD;
+    color: var(--accent-color);
     text-decoration: underline;
     font-weight: 600;
     transition: var(--transition-base);
 }
 
 .empty-cart a:hover {
-    color: #6d28c4;
+    color: var(--accent-color-hover);
 }
 
 .cart-total {
@@ -211,6 +211,7 @@ body, html {
     max-width: 300px;
     text-align: right;
 }
+
 .total-block span:first-child {
     flex: 1;
 }
@@ -218,7 +219,6 @@ body, html {
 .subtotal-amount, .shipping-amount, .total-amount {
     margin-left: 5px;
 }
-
 
 .checkout-section {
     padding: 40px 40px 80px;
@@ -259,8 +259,8 @@ body, html {
 
 .form-group input, .form-group select {
     padding: 10px;
-    background: #F6F6F6;
-    border: 1px solid #807D7E;
+    background: var(--input-bg);
+    border: 1px solid var(--text-color);
     border-radius: 4px;
     font-family: var(--font-main);
     font-size: 1rem;
@@ -269,8 +269,8 @@ body, html {
 }
 
 .form-group input::placeholder, .form-group select option {
-    color: #807D7E;
-    opacity: 1;
+    color: var(--text-color);
+    opacity: 0.8;
 }
 
 .delivery-method {
@@ -301,7 +301,7 @@ body, html {
 }
 
 .option-block {
-    background: #F6F6F6;
+    background: var(--input-bg);
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 10px;
@@ -334,8 +334,8 @@ body, html {
 
 .card-select {
     padding: 10px;
-    background: #FFFFFF;
-    border: 1px solid #807D7E;
+    background: var(--input-bg);
+    border: 1px solid var(--text-color);
     border-radius: 4px;
     font-family: var(--font-main);
     font-size: 1rem;
@@ -351,8 +351,8 @@ body, html {
 .pickup-details input {
     width: 100%;
     padding: 10px;
-    background: #FFFFFF;
-    border: 1px solid #807D7E;
+    background: var(--input-bg);
+    border: 1px solid var(--text-color);
     border-radius: 4px;
     font-family: var(--font-main);
     font-size: 1rem;
@@ -369,7 +369,7 @@ body, html {
 .place-order-btn {
     max-width: 200px;
     padding: 12px 24px;
-    background: #8A33FD;
+    background: var(--accent-color);
     color: var(--primary-color);
     font-family: var(--font-main);
     font-size: 1rem;
@@ -382,7 +382,7 @@ body, html {
 }
 
 .place-order-btn:hover {
-    background: #6d28c4;
+    background: var(--accent-color-hover);
 }
 
 .success-notification {
@@ -411,7 +411,7 @@ body, html {
 
 .success-notification button {
     padding: 8px 16px;
-    background: #8A33FD;
+    background: var(--accent-color);
     color: var(--primary-color);
     font-family: var(--font-main);
     font-size: 1rem;
@@ -422,7 +422,7 @@ body, html {
 }
 
 .success-notification button:hover {
-    background: #6d28c4;
+    background: var(--accent-color-hover);
 }
 
 @media (max-width: 1200px) {
@@ -443,7 +443,7 @@ body, html {
         grid-template-columns: 1fr;
         text-align: center;
         gap: 10px;
-        border: 1px solid #E0E0E0;
+        border: 1px solid var(--border-color);
         border-radius: 8px;
         padding: 15px;
         max-width: 300px;
@@ -515,4 +515,4 @@ body, html {
     .cart-item {
         flex: 0 1 250px;
     }
-} 
+}
