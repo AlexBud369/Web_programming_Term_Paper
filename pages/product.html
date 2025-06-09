@@ -1,57 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="preload" href="../fonts/CoreSansC-55Medium.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="../fonts/CoreSansC-65Bold.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="../fonts/CoreSansC-85Heavy.woff2" as="font" type="font/woff2" crossorigin>
-
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/layouts/header.css">
     <link rel="stylesheet" href="../css/pages/product-details.css">
     <link rel="stylesheet" href="../css/layouts/footer.css">
-    <link rel="stylesheet" href="../css/layouts/modal.css">
-
-    <title>Product Details</title>
+    <link rel="stylesheet" href="../css/layouts/modal-output.css">
+    <title data-i18n="page_title_product">Product Details</title>
 </head>
-<body>
-    <header>
+<body data-page-type="product">
+    <header class="header">
         <div class="header-container">
-            <a href="index.html" class="logo">
-                <img src="../images/logo.png" alt="Euphoria Logo">
+            <a href="../index.html" class="logo" aria-label="Euphoria Home">
+                <img src="../images/Logo.png" alt="Euphoria Logo">
             </a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="catalog.html">Catalog</a></li>
-                    <li class="auth-only"><a href="account.html" class="account-link">Account</a></li>
-                    <li class="auth-only"><a href="cart.html" class="cart-link">Cart</a></li>
+                    <li><a href="../index.html" data-i18n="nav_home">Home</a></li>
+                    <li><a href="catalog.html" data-i18n="nav_catalog">Catalog</a></li>
+                    <li class="auth-only"><a href="account.html" class="account-link" data-i18n="nav_account">Account</a></li>
+                    <li class="auth-only"><a href="cart.html" class="cart-link" data-i18n="nav_cart">Cart</a></li>
                 </ul>
             </nav>
             <div class="header-controls">
                 <div class="language-selector">
-                    <div class="language-toggle" aria-expanded="false">
-                        <span class="current-language">English</span>
+                    <button class="language-toggle" aria-expanded="false" aria-label="Select language">
+                        <span class="current-language" data-i18n="lang_current">English</span>
                         <span class="drop-icon">▼</span>
-                    </div>
+                    </button>
                     <div class="language-dropdown">
-                        <select class="language-select" aria-label="Select language">
-                            <option value="en">English</option>
-                            <option value="ru">Русский</option>
-                        </select>
+                        <button data-lang="en" data-i18n="lang_en">English</button>
+                        <button data-lang="ru" data-i18n="lang_ru">Русский</button>
                     </div>
                 </div>
                 <div class="custom-toggle">
-                    <input type="checkbox" id="theme-toggle" class="toggle-input">
+                    <input type="checkbox" id="theme-toggle" class="toggle-input" aria-label="Toggle dark theme">
                     <label for="theme-toggle" class="toggle-label">
                         <span class="toggle-track">
                             <span class="toggle-knob"></span>
                         </span>
                     </label>
                 </div>
-                <button class="burger-menu" aria-label="Menu">
+                <button class="burger-menu" aria-label="Open menu" aria-expanded="false">
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -60,44 +55,43 @@
         </div>
         <div class="menu-overlay"></div>
         <div class="mobile-menu">
-            <button class="close-menu" aria-label="Close menu">✕</button>
-            <h2 class="menu-title">Menu Navigation</h2>
-            <nav class="mobile-nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="catalog.html">Catalog</a></li>
-                    <li class="auth-only"><a href="account.html" class="account-link">Account</a></li>
-                    <li class="auth-only"><a href="cart.html" class="cart-link">Cart</a></li>
-                </ul>
-            </nav>
-            <div class="mobile-controls">
+            <div class="menu-container">
+                <button class="close-menu" aria-label="Close menu">✕</button>
+                <h2 class="menu-title" data-i18n="menu_title">Menu Navigation</h2>
+                <nav class="mobile-nav">
+                    <ul>
+                        <li><a href="../index.html" data-i18n="nav_home">Home</a></li>
+                        <li><a href="catalog.html" data-i18n="nav_catalog">Catalog</a></li>
+                        <li class="auth-only"><a href="account.html" class="account-link" data-i18n="nav_account">Account</a></li>
+                        <li class="auth-only"><a href="cart.html" class="cart-link" data-i18n="nav_cart">Cart</a></li>
+                    </ul>
+                </nav>
                 <div class="language-selector">
-                    <div class="language-toggle" aria-expanded="false">
-                        <span class="current-language">English</span>
+                    <button class="language-toggle" aria-expanded="false" aria-label="Select language">
+                        <span class="current-language" data-i18n="lang_current">English</span>
                         <span class="drop-icon">▼</span>
-                    </div>
+                    </button>
                     <div class="language-dropdown">
-                        <select class="language-select" aria-label="Select language">
-                            <option value="en">English</option>
-                            <option value="ru">Русский</option>
-                        </select>
+                        <button data-lang="en" data-i18n="lang_en">English</button>
+                        <button data-lang="ru" data-i18n="lang_ru">Русский</button>
                     </div>
                 </div>
                 <div class="custom-toggle">
-                    <input type="checkbox" id="theme-toggle-mobile" class="toggle-input">
+                    <input type="checkbox" id="theme-toggle-mobile" class="toggle-input" aria-label="Toggle dark theme">
                     <label for="theme-toggle-mobile" class="toggle-label">
                         <span class="toggle-track">
                             <span class="toggle-knob"></span>
                         </span>
                     </label>
                 </div>
-            </div>
-            <div class="auth-section">
-                <button class="login-btn">Login</button>
-                <button class="logout-btn">Sign Out</button>
-                <div class="user-profile" style="display:none;">
-                    <span class="username"></span>
-                    <button class="logout-btn">Logout</button>
+                <button class="reset-btn" data-i18n="reset_btn">Reset Settings</button>
+                <div class="auth-section">
+                    <button class="login-btn" data-i18n="login_btn">Login</button>
+                    <button class="register-btn" data-i18n="register_btn">Register</button>
+                    <div class="user-profile auth-only">
+                        <span class="username">User</span>
+                        <button class="logout-btn" data-i18n="logout_btn">Logout</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -109,24 +103,24 @@
             </div>
             <div class="product-details">
                 <nav class="breadcrumbs">
-                    <a href="../index.html">Home</a>
+                    <a href="../index.html" data-i18n="nav_home">Home</a>
                     <img src="../images/product_images/arrow_right_icon.svg" alt="Arrow" class="breadcrumb-icon">
-                    <a href="../pages/catalog.html">Catalog</a>
+                    <a href="../pages/catalog.html" data-i18n="nav_catalog">Catalog</a>
                     <img src="../images/product_images/arrow_right_icon.svg" alt="Arrow" class="breadcrumb-icon">
-                    <a href="#">Product Details</a>
+                    <a href="#" data-i18n="nav_product_details">Product Details</a>
                 </nav>
                 <h1 class="product-title"></h1>
                 <div class="product-rating"></div>
                 <section class="size-section">
-                    <h2 class="section-title">Select Size</h2>
+                    <h2 class="section-title" data-i18n="select_size">Select Size</h2>
                     <div class="product-sizes"></div>
                 </section>
                 <section class="color-section">
-                    <h2 class="section-title">Colours Available</h2>
+                    <h2 class="section-title" data-i18n="colors_available">Colours Available</h2>
                     <div class="product-colors"></div>
                 </section>
                 <div class="action-row">
-                    <button class="add-to-cart">
+                    <button class="add-to-cart" data-i18n="add_to_cart">
                         <img src="../images/product_images/cart_icon.svg" alt="Cart" class="cart-icon"> Add to Cart
                     </button>
                     <div class="product-price"></div>
@@ -139,7 +133,7 @@
                     <div class="text-content">
                         <div class="title-wrapper">
                             <div class="vertical-line"></div>
-                            <h2>Product Description</h2>
+                            <h2 data-i18n="product_description">Product Description</h2>
                         </div>
                         <p></p>
                         <table class="features-table"></table>
@@ -147,7 +141,7 @@
                     <div class="video-container">
                         <video controls poster="" class="product-video">
                             <source src="" type="video/mp4">
-                            Your browser does not support the video tag.
+                            <span data-i18n="video_not_supported">Your browser does not support the video tag.</span>
                         </video>
                     </div>
                 </div>
@@ -156,7 +150,7 @@
         <section class="similar-products-section">
             <div class="section-header">
                 <div class="vertical-line"></div>
-                <h2 class="section-title">Similar Products</h2>
+                <h2 class="section-title" data-i18n="similar_products">Similar Products</h2>
             </div>
             <div class="similar-grid"></div>
         </section>
@@ -164,39 +158,40 @@
     <footer class="footer" aria-label="Site footer">
         <div class="footer__container">
             <div class="footer__column">
-                <h2 class="footer__title">Shop</h2>
+                <h2 class="footer__title" data-i18n="footer_shop_title">Shop</h2>
                 <ul class="footer__list">
-                    <li><a href="index.html" class="footer__link">Home</a></li>
-                    <li><a href="catalog.html" class="footer__link">Catalog</a></li>
-                    <li><a href="cart.html" class="footer__link auth-link">Cart</a></li>
-                    <li><a href="account.html" class="footer__link auth-link">My Account</a></li>
+                    <li><a href="./index.html" class="footer__link" data-i18n="nav_home">Home</a></li>
+                    <li><a href="./catalog.html" class="footer__link" data-i18n="nav_catalog">Catalog</a></li>
+                    <li><a href="./cart.html" class="footer__link auth-link" data-i18n="nav_cart">Cart</a></li>
+                    <li><a href="./account.html" class="footer__link auth-link" data-i18n="nav_account">My Account</a></li>
                 </ul>
             </div>
             <div class="footer__column">
-                <h2 class="footer__title">Contacts</h2>
+                <h2 class="footer__title" data-i18n="footer_contacts_title">Contacts</h2>
                 <ul class="footer__list">
-                    <li><a href="index.html#map" class="footer__link">Store Location</a></li>
-                    <li><span class="footer__link">+1 (234) 567-89-00</span></li>
-                    <li><a href="mailto:info@euphoria.com" class="footer__link">info@euphoria.com</a></li>
+                    <li><a href="./index.html#map" class="footer__link" data-i18n="footer_store_location">Store Location</a></li>
+                    <li><span class="footer__link" data-i18n="footer_phone">+1 (234) 567-89-00</span></li>
+                    <li><a href="mailto:info@euphoria.com" class="footer__link" data-i18n="footer_email">info@euphoria.com</a></li>
                 </ul>
             </div>
             <section class="footer__subscribe" aria-label="Email subscription">
-                <h2 class="footer__title">Newsletter</h2>
-                <p class="footer__text">Subscribe for exclusive offers and updates</p>
+                <h2 class="footer__title" data-i18n="footer_newsletter_title">Newsletter</h2>
+                <p class="footer__text" data-i18n="footer_newsletter_desc">Subscribe for exclusive offers and updates</p>
                 <form class="footer__form">
                     <div class="footer__form-group">
                         <input 
                             type="email" 
-                            placeholder="Your email address" 
                             class="footer__input"
                             aria-label="Email for newsletter"
                             required
+                            data-i18n-placeholder="footer_email_placeholder"
+                            placeholder="Your email address"
                         >
                         <button type="submit" class="footer__button">
-                            <span>Subscribe</span>
+                            <span data-i18n="footer_subscribe_btn">Subscribe</span>
                         </button>
                     </div>
-                    <p class="footer__disclaimer">We respect your privacy. Unsubscribe at any time.</p>
+                    <p class="footer__disclaimer" data-i18n="footer_disclaimer">We respect your privacy. Unsubscribe at any time.</p>
                 </form>
             </section>
         </div>
@@ -206,10 +201,10 @@
                 <a href="#" aria-label="Instagram"><img src="../images/home_page_icons/instagram_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
                 <a href="#" aria-label="Twitter"><img src="../images/home_page_icons/twitter_icon.svg" alt="" class="footer__icon" width="24" height="24"></a>
             </div>
-            <p class="footer__copyright">Copyright © 2023 Euphoria Folks Pvt Ltd. All rights reserved.</p>
+            <p class="footer__copyright" data-i18n="footer_copyright">Copyright © 2023 Euphoria Folks Pvt Ltd. All rights reserved.</p>
         </div>
     </footer>
-    <div id="modal-container"></div>
-    <script type="module" src="../js/product-details.js"></script>
-</body>
+        <div id="modal-container"></div>
+        <script type="module" src="../js/product-details.js"></script>
+    </body>
 </html>
