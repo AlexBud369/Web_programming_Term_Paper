@@ -20,7 +20,7 @@ header {
 }
 
 :root.dark-theme .logo-img {
-    content: url("../images/Logo-dark.png"); 
+    content: url("../../images/Logo-dark.png"); 
 }
 
 .main-nav {
