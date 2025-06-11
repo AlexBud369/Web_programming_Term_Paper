@@ -274,5 +274,85 @@ export const translations = {
   form_validation_error: {
     en: "Please fill out all required fields correctly",
     ru: "Пожалуйста, заполните все обязательные поля корректно"
+  },
+  reset_btn: {
+    en: "Reset Settings",
+    ru: "Сбросить настройки"
+  },
+  add_to_cart_title: {
+    en: "Add {name} to Cart",
+    ru: "Добавить {name} в корзину"
+  },
+  item_added_to_cart: {
+    en: "Item added to cart!",
+    ru: "Товар добавлен в корзину!"
+  },
+  modal_success_title: {
+    en: "Success",
+    ru: "Успех"
+  },
+  modal_error_title: {
+    en: "Error",
+    ru: "Ошибка"
+  },
+  add_button: {
+    en: "Add to Cart",
+    ru: "Добавить в корзину"
+  },
+  cancel_button: {
+    en: "Cancel",
+    ru: "Отмена"
+  },
+  color_purple: {
+    en: "Purple",
+    ru: "Фиолетовый"
+  },
+  color_black: {
+    en: "Black",
+    ru: "Чёрный"
+  },
+  color_white: {
+    en: "White",
+    ru: "Белый"
+  },
+  color_red: {
+    en: "Red",
+    ru: "Красный"
+  },
+  color_orange: {
+    en: "Orange",
+    ru: "Оранжевый"
+  },
+  color_navy: {
+    en: "Navy",
+    ru: "Тёмно-синий"
+  },
+  color_brown: {
+    en: "Brown",
+    ru: "Коричневый"
+  },
+  color_green: {
+    en: "Green",
+    ru: "Зелёный"
+  },
+  color_yellow: {
+    en: "Yellow",
+    ru: "Жёлтый"
+  },
+  color_grey: {
+    en: "Grey",
+    ru: "Серый"
+  },
+  color_pink: {
+    en: "Pink",
+    ru: "Розовый"
+  },
+  color_blue: {
+    en: "Blue",
+    ru: "Синий"
+  },
+  color_gold: {
+    en: "Gold",
+    ru: "Золотой"
   }
 };

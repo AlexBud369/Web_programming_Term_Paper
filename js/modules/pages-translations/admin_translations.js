@@ -1,195 +1,203 @@
 export const translations = {
-    page_title_account: {
-        en: 'Euphoria - My Account',
-        ru: 'Euphoria - Мой аккаунт'
+    page_title_admin: {
+        en: 'Euphoria - Admin Panel',
+        ru: 'Эйфория - Панель администратора'
     },
-    account_title: {
-        en: 'My Account',
-        ru: 'Мой аккаунт'
+    filter_sort: {
+        en: 'Filter & Sort',
+        ru: 'Фильтры и сортировка'
     },
-    wishlist_title: {
-        en: 'Wishlist',
-        ru: 'Избранное'
+    clear_filters: {
+        en: 'Clear Filters',
+        ru: 'Очистить фильтры'
     },
-    account_username: {
-        en: 'Username',
-        ru: 'Имя пользователя'
+    sort_by: {
+        en: 'Sort By',
+        ru: 'Сортировать по'
     },
-    account_first_name: {
-        en: 'First Name',
-        ru: 'Имя'
+    sort_default: {
+        en: 'Default',
+        ru: 'По умолчанию'
     },
-    account_last_name: {
-        en: 'Last Name',
-        ru: 'Фамилия'
+    sort_price_asc: {
+        en: 'Price: Low to High',
+        ru: 'Цена: По возрастанию'
     },
-    account_phone: {
-        en: 'Phone Number',
-        ru: 'Номер телефона'
+    sort_price_desc: {
+        en: 'Price: High to Low',
+        ru: 'Цена: По убыванию'
     },
-    account_email: {
-        en: 'Email',
-        ru: 'Электронная почта'
+    sort_name_asc: {
+        en: 'Name: A to Z',
+        ru: 'Имя: А-Я'
     },
-    account_dob: {
-        en: 'Date of Birth',
-        ru: 'Дата рождения'
+    sort_name_desc: {
+        en: 'Name: Z to A',
+        ru: 'Имя: Я-А'
     },
-    account_password: {
-        en: 'Password',
-        ru: 'Пароль'
+    sort_rating: {
+        en: 'Rating',
+        ru: 'Рейтинг'
     },
-    account_change: {
-        en: 'Change',
-        ru: 'Изменить'
+    search: {
+        en: 'Search',
+        ru: 'Поиск'
     },
-    no_data: {
-        en: 'Not provided',
-        ru: 'Не указано'
+    search_placeholder: {
+        en: 'Search by name, description',
+        ru: 'Поиск по названию, описанию'
     },
-    change: {
-        en: 'Change',
-        ru: 'Изменить'
+    category: {
+        en: 'Category',
+        ru: 'Категория'
     },
-    change_password: {
-        en: 'Change Password',
-        ru: 'Изменить пароль'
+    category_tops_tshirts: {
+        en: 'Tops & T-Shirts',
+        ru: 'Топы и футболки'
     },
-    verify_password: {
-        en: 'Verify Current Password',
-        ru: 'Подтвердите текущий пароль'
+    category_printed_tshirts: {
+        en: 'Printed T-Shirts',
+        ru: 'Футболки с принтом'
     },
-    current_password: {
-        en: 'Current Password',
-        ru: 'Текущий пароль'
+    category_plain_tshirts: {
+        en: 'Plain T-Shirts',
+        ru: 'Однотонные футболки'
     },
-    confirm_password: {
-        en: 'Confirm Password',
-        ru: 'Подтвердите пароль'
+    category_kurti: {
+        en: 'Kurti',
+        ru: 'Курти'
     },
-    verify: {
-        en: 'Verify',
-        ru: 'Подтвердить'
+    category_boxers: {
+        en: 'Boxers',
+        ru: 'Боксеры'
     },
-    cancel: {
-        en: 'Cancel',
-        ru: 'Отмена'
+    category_full_sleeve_tshirts: {
+        en: 'Full Sleeve T-Shirts',
+        ru: 'Футболки с длинным рукавом'
     },
-    confirm: {
-        en: 'Confirm',
-        ru: 'Подтвердить'
+    category_joggers: {
+        en: 'Joggers',
+        ru: 'Джоггеры'
     },
-    empty_field: {
-        en: 'Field cannot be empty',
-        ru: 'Поле не может быть пустым'
+    category_pajamas: {
+        en: 'Pajamas',
+        ru: 'Пижамы'
     },
-    required_fields: {
-        en: 'All fields are required',
-        ru: 'Все поля обязательны'
+    category_jeans: {
+        en: 'Jeans',
+        ru: 'Джинсы'
     },
-    passwords_not_match: {
-        en: 'Passwords do not match',
-        ru: 'Пароли не совпадают'
+    price: {
+        en: 'Price',
+        ru: 'Цена'
     },
-    incorrect_password: {
-        en: 'Incorrect password',
-        ru: 'Неверный пароль'
+    colors: {
+        en: 'Colors',
+        ru: 'Цвета'
     },
-    error_verifying: {
-        en: 'Failed to verify password',
-        ru: 'Не удалось подтвердить пароль'
+    size: {
+        en: 'Size',
+        ru: 'Размер'
     },
-    error_updating: {
-        en: 'Failed to update field',
-        ru: 'Не удалось обновить поле'
+    dress_style: {
+        en: 'Dress Style',
+        ru: 'Стиль одежды'
     },
-    nickname_updated: {
-        en: 'Username updated successfully',
-        ru: 'Имя пользователя успешно обновлено'
+    all_styles: {
+        en: 'All Styles',
+        ru: 'Все стили'
     },
-    firstName_updated: {
-        en: 'First Name updated successfully',
-        ru: 'Имя успешно обновлено'
+    style_classic: {
+        en: 'Classic',
+        ru: 'Классический'
     },
-    lastName_updated: {
-        en: 'Last Name updated successfully',
-        ru: 'Фамилия успешно обновлена'
+    style_casual: {
+        en: 'Casual',
+        ru: 'Повседневный'
     },
-    phoneNumber_updated: {
-        en: 'Phone Number updated successfully',
-        ru: 'Номер телефона успешно обновлен'
+    style_formal: {
+        en: 'Formal',
+        ru: 'Формальный'
     },
-    email_updated: {
-        en: 'Email updated successfully',
-        ru: 'Email успешно обновлен'
+    style_sport: {
+        en: 'Sport',
+        ru: 'Спортивный'
     },
-    birthDate_updated: {
-        en: 'Date of Birth updated successfully',
-        ru: 'Дата рождения успешно обновлена'
+    style_elegant: {
+        en: 'Elegant',
+        ru: 'Элегантный'
     },
-    password_updated: {
-        en: 'Password updated successfully',
-        ru: 'Пароль успешно обновлен'
+    style_formal_evening: {
+        en: 'Formal Evening',
+        ru: 'Вечерний формальный'
     },
-    not_authenticated: {
-        en: 'Please log in to view your wishlist',
-        ru: 'Пожалуйста, войдите, чтобы просмотреть список желаний'
+    admin_product_management: {
+        en: 'Admin Product Management',
+        ru: 'Управление товарами администратора'
     },
-    wishlist_no_results: {
-        en: 'No items in your favorites',
-        ru: 'Нет товаров в избранном'
+    add_new_product: {
+        en: 'Add New Product',
+        ru: 'Добавить новый товар'
     },
-    error_loading: {
-        en: 'Failed to load wishlist',
-        ru: 'Не удалось загрузить список желаний'
+    total_products: {
+        en: 'Total Products',
+        ru: 'Всего товаров'
     },
-    error_missing_elements: {
-        en: 'Page elements not found',
-        ru: 'Элементы страницы не найдены'
-    },
-    please_login: {
-        en: 'Please log in to access this page',
-        ru: 'Пожалуйста, войдите, чтобы получить доступ к этой странице'
+    no_products_found: {
+        en: 'No products found matching your criteria.',
+        ru: 'Товары, соответствующие вашим критериям, не найдены.'
     },
     quick_view: {
         en: 'Quick View',
         ru: 'Быстрый просмотр'
     },
-    remove_from_favorites: {
-        en: 'Remove from Favorites',
-        ru: 'Удалить из избранного'
+    edit: {
+        en: 'Edit',
+        ru: 'Редактировать'
     },
-    favorite_removed: {
-        en: 'Item removed from favorites',
-        ru: 'Товар удален из избранного'
+    delete: {
+        en: 'Delete',
+        ru: 'Удалить'
     },
-    error_removing_favorite: {
-        en: 'Failed to remove item from favorites',
-        ru: 'Не удалось удалить товар из избранного'
+    error_loading_products: {
+        en: 'Failed to load products. Please try again later.',
+        ru: 'Не удалось загрузить товары. Пожалуйста, попробуйте снова позже.'
     },
-    colors_label: {
-        en: 'Colors',
-        ru: 'Цвета'
+    error_loading_product: {
+        en: 'Failed to load product data.',
+        ru: 'Не удалось загрузить данные товара.'
     },
-    category_label: {
-        en: 'Category',
-        ru: 'Категория'
+    error_delete_product: {
+        en: 'Failed to delete product.',
+        ru: 'Не удалось удалить товар.'
     },
-    add_to_cart: {
-        en: 'Add to Cart',
-        ru: 'Добавить в корзину'
+    confirm_delete_product: {
+        en: 'Confirm Deletion',
+        ru: 'Подтвердить удаление'
     },
-    star_alt: {
-        en: 'Full Star',
-        ru: 'Полная звезда'
+    confirm_delete_product_prompt: {
+        en: 'Are you sure you want to delete product',
+        ru: 'Вы уверены, что хотите удалить товар'
     },
-    half_star_alt: {
-        en: 'Half Star',
-        ru: 'Половина звезды'
+    delete_product_success: {
+        en: 'Product deleted successfully!',
+        ru: 'Товар успешно удален!'
     },
-    star_outline_alt: {
-        en: 'Empty Star',
-        ru: 'Пустая звезда'
+    access_denied: {
+        en: 'Access denied: Admin privileges required',
+        ru: 'Доступ запрещен: требуются права администратора'
+    },
+    error_missing_elements: {
+        en: 'Required page elements are missing',
+        ru: 'Отсутствуют необходимые элементы страницы'
+    },
+    confirmation_yes: {
+        en: 'Yes',
+        ru: 'Да'
+    },
+    confirmation_no: {
+        en: 'No',
+        ru: 'Нет'
     },
     pagination_prev: {
         en: 'Previous',
@@ -198,5 +206,171 @@ export const translations = {
     pagination_next: {
         en: 'Next',
         ru: 'Следующая'
+    },
+
+    add_product_title: {
+        en: 'Add New Product',
+        ru: 'Добавить новый товар'
+    },
+    edit_product_title: {
+        en: 'Edit Product',
+        ru: 'Редактировать товар'
+    },
+    product_name_label: {
+        en: 'Name',
+        ru: 'Название'
+    },
+    product_brand_label: {
+        en: 'Brand',
+        ru: 'Бренд'
+    },
+    product_price_label: {
+        en: 'Price',
+        ru: 'Цена'
+    },
+    product_image_label: {
+        en: 'Image URL',
+        ru: 'URL изображения'
+    },
+    product_video_label: {
+        en: 'Video URL',
+        ru: 'URL видео'
+    },
+    product_description_label: {
+        en: 'Description',
+        ru: 'Описание'
+    },
+    product_category_label: {
+        en: 'Category',
+        ru: 'Категория'
+    },
+    product_style_label: {
+        en: 'Style',
+        ru: 'Стиль'
+    },
+    product_colors_label: {
+        en: 'Colors',
+        ru: 'Цвета'
+    },
+    product_sizes_label: {
+        en: 'Sizes',
+        ru: 'Размеры'
+    },
+    product_fabric_label: {
+        en: 'Fabric',
+        ru: 'Ткань'
+    },
+    product_pattern_label: {
+        en: 'Pattern',
+        ru: 'Узор'
+    },
+    product_fit_label: {
+        en: 'Fit',
+        ru: 'Посадка'
+    },
+    product_neck_label: {
+        en: 'Neck',
+        ru: 'Вырез'
+    },
+    product_sleeve_label: {
+        en: 'Sleeve',
+        ru: 'Рукав'
+    },
+    product_name_placeholder: {
+        en: 'Product Name',
+        ru: 'Название товара'
+    },
+    product_brand_placeholder: {
+        en: 'Brand',
+        ru: 'Бренд'
+    },
+    product_price_placeholder: {
+        en: 'Price',
+        ru: 'Цена'
+    },
+    product_image_placeholder: {
+        en: 'Image URL (/images/...)',
+        ru: 'URL изображения (/images/...)'
+    },
+    product_video_placeholder: {
+        en: 'Video URL (/videos/...)',
+        ru: 'URL видео (/videos/...)'
+    },
+    product_description_placeholder: {
+        en: 'Description',
+        ru: 'Описание'
+    },
+    product_fabric_placeholder: {
+        en: 'e.g., Cotton, Polyester',
+        ru: 'например, Хлопок, Полиэстер'
+    },
+    product_pattern_placeholder: {
+        en: 'e.g., Printed, Solid',
+        ru: 'например, С принтом, Однотонный'
+    },
+    product_fit_placeholder: {
+        en: 'e.g., Regular, Slim',
+        ru: 'например, Обычная, Облегающая'
+    },
+    product_neck_placeholder: {
+        en: 'e.g., Crew Neck, V-Neck',
+        ru: 'например, Круглый вырез, V-образный вырез'
+    },
+    product_sleeve_placeholder: {
+        en: 'e.g., Short Sleeve, Long Sleeve',
+        ru: 'например, Короткий рукав, Длинный рукав'
+    },
+    save_button: {
+        en: 'Save',
+        ru: 'Сохранить'
+    },
+    update_button: {
+        en: 'Update',
+        ru: 'Обновить'
+    },
+    cancel_button: {
+        en: 'Cancel',
+        ru: 'Отмена'
+    },
+    add_product_success: {
+        en: 'Product added successfully!',
+        ru: 'Товар успешно добавлен!'
+    },
+    update_product_success: {
+        en: 'Product updated successfully!',
+        ru: 'Товар успешно обновлен!'
+    },
+    error_adding_product: {
+        en: 'Failed to add product.',
+        ru: 'Не удалось добавить товар.'
+    },
+    error_updating_product: {
+        en: 'Failed to update product.',
+        ru: 'Не удалось обновить товар.'
+    },
+    error_invalid_id: {
+        en: 'Invalid product ID.',
+        ru: 'Неверный ID товара.'
+    },
+    duplicate_product_updated: {
+        en: 'Product updated: new colors/sizes added to existing product.',
+        ru: 'Товар обновлен: добавлены новые цвета/размеры к существующему товару.'
+    },
+    
+    modal_success_title: {
+        en: 'Success',
+        ru: 'Успех'
+    },
+    modal_error_title: {
+        en: 'Error',
+        ru: 'Ошибка'
+    },
+    modal_info_title: {
+        en: 'Info',
+        ru: 'Информация'
+    },
+    ok_button: {
+        en: 'OK',
+        ru: 'ОК'
     }
 };

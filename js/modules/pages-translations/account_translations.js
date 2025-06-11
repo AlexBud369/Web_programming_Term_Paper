@@ -159,6 +159,10 @@ export const translations = {
         en: 'Remove from Favorites',
         ru: 'Удалить из избранного'
     },
+    add_to_favorites: {
+        en: 'Add to Favorites',
+        ru: 'Добавить в избранное'
+    },
     favorite_removed: {
         en: 'Item removed from favorites',
         ru: 'Товар удален из избранного'
@@ -198,5 +202,95 @@ export const translations = {
     pagination_next: {
         en: 'Next',
         ru: 'Следующая'
+    },
+
+    category_tops_tshirts: {
+        en: 'Tops & T-Shirts',
+        ru: 'Топы и футболки'
+    },
+    category_printed: {
+        en: 'Printed T-Shirts',
+        ru: 'Футболки с принтом'
+    },
+    category_plain: {
+        en: 'Plain T-Shirts',
+        ru: 'Однотонные футболки'
+    },
+    category_kurti: {
+        en: 'Kurti',
+        ru: 'Курти'
+    },
+    category_boxers: {
+        en: 'Boxers',
+        ru: 'Боксеры'
+    },
+    category_full_sleeve_tshirts: {
+        en: 'Full Sleeve T-Shirts',
+        ru: 'Футболки с длинным рукавом'
+    },
+    category_joggers: {
+        en: 'Joggers',
+        ru: 'Джоггеры'
+    },
+    category_pajamas: {
+        en: 'Pajamas',
+        ru: 'Пижамы'
+    },
+    category_jeans: {
+        en: 'Jeans',
+        ru: 'Джинсы'
+    },
+ 
+    color_purple: {
+        en: 'Purple',
+        ru: 'Фиолетовый'
+    },
+    color_black: {
+        en: 'Black',
+        ru: 'Чёрный'
+    },
+    color_white: {
+        en: 'White',
+        ru: 'Белый'
+    },
+    color_red: {
+        en: 'Red',
+        ru: 'Красный'
+    },
+    color_orange: {
+        en: 'Orange',
+        ru: 'Оранжевый'
+    },
+    color_navy: {
+        en: 'Navy',
+        ru: 'Тёмно-синий'
+    },
+    color_brown: {
+        en: 'Brown',
+        ru: 'Коричневый'
+    },
+    color_green: {
+        en: 'Green',
+        ru: 'Зелёный'
+    },
+    color_yellow: {
+        en: 'Yellow',
+        ru: 'Жёлтый'
+    },
+    color_grey: {
+        en: 'Grey',
+        ru: 'Серый'
+    },
+    color_pink: {
+        en: 'Pink',
+        ru: 'Розовый'
+    },
+    color_blue: {
+        en: 'Blue',
+        ru: 'Синий'
+    },
+    color_gold: {
+        en: 'Gold',
+        ru: 'Золотой'
     }
 };

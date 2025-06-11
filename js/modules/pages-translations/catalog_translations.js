@@ -1,4 +1,5 @@
 export const translations = {
+
   page_title: {
     en: "Catalog",
     ru: "Каталог"
@@ -101,19 +102,11 @@ export const translations = {
   },
   products_count: {
     en: "{count} items",
-    ru: "{count} товаров"
+    ru: "{count} {count, plural, one {товар} few {товара} many {товаров} other {товаров}}"
   },
   no_results: {
     en: "No products found matching your criteria.",
     ru: "Товары, соответствующие вашим критериям, не найдены."
-  },
-  quick_view: {
-    en: "Quick View",
-    ru: "Быстрый просмотр"
-  },
-  add_to_cart: {
-    en: "Add to Cart",
-    ru: "Добавить в корзину"
   },
   modal_login_required: {
     en: "Login Required",
@@ -127,6 +120,62 @@ export const translations = {
     en: "Please log in to add items to favorites.",
     ru: "Пожалуйста, войдите, чтобы добавить товары в избранное."
   },
+  pagination_prev: {
+    en: "Previous",
+    ru: "Предыдущая"
+  },
+  pagination_next: {
+    en: "Next",
+    ru: "Следующая"
+  },
+
+  add_to_cart: {
+    en: "Add to Cart",
+    ru: "Добавить в корзину"
+  },
+  quick_view: {
+    en: "Quick View",
+    ru: "Посмотреть"
+  },
+
+
+  category_tops_tshirts: {
+    en: "Tops & T-Shirts",
+    ru: "Топы и футболки"
+  },
+  category_printed: {
+    en: "Printed T-Shirts",
+    ru: "Футболки с принтом"
+  },
+  category_plain: {
+    en: "Plain T-Shirts",
+    ru: "Однотонные футболки"
+  },
+  category_kurti: {
+    en: "Kurti",
+    ru: "Курти"
+  },
+  category_boxers: {
+    en: "Boxers",
+    ru: "Боксеры"
+  },
+  category_full_sleeve_tshirts: {
+    en: "Full Sleeve T-Shirts",
+    ru: "Футболки с длинным рукавом"
+  },
+  category_joggers: {
+    en: "Joggers",
+    ru: "Джоггеры"
+  },
+  category_pajamas: {
+    en: "Pajamas",
+    ru: "Пижамы"
+  },
+  category_jeans: {
+    en: "Jeans",
+    ru: "Джинсы"
+  },
+
   color_purple: {
     en: "Purple",
     ru: "Фиолетовый"
@@ -175,12 +224,8 @@ export const translations = {
     en: "Blue",
     ru: "Синий"
   },
-  pagination_prev: {
-    en: "Previous",
-    ru: "Предыдущая"
-  },
-  pagination_next: {
-    en: "Next",
-    ru: "Следующая"
+  color_gold: {
+    en: "Gold",
+    ru: "Золотой"
   }
 };
