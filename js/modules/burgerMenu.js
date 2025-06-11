@@ -1,6 +1,7 @@
 import { checkAuth, updateUserProfile } from './auth.js';
-import { initAccessibility } from './accessibility.js';
-import { resetAccessibility } from './accessibility.js';
+import { initAccessibility, resetAccessibility } from './accessibility.js';
+import { translations } from './pages-translations/header_translations.js';
+import { updateLanguage } from './languageSwitcher.js';
 
 export function initBurgerMenu(isIndexPage = false, isAuthPage = false, isSignInPage = false) {
     const burgerBtn = document.querySelector('.burger-menu');
@@ -42,31 +43,37 @@ export function initBurgerMenu(isIndexPage = false, isAuthPage = false, isSignIn
         const authBtn = authSection.querySelector('.auth-btn');
         const mobileAuthBtn = mobileMenu.querySelector('.auth-section .auth-btn');
 
-        if (isAuthPage) {
+        const currentLang = localStorage.getItem('language') || 'en';
+        if (loginBtn) loginBtn.setAttribute('data-i18n', 'login_btn');
+        if (registerBtn) registerBtn.setAttribute('data-i18n', 'register_btn');
+        if (logoutBtn) logoutBtn.setAttribute('data-i18n', 'logout_btn');
+        updateLanguage(currentLang, translations);
+
+       if (isAuthPage) {
             if (authBtn) {
-                authBtn.textContent = isSignInPage ? 'Register' : 'Login';
+                authBtn.setAttribute('data-i18n', isSignInPage ? 'register_btn' : 'login_btn');
                 authBtn.addEventListener('click', () => {
                     window.location.href = isSignInPage ? 'signup.html' : 'signin.html';
                     toggleMenu();
                 });
             }
             if (mobileAuthBtn) {
-                mobileAuthBtn.textContent = isSignInPage ? 'Register' : 'Login';
+                mobileAuthBtn.setAttribute('data-i18n', isSignInPage ? 'register_btn' : 'login_btn');
                 mobileAuthBtn.addEventListener('click', () => {
                     window.location.href = isSignInPage ? 'signup.html' : 'signin.html';
                     toggleMenu();
-                });
-            }
+               });
+        
         } else {
             if (loginBtn) {
                 loginBtn.addEventListener('click', () => {
-                    window.location.href = isIndexPage ? 'pages/signin.html' : '../auth/signin.html';
-                    toggleMenu();
+                    window.location.href = '../auth/signin.html';
+                    toggleMenu(); 
                 });
             }
             if (registerBtn) {
                 registerBtn.addEventListener('click', () => {
-                    window.location.href = isIndexPage ? 'pages/signup.html' : '../auth/signup.html';
+                    window.location.href = '../auth/signup.html';
                     toggleMenu();
                 });
             }
@@ -77,7 +84,7 @@ export function initBurgerMenu(isIndexPage = false, isAuthPage = false, isSignIn
                 localStorage.removeItem('user');
                 updateUserProfile();
                 toggleMenu();
-                window.location.href = isIndexPage ? 'pages/signin.html' : isAuthPage ? 'signin.html' : '../auth/signin.html';
+                window.location.href = isAuthPage ? 'signin.html' : '../auth/signin.html';
             });
         }
 
@@ -89,25 +96,43 @@ export function initBurgerMenu(isIndexPage = false, isAuthPage = false, isSignIn
         if (!resetBtn) {
             resetBtn = document.createElement('button');
             resetBtn.className = 'reset-btn';
-            resetBtn.textContent = 'Reset Settings';
-            resetBtn.setAttribute('aria-label', 'Reset all settings');
+            resetBtn.setAttribute('aria-label', translations.reset_btn[currentLang]);
+            resetBtn.setAttribute('data-i18n', 'reset_btn');
             menuContainer.insertBefore(resetBtn, authSection);
         }
 
+        const currentLang = localStorage.getItem('language') || 'en';
+        updateLanguage(currentLang, translations);
+
         resetBtn.addEventListener('click', () => {
             console.log('Reset button clicked');
+
+            localStorage.setItem('language', 'en');
+            localStorage.setItem('theme', 'light');
+            document.documentElement.setAttribute('data-theme', 'light');
+   
             resetAccessibility();
+     
+            const languageChangedEvent = new CustomEvent('languageChanged', { detail: { lang: 'en' } });
+            window.dispatchEvent(languageChangedEvent);
             toggleMenu();
             setTimeout(() => window.location.reload(), 100);
         });
     }
+
     initAuthSection();
     initMobileMenu();
 
-
-   console.log('a11ySettings found:', a11ySettings);
+    console.log('a11ySettings found:', a11ySettings);
     if (isIndexPage && a11ySettings) {
         console.log('Initializing accessibility with container:', a11ySettings);
         initAccessibility(a11ySettings);
+    }
+
+
+    window.addEventListener('languageChanged', (e) => {
+        const newLang = e.detail.lang;
+        updateLanguage(newLang, translations);
+    });
     }
 }
