@@ -14,7 +14,10 @@
     <link rel="stylesheet" href="../css/layouts/modal-form.css">
     <title data-i18n="page_title_account">Euphoria - My Account</title>
 </head>
-<body data-page-type="account">
+<body data-page-type="account" class="a11y-page">
+    <div class="preloader">
+        <div class="preloader__spinner"></div>
+    </div>
     <header class="header">
         <div class="header-container">
             <a href="../index.html" class="logo" aria-label="Euphoria Home">
@@ -22,9 +25,9 @@
             </a>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="../index.html" data-i18n="nav_home">Home</a></li>
+                    <li><a href="./index.html" data-i18n="nav_home">Home</a></li>
                     <li><a href="catalog.html" data-i18n="nav_catalog">Catalog</a></li>
-                    <li class="auth-only"><a href="./account.html" class="account-link" data-i18n="nav_account">Account</a></li>
+                    <li class="auth-only"><a href="account.html" class="account-link" data-i18n="nav_account">Account</a></li>
                     <li class="auth-only"><a href="./cart.html" class="cart-link" data-i18n="nav_cart">Cart</a></li>
                     <li class="admin-only"><a href="./admin.html" class="admin-link" data-i18n="nav_admin_panel">Admin Panel</a></li>
                 </ul>
@@ -70,7 +73,7 @@
                     <ul>
                         <li><a href="../index.html" data-i18n="nav_home">Home</a></li>
                         <li><a href="catalog.html" data-i18n="nav_catalog">Catalog</a></li>
-                        <li class="auth-only"><a href="./account.html" class="account-link" data-i18n="nav_account">Account</a></li>
+                        <li class="auth-only"><a href="account.html" class="account-link" data-i18n="nav_account">Account</a></li>
                         <li class="auth-only"><a href="./cart.html" class="cart-link" data-i18n="nav_cart">Cart</a></li>
                         <li class="admin-only"><a href="./admin.html" class="admin-link" data-i18n="nav_admin_panel">Admin Panel</a></li>
                     </ul>
@@ -95,15 +98,13 @@
                             <label data-i18n="a11y_color_scheme">Color Scheme:</label>
                             <div class="color-schemes">
                                 <label><input type="radio" name="color-scheme" value="black-white" data-i18n="a11y_black_white">Black background, white text</label>
-                                <label><input type="radio" name="color-scheme" value="black-green" data-i18n="a11y_black_green">Black background, green text</label>
-                                <label><input type="radio" name="color-scheme" value="white-black" data-i18n="a11y_white_black">White background, black text</label>
                                 <label><input type="radio" name="color-scheme" value="beige-brown" data-i18n="a11y_beige_brown">Beige background, brown text</label>
                                 <label><input type="radio" name="color-scheme" value="blue-darkblue" data-i18n="a11y_blue_darkblue">Blue background, dark blue text</label>
                             </div>
                         </div>
                         <div class="option-group">
                             <label>
-                                <input type="checkbox" id="images-toggle" checked data-i18n="a11y_show_images"> Show Images
+                                <input type="checkbox" id="images-toggle" checked data-i18n="a11y_show_images"> Show Images in Wishlist
                             </label>
                         </div>
                     </div>
@@ -216,13 +217,13 @@
                     <li><a href="./index.html" class="footer__link" data-i18n="nav_home">Home</a></li>
                     <li><a href="./catalog.html" class="footer__link" data-i18n="nav_catalog">Catalog</a></li>
                     <li><a href="./cart.html" class="footer__link auth-link" data-i18n="nav_cart">Cart</a></li>
-                    <li><a href="./account.html" class="footer__link auth-link" data-i18n="nav_account">My Account</a></li>
+                    <li><a href="account.html" class="footer__link auth-link" data-i18n="nav_account">My Account</a></li>
                 </ul>
             </div>
             <div class="footer__column">
                 <h2 class="footer__title" data-i18n="footer_contacts_title">Contacts</h2>
                 <ul class="footer__list">
-                    <li><a href="index.html#map" class="footer__link" data-i18n="footer_store_location">Store Location</a></li>
+                    <li><a href="./index.html#map" class="footer__link" data-i18n="footer_store_location">Store Location</a></li>
                     <li><span class="footer__link" data-i18n="footer_phone">+1 (234) 567-89-00</span></li>
                     <li><a href="mailto:info@euphoria.com" class="footer__link" data-i18n="footer_email">info@euphoria.com</a></li>
                 </ul>
