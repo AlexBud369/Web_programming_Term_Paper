@@ -1,36 +1,45 @@
 import { showAddToCartModal, showSuccessModal, showErrorModal } from './modal.js';
+import { translations as cartTranslations } from './pages-translations/cart_translations.js';
 
 export async function initAddToCart(pageType, selector, products = []) {
     const buttons = document.querySelectorAll(selector);
+    const lang = localStorage.getItem('language') || 'en';
+
     buttons.forEach(button => {
         button.addEventListener('click', async () => {
-            const productId = button.dataset.productId;
-            const product = products.find(p => p.id == productId) || await fetchProduct(productId);
+            const productId = parseInt(button.dataset.productId);
+            let product = products.find(p => p.id === productId) || await fetchProduct(productId);
             if (!product) {
-                showErrorModal('Product not found');
+                showErrorModal(cartTranslations.error_product_not_found?.[lang] || 'Product not found');
                 return;
             }
 
+            product = {
+                ...product,
+                colors: Array.isArray(product.colors) ? product.colors : ['Unknown'],
+                sizes: Array.isArray(product.sizes) ? product.sizes : ['M']
+            };
+
             const cartRes = await fetch('http://localhost:3000/cart');
             if (!cartRes.ok) {
-                showErrorModal('Failed to fetch cart');
+                showErrorModal(cartTranslations.error_fetch_cart?.[lang] || 'Failed to fetch cart');
                 return;
             }
             const cartItems = await cartRes.json();
             const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-            if (totalItems >= 10 && pageType !== 'product') {
-                showErrorModal('Cannot add to cart. Maximum 10 items allowed.');
+            if (totalItems >= 10) {
+                showErrorModal(cartTranslations.error_cart_limit?.[lang] || 'Cannot add to cart. Maximum 10 items allowed.');
                 return;
             }
 
-            if (pageType === 'product' && !button.closest('.related-products')) {
-                const color = document.querySelector('#color-select')?.value || product.colors[0];
-                const size = document.querySelector('#size-select')?.value || product.sizes[0];
-                await addToCart(product, color, size);
-            } else {
+            if (button.dataset.context === 'product-card') {
                 showAddToCartModal(product, async (color, size) => {
                     await addToCart(product, color, size);
                 });
+            } else {
+                const color = product.colors[0];
+                const size = product.sizes[0];
+                await addToCart(product, color, size);
             }
         });
     });
@@ -49,6 +58,7 @@ async function fetchProduct(productId) {
 
 async function addToCart(product, color, size, quantity = 1) {
     try {
+        const lang = localStorage.getItem('language') || 'en';
         const cartRes = await fetch('http://localhost:3000/cart');
         if (!cartRes.ok) throw new Error('Failed to fetch cart');
         const cartItems = await cartRes.json();
@@ -61,7 +71,7 @@ async function addToCart(product, color, size, quantity = 1) {
         if (existingItem) {
             const newQuantity = existingItem.quantity + quantity;
             if (totalItems + quantity > 10) {
-                showErrorModal('Cannot add to cart. Maximum 10 items allowed.');
+                showErrorModal(cartTranslations.error_cart_limit?.[lang] || 'Cannot add to cart. Maximum 10 items allowed.');
                 return false;
             }
             const updatedItem = { ...existingItem, quantity: newQuantity };
@@ -73,7 +83,7 @@ async function addToCart(product, color, size, quantity = 1) {
             if (!updateRes.ok) throw new Error('Failed to update cart item');
         } else {
             if (totalItems + quantity > 10) {
-                showErrorModal('Cannot add to cart. Maximum 10 items allowed.');
+                showErrorModal(cartTranslations.error_cart_limit?.[lang] || 'Cannot add to cart. Maximum 10 items allowed.');
                 return false;
             }
             const cartItem = {
@@ -94,13 +104,13 @@ async function addToCart(product, color, size, quantity = 1) {
             if (!addRes.ok) throw new Error('Failed to add item to cart');
         }
 
-        showSuccessModal(`${product.name} added to cart!`);
+        showSuccessModal(cartTranslations.item_added_to_cart?.[lang] || `${product.name} added to cart!`);
         sessionStorage.setItem('showSuccessModal', 'true');
         updateCartCount();
         return true;
     } catch (error) {
         console.error('Error adding to cart:', error);
-        showErrorModal('Failed to add item to cart.');
+        showErrorModal(cartTranslations.error_add_to_cart?.[lang] || 'Failed to add item to cart.');
         return false;
     }
 }
