@@ -21,7 +21,7 @@ header {
 }
 
 :root.dark-theme .logo img {
-    content: url("../images/Logo-dark.png"); 
+    content: url("../../images/Logo-dark.png"); 
 }
 
 .main-nav {
@@ -420,6 +420,12 @@ header {
 
 .logged-in .auth-only {
     display: block;
+}
+
+.mobile-menu .custom-toggle {
+    display: block;
+    
+    margin-top: 20px; 
 }
 
 .mobile-menu .language-selector,
