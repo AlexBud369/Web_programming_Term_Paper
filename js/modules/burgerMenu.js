@@ -1,4 +1,4 @@
-import { checkAuth, updateUserProfile } from './auth.js';
+import { checkAuth, updateUserProfile, logoutUser } from './auth.js';
 import { initAccessibility, resetAccessibility } from './accessibility.js';
 import { translations } from './pages-translations/header_translations.js';
 import { updateLanguage } from './languageSwitcher.js';
@@ -49,31 +49,34 @@ export function initBurgerMenu(isIndexPage = false, isAuthPage = false, isSignIn
         if (logoutBtn) logoutBtn.setAttribute('data-i18n', 'logout_btn');
         updateLanguage(currentLang, translations);
 
-       if (isAuthPage) {
+        const isInPagesDir = window.location.pathname.includes('/pages/');
+        const basePath = isInPagesDir ? '../' : '';
+
+        if (isAuthPage) {
             if (authBtn) {
                 authBtn.setAttribute('data-i18n', isSignInPage ? 'register_btn' : 'login_btn');
                 authBtn.addEventListener('click', () => {
-                    window.location.href = isSignInPage ? 'signup.html' : 'signin.html';
+                    window.location.href = `${basePath}auth/${isSignInPage ? 'signup.html' : 'signin.html'}`;
                     toggleMenu();
                 });
             }
             if (mobileAuthBtn) {
                 mobileAuthBtn.setAttribute('data-i18n', isSignInPage ? 'register_btn' : 'login_btn');
                 mobileAuthBtn.addEventListener('click', () => {
-                    window.location.href = isSignInPage ? 'signup.html' : 'signin.html';
+                    window.location.href = `${basePath}auth/${isSignInPage ? 'signup.html' : 'signin.html'}`;
                     toggleMenu();
-               });
-        
+                });
+            }
         } else {
             if (loginBtn) {
                 loginBtn.addEventListener('click', () => {
-                    window.location.href = '../auth/signin.html';
-                    toggleMenu(); 
+                    window.location.href = `${basePath}auth/signin.html`;
+                    toggleMenu();
                 });
             }
             if (registerBtn) {
                 registerBtn.addEventListener('click', () => {
-                    window.location.href = '../auth/signup.html';
+                    window.location.href = `${basePath}auth/signup.html`;
                     toggleMenu();
                 });
             }
@@ -81,43 +84,68 @@ export function initBurgerMenu(isIndexPage = false, isAuthPage = false, isSignIn
 
         if (logoutBtn) {
             logoutBtn.addEventListener('click', () => {
-                localStorage.removeItem('user');
-                updateUserProfile();
+                console.log('Logout button clicked, calling logoutUser');
+                logoutUser();
                 toggleMenu();
-                window.location.href = isAuthPage ? 'signin.html' : '../auth/signin.html';
             });
         }
 
-        updateUserProfile();
+        console.log('Initializing user profile on page load');
+        try {
+            updateUserProfile();
+        } catch (error) {
+            console.error('Error in updateUserProfile on init:', error);
+        }
     }
 
     function initMobileMenu() {
         let resetBtn = menuContainer.querySelector('.reset-btn');
         if (!resetBtn) {
+            console.log('Creating reset button');
             resetBtn = document.createElement('button');
             resetBtn.className = 'reset-btn';
-            resetBtn.setAttribute('aria-label', translations.reset_btn[currentLang]);
             resetBtn.setAttribute('data-i18n', 'reset_btn');
             menuContainer.insertBefore(resetBtn, authSection);
         }
 
         const currentLang = localStorage.getItem('language') || 'en';
-        updateLanguage(currentLang, translations);
+        resetBtn.textContent = translations.reset_btn?.[currentLang] || 'Reset Settings';
+        resetBtn.setAttribute('aria-label', translations.reset_btn?.[currentLang] || 'Reset Settings');
+
+        const isAccountPage = window.location.pathname.includes('account.html');
 
         resetBtn.addEventListener('click', () => {
             console.log('Reset button clicked');
+            try {
+                localStorage.setItem('language', 'en');
+                localStorage.setItem('theme', 'light');
+                document.documentElement.setAttribute('data-theme', 'light');
 
-            localStorage.setItem('language', 'en');
-            localStorage.setItem('theme', 'light');
-            document.documentElement.setAttribute('data-theme', 'light');
-   
-            resetAccessibility();
-     
-            const languageChangedEvent = new CustomEvent('languageChanged', { detail: { lang: 'en' } });
-            window.dispatchEvent(languageChangedEvent);
-            toggleMenu();
-            setTimeout(() => window.location.reload(), 100);
+               
+                if (isAccountPage) {
+                    console.log('Resetting accessibility settings for account page');
+                    resetAccessibility();
+                } else {
+                    console.log('Skipping accessibility reset, not on account page');
+                }
+
+                const languageChangedEvent = new CustomEvent('languageChanged', { detail: { lang: 'en' } });
+                window.dispatchEvent(languageChangedEvent);
+                console.log('Calling updateUserProfile for reset');
+                try {
+                    updateUserProfile();
+                } catch (error) {
+                    console.error('Error in updateUserProfile during reset:', error);
+                }
+                toggleMenu();
+                console.log('Settings reset, UI updated');
+            } catch (error) {
+                console.error('Error during reset:', error);
+                toggleMenu();
+            }
         });
+
+        updateLanguage(currentLang, translations);
     }
 
     initAuthSection();
@@ -129,10 +157,8 @@ export function initBurgerMenu(isIndexPage = false, isAuthPage = false, isSignIn
         initAccessibility(a11ySettings);
     }
 
-
     window.addEventListener('languageChanged', (e) => {
         const newLang = e.detail.lang;
         updateLanguage(newLang, translations);
     });
-    }
 }
