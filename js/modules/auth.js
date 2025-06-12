@@ -1,192 +1,351 @@
 import { API_URL, COMMON_PASSWORDS, LOWERCASE, UPPERCASE, DIGITS, SPECIALS } from './constants.js';
+import { showErrorModal } from './modal.js';
 
+const FALLBACK_API_URL = 'http://localhost:3000';
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&*_])[A-Za-z\d@$!%*?&*_]{8,20}$/;
 
-function validatePhoneNumber(phone) {
-  const phoneRegex = /^\+375\s?(25|29|33|44)\s?\d{3}\s?\d{2}\s?\d{2}$/;
-  return phoneRegex.test(phone);
+export function validatePhoneNumber(phone) {
+    console.log('Validating phone number:', phone);
+    const phoneRegex = /^\+375\s?(25|29|33|44)\s?\d{3}\s?\d{2}\s?\d{2}$/;
+    return phoneRegex.test(phone);
 }
 
-function validateEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+export function validateEmail(email) {
+    console.log('Validating email:', email);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
 }
 
-function validateBirthDate(birthDate) {
-  const today = new Date();
-  const birth = new Date(birthDate);
-  const age = today.getFullYear() - birth.getFullYear();
-  const monthDiff = today.getMonth() - birth.getMonth();
-  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-    return age - 1 >= 16;
-  }
-  return age >= 16;
-}
-
-function validatePassword(password) {
-  return passwordRegex.test(password) && !COMMON_PASSWORDS.includes(password);
-}
-
-function generateRandomPassword() {
-  const allChars = LOWERCASE + UPPERCASE + DIGITS + SPECIALS;
-  let password = '';
-  const length = 12;
-
-  password += LOWERCASE[Math.floor(Math.random() * LOWERCASE.length)];
-  password += UPPERCASE[Math.floor(Math.random() * UPPERCASE.length)];
-  password += DIGITS[Math.floor(Math.random() * DIGITS.length)];
-  password += SPECIALS[Math.floor(Math.random() * SPECIALS.length)];
-
-  for (let i = 4; i < length; i++) {
-    password += allChars[Math.floor(Math.random() * allChars.length)];
-  }
-
-  password = password.split('').sort(() => Math.random() - 0.5).join('');
-
-  if (!validatePassword(password)) {
-    return generateRandomPassword();
-  }
-  return password;
-}
-
-async function generateNickname(attempts = 0) {
-  const adjectives = ['Cool', 'Brave', 'Swift', 'Bright', 'Clever'];
-  const nouns = ['Star', 'Wolf', 'Eagle', 'Fox', 'River'];
-  const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-  const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
-  const randomNumber = Math.floor(Math.random() * 1000);
-  const nickname = `${randomAdjective}${randomNoun}${randomNumber}`;
-
-  try {
-    const response = await fetch(`${API_URL}/users?nickname=${nickname}`);
-    if (!response.ok) {
-      throw new Error('Failed to check nickname availability');
+export function validateBirthDate(birthDate) {
+    console.log('Validating birth date:', birthDate);
+    const today = new Date();
+    const birth = new Date(birthDate);
+    const age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+        return age - 1 >= 16;
     }
-    const users = await response.json();
-    if (users.length > 0 && attempts < 5) {
-      return generateNickname(attempts + 1);
+    return age >= 16;
+}
+
+export function validatePassword(password) {
+    console.log('Validating password');
+    const isValid = passwordRegex.test(password) && !COMMON_PASSWORDS.includes(password);
+    console.log('Password validation result:', isValid);
+    return isValid;
+}
+
+export function generateRandomPassword() {
+    console.log('Generating random password');
+    const allChars = LOWERCASE + UPPERCASE + DIGITS + SPECIALS;
+    let password = '';
+    const length = 12;
+
+    password += LOWERCASE[Math.floor(Math.random() * LOWERCASE.length)];
+    password += UPPERCASE[Math.floor(Math.random() * UPPERCASE.length)];
+    password += DIGITS[Math.floor(Math.random() * DIGITS.length)];
+    password += SPECIALS[Math.floor(Math.random() * SPECIALS.length)];
+
+    for (let i = 4; i < length; i++) {
+        password += allChars[Math.floor(Math.random() * allChars.length)];
     }
-    return nickname;
-  } catch (error) {
-    return `${randomAdjective}${randomNoun}${randomNumber + attempts}`;
-  }
+
+    password = password.split('').sort(() => Math.random() - 0.5).join('');
+
+    if (!passwordRegex.test(password)) {
+        console.log('Generated password invalid, retrying');
+        return generateRandomPassword();
+    }
+    console.log('Generated password:', password);
+    return password;
 }
 
-function checkAuth(requiredRole = null) {
-  const user = JSON.parse(localStorage.getItem('user'));
-  if (!user) {
-    return { isAuthenticated: false, role: null };
-  }
-  if (requiredRole && user.role !== requiredRole) {
-    return { isAuthenticated: true, role: user.role, hasRequiredRole: false };
-  }
-  return { isAuthenticated: true, role: user.role, hasRequiredRole: true };
+export async function generateNickname(attempts = 0) {
+    console.log(`Generating nickname, attempt ${attempts + 1}`);
+    const maxAttempts = 4;
+    if (attempts >= maxAttempts) {
+        throw new Error('Maximum nickname generation attempts reached');
+    }
+
+    const adjectives = ['Cool', 'Bold', 'Swift', 'Bright', 'Clever', 'Smart', 'Vivid', 'Neat'];
+    const nouns = ['Star', 'Wolf', 'Eagle', 'Fox', 'River', 'Cloud', 'Tree', 'Moon'];
+    const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+    const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
+    const randomNumber = Math.floor(Math.random() * 1000);
+    const nickname = `${randomAdjective}${randomNoun}${randomNumber}`;
+
+    try {
+        const apiUrl = API_URL || FALLBACK_API_URL;
+        console.log(`Checking nickname availability: ${nickname} at ${apiUrl}`);
+        const response = await fetch(`${apiUrl}/users?nickname=${encodeURIComponent(nickname)}`);
+        if (!response.ok) {
+            console.log('Nickname check failed:', response.statusText);
+            throw new Error('Failed to check nickname availability');
+        }
+        const users = await response.json();
+        if (users.length > 0) {
+            console.log('Nickname exists, retrying');
+            return generateNickname(attempts + 1);
+        }
+        console.log('Nickname generated:', nickname);
+        return nickname;
+    } catch (error) {
+        console.log('Nickname generation error:', error.message);
+        if (attempts + 1 < maxAttempts) {
+            console.log('Retrying nickname generation');
+            return generateNickname(attempts + 1);
+        }
+        const fallbackNickname = `${randomAdjective}${randomNoun}${randomNumber + attempts}`;
+        console.log('Using fallback nickname:', fallbackNickname);
+        return fallbackNickname;
+    }
 }
 
-function updateUserProfile() {
-  const auth = checkAuth();
-  const loginBtn = document.querySelector('.login-btn');
-  const registerBtn = document.querySelector('.register-btn');
-  const userProfile = document.querySelector('.user-profile');
-  const usernameSpan = document.querySelector('.username');
-  const logoutBtn = document.querySelector('.logout-btn');
-  const authLinks = document.querySelectorAll('.auth-only');
+export function checkAuth(requiredRole = null) {
+    console.log('Checking authentication status, requiredRole:', requiredRole);
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+        console.log('No user found in localStorage');
+        return { isAuthenticated: false, role: null, hasRequiredRole: false, userId: null };
+    }
+    console.log('User found:', user);
+    const hasRequiredRole = requiredRole ? user.role === requiredRole : true;
+    console.log(`User role: ${user.role}, hasRequiredRole: ${hasRequiredRole}, userId: ${user.id}`);
+    return { isAuthenticated: true, role: user.role, hasRequiredRole, userId: user.id };
+}
 
-  if (!auth.isAuthenticated) {
-    if (loginBtn) loginBtn.style.display = 'block';
-    if (registerBtn) registerBtn.style.display = 'block';
-    if (userProfile) userProfile.style.display = 'none';
-    authLinks.forEach(el => el.style.display = 'none');
-    return;
-  }
+export function updateUserProfile() {
+    console.log('updateUserProfile called');
+    const auth = checkAuth();
+    const loginBtn = document.querySelector('.header-controls .login-btn');
+    const registerBtn = document.querySelector('.header-controls .register-btn');
+    const mobileLoginBtn = document.querySelector('.auth-section .login-btn');
+    const mobileRegisterBtn = document.querySelector('.auth-section .register-btn');
+    const userProfile = document.querySelector('.user-profile');
+    const usernameSpan = document.querySelector('.username');
+    const authLinks = document.querySelectorAll('.auth-only');
+    const adminLinks = document.querySelectorAll('.admin-only');
+    const isSignInPage = window.location.pathname.includes('signin.html');
+    const isSignUpPage = window.location.pathname.includes('signup.html');
 
-  const user = JSON.parse(localStorage.getItem('user'));
-  if (loginBtn) loginBtn.style.display = 'none';
-  if (registerBtn) registerBtn.style.display = 'none';
-  if (userProfile) userProfile.style.display = 'block';
-  if (usernameSpan) usernameSpan.textContent = user.nickname || 'User';
-  authLinks.forEach(el => el.style.display = 'list-item');
+    if (!auth.isAuthenticated) {
+        console.log('User not authenticated, updating UI for unauthenticated state');
+        if (loginBtn) {
+            loginBtn.style.display = isSignInPage ? 'none' : 'block';
+            loginBtn.textContent = 'Login';
+            loginBtn.addEventListener('click', () => {
+                console.log('Login button clicked, redirecting to signin.html');
+                window.location.assign('../auth/signin.html');
+            }, { once: true });
+        }
+        if (registerBtn) {
+            registerBtn.style.display = isSignUpPage ? 'none' : 'block';
+            registerBtn.textContent = 'Register';
+            registerBtn.addEventListener('click', () => {
+                console.log('Register button clicked, redirecting to signup.html');
+                window.location.assign('../auth/signup.html');
+            }, { once: true });
+        }
+        if (mobileLoginBtn) {
+            mobileLoginBtn.style.display = isSignInPage ? 'none' : 'block';
+            mobileLoginBtn.textContent = 'Login';
+            mobileLoginBtn.addEventListener('click', () => {
+                console.log('Mobile login button clicked, redirecting to signin.html');
+                window.location.assign('../auth/signin.html');
+            }, { once: true });
+        }
+        if (mobileRegisterBtn) {
+            mobileRegisterBtn.style.display = isSignUpPage ? 'none' : 'block';
+            mobileRegisterBtn.textContent = 'Register';
+            mobileRegisterBtn.addEventListener('click', () => {
+                console.log('Mobile register button clicked, redirecting to signup.html');
+                window.location.assign('../auth/signup.html');
+            }, { once: true });
+        }
+        if (userProfile) {
+            userProfile.style.display = 'none';
+            console.log('Hiding user profile');
+        }
+        authLinks.forEach(link => {
+            link.style.display = 'none';
+            console.log('Hiding auth link:', link);
+        });
+        adminLinks.forEach(link => {
+            link.style.display = 'none';
+            console.log('Hiding admin link:', link);
+        });
+        return;
+    }
 
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
-      localStorage.removeItem('user');
-      window.location.href = '../auth/signin.html';
+    const user = JSON.parse(localStorage.getItem('user'));
+    console.log('User authenticated, updating UI for user:', user.nickname, 'role:', user.role);
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (registerBtn) registerBtn.style.display = 'none';
+    if (mobileLoginBtn) mobileLoginBtn.style.display = 'none';
+    if (mobileRegisterBtn) mobileRegisterBtn.style.display = 'none';
+    if (userProfile) {
+        userProfile.style.display = 'block';
+        console.log('Showing user profile');
+    }
+    if (usernameSpan) {
+        usernameSpan.textContent = user.nickname || 'User';
+        console.log('Setting username to:', user.nickname || 'User');
+    }
+    authLinks.forEach(link => {
+        link.style.display = 'list-item';
+        console.log('Showing auth link:', link);
     });
-  }
-}
-
-async function registerUser(userData) {
-  try {
-    const emailResponse = await fetch(`${API_URL}/users?email=${userData.email}`);
-    if (!emailResponse.ok) {
-      throw new Error('Failed to check email availability');
-    }
-    const existingEmail = await emailResponse.json();
-    if (existingEmail.length > 0) {
-      throw new Error('Email already registered');
-    }
-
-    const phoneResponse = await fetch(`${API_URL}/users?phoneNumber=${userData.phoneNumber}`);
-    if (!phoneResponse.ok) {
-      throw new Error('Failed to check phone availability');
-    }
-    const existingPhone = await phoneResponse.json();
-    if (existingPhone.length > 0) {
-      throw new Error('Phone number already registered');
-    }
-
-    const response = await fetch(`${API_URL}/users`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userData),
+    adminLinks.forEach(link => {
+        link.style.display = user.role === 'admin' ? 'list-item' : 'none';
+        console.log('Admin link visibility (', user.role, '):', link.style.display);
     });
-
-    if (!response.ok) {
-      throw new Error(`Registration failed: ${response.statusText}`);
-    }
-
-    const newUser = await response.json();
-    console.log('New user registered:', newUser);
-    return newUser;
-  } catch (error) {
-    console.error('Register user error:', error);
-    throw new Error(error.message || 'Registration failed');
-  }
 }
 
-async function loginUser({ usernameEmail, password }) {
-  try {
-    const response = await fetch(`${API_URL}/users?email=${usernameEmail}&password=${password}`);
-    if (!response.ok) {
-      throw new Error('Login failed');
+export async function registerUser(userData) {
+    console.log('Registering user:', userData);
+    try {
+        const apiUrl = API_URL || FALLBACK_API_URL;
+
+        console.log('Checking phone number availability:', userData.phoneNumber);
+        const phoneResponse = await fetch(`${apiUrl}/users?phoneNumber=${encodeURIComponent(userData.phoneNumber)}`);
+        if (!phoneResponse.ok) {
+            console.log('Phone check failed:', phoneResponse.statusText);
+            showErrorModal('Failed to check phone availability');
+            throw new Error('Failed to check phone availability');
+        }
+        const existingPhone = await phoneResponse.json();
+        if (existingPhone.length > 0) {
+            console.log('Phone number already registered');
+            showErrorModal('Phone number already registered');
+            throw new Error('Phone number already registered');
+        }
+
+        console.log('Checking email availability:', userData.email);
+        const emailResponse = await fetch(`${apiUrl}/users?email=${encodeURIComponent(userData.email)}`);
+        if (!emailResponse.ok) {
+            console.log('Email check failed:', emailResponse.statusText);
+            showErrorModal('Failed to check email availability');
+            throw new Error('Failed to check email availability');
+        }
+        const existingEmail = await emailResponse.json();
+        if (existingEmail.length > 0) {
+            console.log('Email already registered');
+            showErrorModal('Email already registered');
+            throw new Error('Email already registered');
+        }
+
+        console.log('Checking nickname availability:', userData.nickname);
+        const nicknameResponse = await fetch(`${apiUrl}/users?nickname=${encodeURIComponent(userData.nickname)}`);
+        if (!nicknameResponse.ok) {
+            console.log('Nickname check failed:', nicknameResponse.statusText);
+            showErrorModal('Failed to check nickname availability');
+            throw new Error('Failed to check nickname availability');
+        }
+        const existingNickname = await nicknameResponse.json();
+        if (existingNickname.length > 0) {
+            console.log('Nickname already registered');
+            showErrorModal('Nickname already registered');
+            throw new Error('Nickname already registered');
+        }
+
+        console.log('Sending registration request');
+        const response = await fetch(`${apiUrl}/users`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData),
+        });
+
+        if (!response.ok) {
+            console.log('Registration failed:', response.statusText);
+            showErrorModal(`Registration failed: ${response.statusText}`);
+            throw new Error(`Registration failed: ${response.statusText}`);
+        }
+
+        const newUser = await response.json();
+        console.log('New user registered:', newUser);
+
+        const userToSave = {
+            id: newUser.id || Date.now(),
+            email: newUser.email || '',
+            nickname: newUser.nickname || '',
+            phoneNumber: newUser.phoneNumber || '',
+            firstName: newUser.firstName || '',
+            lastName: newUser.lastName || '',
+            birthDate: newUser.birthDate || '',
+            role: newUser.role || 'user'
+        };
+        localStorage.setItem('user', JSON.stringify(userToSave));
+        console.log('User saved to localStorage:', userToSave);
+
+        updateUserProfile();
+
+        console.log('Redirecting to account.html after registration');
+        window.location.assign('../pages/account.html');
+
+        return userToSave;
+    } catch (error) {
+        console.log('Registration error:', error.message);
+        throw error;
     }
-    const users = await response.json();
-    if (users.length === 0) {
-      throw new Error('Invalid email or password');
-    }
-    const user = users[0];
-    user.role = user.email === 'admin@example.com' ? 'admin' : 'user';
-    return user;
-  } catch (error) {
-    throw new Error(error.message);
-  }
 }
 
-function logoutUser() {
-  localStorage.removeItem('user');
-  window.location.href = '/auth/signin.html';
+export async function loginUser({ usernameEmail, password }) {
+    console.log('Logging in user:', usernameEmail);
+    try {
+        const apiUrl = API_URL || FALLBACK_API_URL;
+        const isEmail = validateEmail(usernameEmail);
+        const loginQuery = isEmail ? `email=${encodeURIComponent(usernameEmail)}` : `nickname=${encodeURIComponent(usernameEmail)}`;
+        console.log(`Sending login request with query: ${loginQuery}`);
+        const response = await fetch(`${apiUrl}/users?${loginQuery}`);
+        if (!response.ok) {
+            console.log('Login request failed:', response.statusText);
+            showErrorModal('Failed to process login request');
+            throw new Error('Login failed');
+        }
+        const users = await response.json();
+        if (users.length === 0) {
+            console.log('User not found');
+            showErrorModal('User does not exist');
+            throw new Error('User does not exist');
+        }
+        const user = users[0];
+        if (user.password !== password) {
+            console.log('Incorrect password');
+            showErrorModal('Incorrect password');
+            throw new Error('Incorrect password');
+        }
+        console.log('Login successful:', user);
+
+        const userToSave = {
+            id: user.id || Date.now(),
+            email: user.email || '',
+            nickname: user.nickname || '',
+            phoneNumber: user.phoneNumber || '',
+            firstName: user.firstName || '',
+            lastName: user.lastName || '',
+            birthDate: user.birthDate || '',
+            role: user.role || 'user'
+        };
+        localStorage.setItem('user', JSON.stringify(userToSave));
+        console.log('User saved to localStorage:', userToSave);
+
+        updateUserProfile();
+
+        console.log('Redirecting to account.html after login');
+        window.location.assign('../pages/account.html');
+
+        return userToSave;
+    } catch (error) {
+        console.log('Login error:', error.message);
+        showErrorModal(error.message || 'Login failed');
+        throw error;
+    }
 }
 
-export {
-  validatePhoneNumber,
-  validateEmail,
-  validateBirthDate,
-  validatePassword,
-  generateRandomPassword,
-  generateNickname,
-  checkAuth,
-  updateUserProfile,
-  registerUser,
-  loginUser,
-  logoutUser
-};
+export function logoutUser() {
+    console.log('Logging out user');
+    localStorage.removeItem('user');
+    updateUserProfile();
+    console.log('Redirecting to index.html after logout');
+    window.location.assign('./index.html');
+}
