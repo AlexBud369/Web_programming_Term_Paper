@@ -1,5 +1,4 @@
 export const translations = {
-
   page_title: {
     en: "Catalog",
     ru: "Каталог"
@@ -116,6 +115,10 @@ export const translations = {
     en: "Please log in to add items to cart.",
     ru: "Пожалуйста, войдите, чтобы добавить товары в корзину."
   },
+  modal_cart_message: {
+    en: "Please log in to add items to your cart.",
+    ru: "Пожалуйста, войдите, чтобы добавить товары в корзину."
+  },
   modal_favorites_message: {
     en: "Please log in to add items to favorites.",
     ru: "Пожалуйста, войдите, чтобы добавить товары в избранное."
@@ -128,7 +131,6 @@ export const translations = {
     en: "Next",
     ru: "Следующая"
   },
-
   add_to_cart: {
     en: "Add to Cart",
     ru: "Добавить в корзину"
@@ -137,8 +139,6 @@ export const translations = {
     en: "Quick View",
     ru: "Посмотреть"
   },
-
-
   category_tops_tshirts: {
     en: "Tops & T-Shirts",
     ru: "Топы и футболки"
@@ -175,7 +175,6 @@ export const translations = {
     en: "Jeans",
     ru: "Джинсы"
   },
-
   color_purple: {
     en: "Purple",
     ru: "Фиолетовый"

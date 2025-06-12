@@ -167,7 +167,7 @@ export const translations = {
         en: 'Item removed from favorites',
         ru: 'Товар удален из избранного'
     },
-    error_removing_favorite: {
+    error_removing: {
         en: 'Failed to remove item from favorites',
         ru: 'Не удалось удалить товар из избранного'
     },
@@ -183,15 +183,16 @@ export const translations = {
         en: 'Add to Cart',
         ru: 'Добавить в корзину'
     },
-    star_alt: {
+    star_icon: {
         en: 'Full Star',
         ru: 'Полная звезда'
     },
-    half_star_alt: {
+    half_star_icon: {
         en: 'Half Star',
         ru: 'Половина звезды'
     },
-    star_outline_alt: {
+    star_outline: {
+        icon: 'en_alt',
         en: 'Empty Star',
         ru: 'Пустая звезда'
     },
@@ -203,7 +204,6 @@ export const translations = {
         en: 'Next',
         ru: 'Следующая'
     },
-
     category_tops_tshirts: {
         en: 'Tops & T-Shirts',
         ru: 'Топы и футболки'
@@ -240,7 +240,6 @@ export const translations = {
         en: 'Jeans',
         ru: 'Джинсы'
     },
- 
     color_purple: {
         en: 'Purple',
         ru: 'Фиолетовый'
@@ -292,5 +291,13 @@ export const translations = {
     color_gold: {
         en: 'Gold',
         ru: 'Золотой'
+    },
+    toggle_password_show: {
+        en: 'Show',
+        ru: 'Показать'
+    },
+    toggle_password_hide: {
+        en: 'Hide',
+        ru: 'Скрыть'
     }
 };
