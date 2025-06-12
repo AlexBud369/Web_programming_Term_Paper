@@ -1,4 +1,4 @@
-import { applyFilters, initFilters } from './modules/filtering.js';
+import { applyFilters, initFilters} from './modules/filtering.js';
 import { initPagination, getPaginatedItems } from './modules/pagination.js';
 import { getSortParams } from './modules/sorting.js';
 import { initSearch } from './modules/search.js';
@@ -10,7 +10,7 @@ import { initBurgerMenu } from './modules/burgerMenu.js';
 import { initLanguageSwitcher } from './modules/languageSwitcher.js';
 import { initThemeSwitcher } from './modules/themeSwitcher.js';
 import { translations } from './modules/pages-translations/catalog_translations.js';
-import { translations as homeTranslations } from './modules/pages-translations/home_translations.js';
+import { showPreloader, hidePreloader, initPreloader } from './modules/preloader.js';
 
 const productsGrid = document.getElementById('products-grid');
 const productsCount = document.getElementById('products-count');
@@ -42,8 +42,15 @@ const colorTranslationKeys = {
   yellow: 'color_yellow',
   grey: 'color_grey',
   pink: 'color_pink',
-  blue: 'color_blue'
+  blue: 'color_blue',
+  gold: 'color_gold'
 };
+
+function getPluralForm(count) {
+  if (count === 1) return 'товар';
+  if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) return 'товара';
+  return 'товаров';
+}
 
 async function fetchProducts(sortOption, page = 1) {
     const checkedCategories = document.querySelectorAll('#category-filter input[name="category"]:checked');
@@ -86,6 +93,7 @@ async function fetchProducts(sortOption, page = 1) {
     const url = `http://localhost:3000/products${query}`;
 
     try {
+        showPreloader();
         console.log('Fetching products from:', url);
         const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
         if (!res.ok) throw new Error(`HTTP error: ${res.status} for ${url}`);
@@ -95,23 +103,27 @@ async function fetchProducts(sortOption, page = 1) {
         const countQuery = countQueryParams.length > 0 ? `?${countQueryParams.join('&')}` : '';
         const countUrl = `http://localhost:3000/products${countQuery}`;
         console.log('Fetching total count from:', countUrl);
-        let totalProducts = filteredProducts.length;
+        let totalProducts = 0;
         try {
             const countRes = await fetch(countUrl, { headers: { 'Accept': 'application/json' } });
-            if (!countRes.ok) throw new Error(`HTTP error: ${res.status} for ${countUrl}`);
-            totalProducts = (await countRes.json()).length;
+            if (!countRes.ok) throw new Error(`HTTP error: ${countRes.status} for ${countUrl}`);
+            const allProductsData = await countRes.json();
+            totalProducts = allProductsData.length;
         } catch (countError) {
-            console.warn('Failed to fetch total count:', countError.message);
+            console.warn('Failed to fetch total count, using filtered length:', countError.message);
+            totalProducts = filteredProducts.length;
         }
 
         console.log('Fetched products:', filteredProducts.length, 'Total products:', totalProducts);
         allProducts = filteredProducts;
         renderProducts(filteredProducts, totalProducts, localStorage.getItem('language') || 'en');
     } catch (error) {
-        console.error('Error fetching products:', error.message);
-        noResults.textContent = 'Failed to load products. Please check the server or try again later.';
+        console.log('Error fetching products:', error.message);
+        noResults.textContent = translations.no_results[localStorage.getItem('language') || 'en'] || 'Failed to load products. Please check the server or try again later.';
         noResults.style.display = 'block';
         renderProducts([], 0);
+    } finally {
+        hidePreloader();
     }
 }
 
@@ -140,20 +152,23 @@ function renderProducts(products, totalProducts, lang = localStorage.getItem('la
     productsGrid.innerHTML = '';
     noResults.style.display = products.length === 0 ? 'block' : 'none';
     noResults.innerHTML = `<span data-i18n="no_results">${translations.no_results[lang]}</span>`;
-    productsCount.innerHTML = `<span data-i18n="products_count" data-i18n-data='{"count": ${totalProducts}}'>${translations.products_count[lang].replace('{count}', totalProducts)}</span>`;
+
+    const countText = lang === 'ru'
+        ? `${totalProducts} ${getPluralForm(totalProducts)}`
+        : translations.products_count[lang].replace('{count}', totalProducts);
+    productsCount.innerHTML = `<span data-i18n="products_count" data-i18n-data='{"count": ${totalProducts}}'>${countText}</span>`;
 
     products.forEach(product => {
         const categoryKey = categoryTranslationKeys[product.category] || product.category.toLowerCase().replace(/ & /g, '_').replace(/\s+/g, '_');
-        const translatedCategory = homeTranslations[categoryKey]?.[lang] || product.category;
-
-        const translatedColors = product.colors.map(color => translations[`color_${color.toLowerCase()}`]?.[lang] || color).join(', ');
+        const translatedCategory = translations[categoryKey]?.[lang] || product.category;
+        const translatedColors = product.colors.map(color => translations[colorTranslationKeys[color.toLowerCase()]]?.[lang] || color).join(', ');
 
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
         productCard.dataset.id = product.id;
         productCard.innerHTML = `
             <div class="product-image-container">
-                <img src="${product.image}" alt="${product.name}" class="product-image">
+                <img src="../images/catalog_images/catalog_card${product.id}.png" alt="${product.name}" class="product-image">
                 <button class="quick-view" data-product-id="${product.id}" data-i18n="quick_view">${translations.quick_view[lang]}</button>
                 <button class="favorite-btn" data-product-id="${product.id}">
                     <img src="../images/home_page_icons/heart_icon.svg" alt="Add to Favorites" class="favorite-icon">
@@ -190,6 +205,7 @@ function renderProducts(products, totalProducts, lang = localStorage.getItem('la
                 icon.alt = isFavorite ? 'Remove from Favorites' : 'Add to Favorites';
             }
         });
+        initAddToCart('catalog', '.add-to-cart-btn', products);
     } else {
         productsGrid.querySelectorAll('.favorite-btn').forEach(button => {
             button.addEventListener('click', () => {
@@ -198,31 +214,25 @@ function renderProducts(products, totalProducts, lang = localStorage.getItem('la
                     translations.modal_favorites_message[lang],
                     'modal-error'
                 );
-                setTimeout(() => window.location.assign('../auth/signin.html'), 1500);
+                setTimeout(() => window.location.assign('../auth/signin.html'), 1000);
+            });
+        });
+        productsGrid.querySelectorAll('.add-to-cart-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                showSimpleModal(
+                    translations.modal_login_required[lang],
+                    translations.modal_cart_message[lang],
+                    'modal-error'
+                );
+                setTimeout(() => window.location.assign('../auth/signin.html'), 1000);
             });
         });
     }
 
-    productsGrid.querySelectorAll('.add-to-cart-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            if (!auth.isAuthenticated) {
-                showSimpleModal(
-                    translations.modal_login_required[lang],
-                    translations.modal_login_message[lang],
-                    'modal-error'
-                );
-                setTimeout(() => window.location.assign('../auth/signin.html'), 1500);
-                return;
-            }
-        });
-    });
-
-    initAddToCart('catalog', '.add-to-cart-btn', products);
     initPagination(totalProducts || 0, currentPage, 9, (page) => {
         currentPage = page;
         fetchProducts(document.getElementById('sort-by')?.value || 'default', page);
     }, translations, lang);
-
 
     productsGrid.querySelectorAll('.quick-view').forEach(button => {
         button.addEventListener('click', () => {
@@ -234,6 +244,7 @@ function renderProducts(products, totalProducts, lang = localStorage.getItem('la
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('catalog.js loaded');
+    initPreloader();
     updateUserProfile();
     initFilters(sortOption => {
         currentPage = 1;
@@ -246,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchProducts('default', currentPage);
     showSuccessModalAfterReload();
     initBurgerMenu(false);
-    initLanguageSwitcher('.header-controls .language-selector');
+    initLanguageSwitcher('.header-controls .language-selector, .mobile-menu .language-selector');
     const headerThemeToggle = document.querySelector('.header-controls .custom-toggle .toggle-input');
     const mobileThemeToggle = document.querySelector('.mobile-menu .custom-toggle .toggle-input');
     if (headerThemeToggle) {
@@ -259,6 +270,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.addEventListener('languageChanged', (e) => {
         const newLang = e.detail.lang;
-        renderProducts(allProducts, allProducts.length, newLang);
+        const sortOption = document.getElementById('sort-by')?.value || 'default';
+        fetchProducts(sortOption, currentPage);
+        initPagination(allProducts.length || 0, currentPage, 9, (page) => {
+            currentPage = page;
+            fetchProducts(sortOption, page);
+        }, translations, newLang);
     });
 });
