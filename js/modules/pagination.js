@@ -1,13 +1,13 @@
-export function initPagination(totalItems, currentPage, itemsPerPage, onPageChange) {
+export function initPagination(totalItems, currentPage, itemsPerPage, onPageChange, translations = {}, lang = 'en') {
     const container = document.getElementById('pagination');
     if (!container) {
         console.error('Pagination container (#pagination) not found in DOM');
         return;
     }
 
-    container.innerHTML = ''; 
+    container.innerHTML = '';
     const totalPages = Math.ceil(totalItems / itemsPerPage);
-    console.log('Pagination: totalItems=', totalItems, 'totalPages=', totalPages, 'currentPage=', currentPage); 
+    console.log('Pagination: totalItems=', totalItems, 'totalPages=', totalPages, 'currentPage=', currentPage);
 
     if (totalPages <= 1) {
         container.style.display = 'none';
@@ -17,7 +17,7 @@ export function initPagination(totalItems, currentPage, itemsPerPage, onPageChan
 
     const prevBtn = document.createElement('button');
     prevBtn.className = 'page-btn prev-btn';
-    prevBtn.textContent = 'Previous';
+    prevBtn.innerHTML = `<span data-i18n="pagination_prev">${translations.pagination_prev?.[lang] || 'Previous'}</span>`;
     prevBtn.disabled = currentPage === 1;
     prevBtn.addEventListener('click', () => {
         if (currentPage > 1) {
@@ -25,7 +25,6 @@ export function initPagination(totalItems, currentPage, itemsPerPage, onPageChan
         }
     });
     container.appendChild(prevBtn);
-
 
     const pageNumbers = document.createElement('div');
     pageNumbers.className = 'page-numbers';
@@ -47,10 +46,9 @@ export function initPagination(totalItems, currentPage, itemsPerPage, onPageChan
     }
     container.appendChild(pageNumbers);
 
-
     const nextBtn = document.createElement('button');
     nextBtn.className = 'page-btn next-btn';
-    nextBtn.textContent = 'Next';
+    nextBtn.innerHTML = `<span data-i18n="pagination_next">${translations.pagination_next?.[lang] || 'Next'}</span>`;
     nextBtn.disabled = currentPage === totalPages;
     nextBtn.addEventListener('click', () => {
         if (currentPage < totalPages) {
