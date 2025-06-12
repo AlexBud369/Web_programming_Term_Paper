@@ -110,9 +110,9 @@ body, html {
 }
 
 .shop-btn {
-  max-width: calc(254px * var(--global-font-scale));
+  max-width: 254px;
   display: flex;
-  padding: calc(16px * var(--global-font-scale)) calc(72px * var(--global-font-scale));
+  padding: 16px 72px;
   justify-content: center;
   align-items: center;
   gap: calc(12px * var(--global-font-scale));
@@ -544,6 +544,7 @@ img, video, canvas {
 }
 
 .saving-zone__card .shop-now-btn {
+    min-width: 120px;
     color: #000000; 
     border: 1px solid #000000; 
     background: transparent; 
@@ -555,6 +556,7 @@ img, video, canvas {
     text-decoration: none;
     display: inline-flex;
     align-items: center;
+    text-align: center;
     justify-content: center;
     transition: var(--transition-base);
     cursor: pointer; 
@@ -563,6 +565,11 @@ img, video, canvas {
 .saving-zone__card .shop-now-btn:hover {
     background: rgba(0, 0, 0, 0.1); 
     color: #000000;
+}
+
+.saving-zone__card .card-content {
+    position: relative;
+    z-index: 2;
 }
 
 .everyday-fashion-section {
@@ -628,11 +635,12 @@ img, video, canvas {
 }
 
 .everyday-shop-btn {
-  max-width: 171px;
+  min-width: 120px;
   display: inline-flex;
   padding: 12px 44px;
   justify-content: center;
   align-items: center;
+  text-align: center;
   gap: 12px;
   border-radius: 8px;
   background: var(--accent-color);
