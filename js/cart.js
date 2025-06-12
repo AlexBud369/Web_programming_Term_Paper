@@ -6,6 +6,11 @@ import { initBurgerMenu } from './modules/burgerMenu.js';
 import { initLanguageSwitcher } from './modules/languageSwitcher.js';
 import { initThemeSwitcher } from './modules/themeSwitcher.js';
 import { translations } from './modules/pages-translations/cart_translations.js';
+import { showPreloader, hidePreloader, initPreloader } from './modules/preloader.js';
+
+function getTranslation(key, lang, fallback) {
+    return translations[key]?.[lang] || fallback || key;
+}
 
 export async function initCart() {
     const elements = {
@@ -15,14 +20,16 @@ export async function initCart() {
         cartShipping: document.querySelector('#cart-shipping'),
         cartTotalAmount: document.querySelector('#cart-total'),
         checkoutForm: document.querySelector('#checkout-form'),
-        successNotification: document.querySelector('#success-notification'),
-        notificationClose: document.querySelector('#success-notification .modal-ok-btn'),
     };
 
+    const lang = localStorage.getItem('language') || 'en';
     if (!elements.cartItems || !elements.cartTotal) {
         console.error('Cart elements not found');
-        const lang = localStorage.getItem('language') || 'en';
-        showSimpleModal(translations.modal_error_title[lang], translations.error_missing_elements[lang], 'modal-error');
+        showSimpleModal(
+            getTranslation('modal_error_title', lang, 'Error'),
+            getTranslation('error_missing_elements', lang, 'Required page elements are missing.'),
+            'modal-error'
+        );
         return;
     }
 
@@ -33,14 +40,20 @@ export async function initCart() {
 
     async function fetchCart() {
         try {
+            showPreloader();
             const res = await fetch('http://localhost:3000/cart');
             if (!res.ok) throw new Error('Failed to fetch cart');
             return await res.json();
         } catch (error) {
             console.error('Error fetching cart:', error);
-            const lang = localStorage.getItem('language') || 'en';
-            showSimpleModal(translations.modal_error_title[lang], translations.error_loading_cart[lang], 'modal-error');
+            showSimpleModal(
+                getTranslation('modal_error_title', lang, 'Error'),
+                getTranslation('error_loading_cart', lang, 'Failed to load cart. Please try again.'),
+                'modal-error'
+            );
             return [];
+        } finally {
+            hidePreloader();
         }
     }
 
@@ -49,21 +62,21 @@ export async function initCart() {
         if (cart.length === 0) {
             elements.cartItems.innerHTML = `
                 <div class="empty-cart">
-                    <p data-i18n="cart_empty_message">${translations.cart_empty_message[lang]}</p>
-                    <a href="/pages/catalog.html" data-i18n="continue_shopping">${translations.continue_shopping[lang]}</a>
+                    <p data-i18n="cart_empty_message">${getTranslation('cart_empty_message', lang, 'Your cart is empty.')}</p>
+                    <a href="/pages/catalog.html" data-i18n="continue_shopping">${getTranslation('continue_shopping', lang, 'Continue Shopping')}</a>
                 </div>
             `;
             elements.cartTotal.innerHTML = `
                 <div class="total-row">
-                    <span data-i18n="cart_subtotal_label">${translations.cart_subtotal_label[lang]}</span>
+                    <span data-i18n="cart_subtotal_label">${getTranslation('cart_subtotal_label', lang, 'Subtotal')}</span>
                     <span id="cart-subtotal">$0.00</span>
                 </div>
                 <div class="total-row">
-                    <span data-i18n="cart_shipping_label">${translations.cart_shipping_label[lang]}</span>
+                    <span data-i18n="cart_shipping_label">${getTranslation('cart_shipping_label', lang, 'Shipping')}</span>
                     <span id="cart-shipping">$0.00</span>
                 </div>
                 <div class="total-row total">
-                    <span data-i18n="cart_total_label">${translations.cart_total_label[lang]}</span>
+                    <span data-i18n="cart_total_label">${getTranslation('cart_total_label', lang, 'Total')}</span>
                     <span id="cart-total">$0.00</span>
                 </div>
             `;
@@ -76,21 +89,21 @@ export async function initCart() {
                     <img src="${item.image}" alt="${item.name}" class="product-image">
                     <div class="product-info">
                         <h3 class="product-name">${item.name}</h3>
-                        <p class="product-color"><span data-i18n="color_label">${translations.color_label[lang]}</span>: ${translations[`color_${item.color.toLowerCase()}`]?.[lang] || item.color}</p>
-                        <p class="product-size"><span data-i18n="size_label">${translations.size_label[lang]}</span>: ${item.size}</p>
+                        <p class="product-color"><span data-i18n="color_label">${getTranslation('color_label', lang, 'Color')}</span>: ${getTranslation(`color_${item.color.toLowerCase()}`, lang, item.color)}</p>
+                        <p class="product-size"><span data-i18n="size_label">${getTranslation('size_label', lang, 'Size')}</span>: ${item.size}</p>
                     </div>
                 </div>
                 <div class="cart-column product-price">$${item.price.toFixed(2)}</div>
                 <div class="cart-column quantity-control">
-                    <button class="quantity-btn decrease" aria-label="${translations.decrease_quantity[lang]}">-</button>
+                    <button class="quantity-btn decrease" aria-label="${getTranslation('decrease_quantity', lang, 'Decrease quantity')}">-</button>
                     <span class="quantity-label">${item.quantity}</span>
-                    <button class="quantity-btn increase" aria-label="${translations.increase_quantity[lang]}">+</button>
+                    <button class="quantity-btn increase" aria-label="${getTranslation('increase_quantity', lang, 'Increase quantity')}">+</button>
                 </div>
                 <div class="cart-column shipping">$${item.shipping?.toFixed(2) || '7.00'}</div>
                 <div class="cart-column subtotal">$${(item.price * item.quantity).toFixed(2)}</div>
                 <div class="cart-column action">
-                    <button class="delete-btn" aria-label="${translations.remove_item[lang].replace('{name}', item.name)}">
-                        <img src="../images/home_page/deletecart.svg" alt="${translations.delete[lang]}">
+                    <button class="delete-btn" aria-label="${getTranslation('remove_item', lang, 'Remove {name} from cart').replace('{name}', item.name)}">
+                        <img src="../images/cart_images/deletecon.svg" alt="${getTranslation('delete', lang, 'Delete')}">
                     </button>
                 </div>
             </div>
@@ -108,26 +121,18 @@ export async function initCart() {
     function updateLanguage(lang = localStorage.getItem('language') || 'en') {
         document.querySelectorAll('[data-i18n]').forEach(element => {
             const key = element.dataset.i18n;
-            const translation = translations[key]?.[lang];
-            if (translation) {
-                element.innerHTML = translation;
-            } else {
-                console.warn(`Translation missing for key "${key}" in language "${lang}"`);
-            }
+            const translation = getTranslation(key, lang, element.textContent || key);
+            element.innerHTML = translation;
         });
 
         document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
             const key = element.dataset.i18nPlaceholder;
-            const translation = translations[key]?.[lang];
-            if (translation) {
-                element.placeholder = translation;
-            } else {
-                console.warn(`Placeholder translation missing for key "${key}" in language "${lang}"`);
-            }
+            const translation = getTranslation(key, lang, element.placeholder || key);
+            element.placeholder = translation;
         });
 
         document.querySelectorAll('.current-language').forEach(element => {
-            const translation = translations.lang_current?.[lang] || lang.toUpperCase();
+            const translation = getTranslation('lang_current', lang, lang.toUpperCase());
             element.textContent = translation;
         });
     }
@@ -143,11 +148,13 @@ export async function initCart() {
         if (e.target.closest('.decrease')) {
             const item = (await fetchCart()).find(item => item.id === itemId);
             if (item) {
+                showPreloader();
                 const success = await updateCartItemQuantity(itemId, item.quantity - 1);
+                hidePreloader();
                 if (success) {
                     localStorage.setItem('showCartModal', JSON.stringify({
-                        title: translations.modal_success_title[lang],
-                        message: translations.quantity_updated[lang],
+                        title: getTranslation('modal_success_title', lang, 'Success'),
+                        message: getTranslation('quantity_updated', lang, 'Quantity updated successfully!'),
                         type: 'modal-success'
                     }));
                     window.location.reload();
@@ -158,11 +165,13 @@ export async function initCart() {
         if (e.target.closest('.increase')) {
             const item = (await fetchCart()).find(item => item.id === itemId);
             if (item) {
+                showPreloader();
                 const success = await updateCartItemQuantity(itemId, item.quantity + 1);
+                hidePreloader();
                 if (success) {
                     localStorage.setItem('showCartModal', JSON.stringify({
-                        title: translations.modal_success_title[lang],
-                        message: translations.quantity_updated[lang],
+                        title: getTranslation('modal_success_title', lang, 'Success'),
+                        message: getTranslation('quantity_updated', lang, 'Quantity updated successfully!'),
                         type: 'modal-success'
                     }));
                     window.location.reload();
@@ -171,11 +180,13 @@ export async function initCart() {
         }
 
         if (e.target.closest('.delete-btn')) {
+            showPreloader();
             const success = await removeFromCart(itemId);
+            hidePreloader();
             if (success) {
                 localStorage.setItem('showCartModal', JSON.stringify({
-                    title: translations.modal_success_title[lang],
-                    message: translations.item_removed[lang],
+                    title: getTranslation('modal_success_title', lang, 'Success'),
+                    message: getTranslation('item_removed', lang, 'Item removed from cart!'),
                     type: 'modal-success'
                 }));
                 window.location.reload();
@@ -188,48 +199,55 @@ export async function initCart() {
         const lang = localStorage.getItem('language') || 'en';
         const auth = checkAuth();
         if (!auth.isAuthenticated) {
-            showSimpleModal(translations.modal_error_title[lang], translations.error_not_authenticated[lang], 'modal-error');
+            showSimpleModal(
+                getTranslation('modal_error_title', lang, 'Error'),
+                getTranslation('error_not_authenticated', lang, 'Please log in to proceed.'),
+                'modal-error'
+            );
             setTimeout(() => window.location.assign('../auth/signin.html'), 1500);
+            return;
+        }
+
+        const cart = await fetchCart();
+        if (cart.length === 0) {
+            showSimpleModal(
+                getTranslation('modal_error_title', lang, 'Error'),
+                getTranslation('cart_empty_message', lang, 'Your cart is empty.'),
+                'modal-error'
+            );
             return;
         }
 
         const isValid = await validateCheckoutForm(elements.checkoutForm);
         if (!isValid) {
-            showSimpleModal(translations.modal_error_title[lang], translations.form_validation_error[lang], 'modal-error');
+            showSimpleModal(
+                getTranslation('modal_error_title', lang, 'Error'),
+                getTranslation('form_validation_error', lang, 'Please fill out the form correctly.'),
+                'modal-error'
+            );
             return;
         }
 
         try {
-            const cart = await fetchCart();
+            showPreloader();
             for (const item of cart) {
                 await fetch(`http://localhost:3000/cart/${item.id}`, { method: 'DELETE' });
             }
-
-            if (elements.successNotification) {
-                elements.successNotification.style.display = 'flex';
-                setTimeout(() => {
-                    elements.successNotification.querySelector('.modal-content').classList.add('show');
-                }, 10);
-            }
-
-            await renderCart(lang);
+            localStorage.setItem('showOrderSuccessModal', 'true');
             updateCartCount();
+            window.location.reload();
         } catch (error) {
             console.error('Error processing order:', error);
-            showSimpleModal(translations.modal_error_title[lang], translations.error_place_order[lang], 'modal-error');
+            showSimpleModal(
+                getTranslation('modal_error_title', lang, 'Error'),
+                getTranslation('error_place_order', lang, 'Failed to place order. Please try again.'),
+                'modal-error'
+            );
+        } finally {
+            hidePreloader();
         }
     });
 
-    elements.notificationClose?.addEventListener('click', () => {
-        if (elements.successNotification) {
-            elements.successNotification.querySelector('.modal-content').classList.remove('show');
-            setTimeout(() => {
-                elements.successNotification.style.display = 'none';
-            }, 300);
-        }
-    });
-
-    const lang = localStorage.getItem('language') || 'en';
     await renderCart(lang);
     updateLanguage(lang);
     updateCartCount();
@@ -237,10 +255,15 @@ export async function initCart() {
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('cart.js loaded');
+    initPreloader();
     const lang = localStorage.getItem('language') || 'en';
     const auth = checkAuth();
     if (!auth.isAuthenticated) {
-        showSimpleModal(translations.modal_error_title[lang], translations.error_not_authenticated[lang], 'modal-error');
+        showSimpleModal(
+            getTranslation('modal_error_title', lang, 'Error'),
+            getTranslation('error_not_authenticated', lang, 'Please log in to proceed.'),
+            'modal-error'
+        );
         setTimeout(() => window.location.assign('../auth/signin.html'), 1500);
         return;
     }
@@ -252,9 +275,18 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem('showCartModal');
     }
 
+    const orderSuccessModal = localStorage.getItem('showOrderSuccessModal');
+    if (orderSuccessModal === 'true') {
+        showSuccessModal(
+            getTranslation('order_success_message', lang, 'Order Successfully Placed!')
+        );
+        localStorage.removeItem('showOrderSuccessModal');
+    }
+
     initCart();
     initBurgerMenu(false);
     initLanguageSwitcher('.header-controls .language-selector');
+    initLanguageSwitcher('.mobile-menu .language-selector');
     const headerThemeToggle = document.querySelector('.header-controls .custom-toggle .toggle-input');
     const mobileThemeToggle = document.querySelector('.mobile-menu .custom-toggle .toggle-input');
     if (headerThemeToggle) {
