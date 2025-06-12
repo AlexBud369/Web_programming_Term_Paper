@@ -7,7 +7,7 @@
       "category": "Printed T-Shirts",
       "price": 35,
       "rating": 4.5,
-      "image": "/images/catalog_images/tshirt1.pn",
+      "image": "/images/catalog_images/catalog_card1.png",
       "description": "Stylish black T-shirt with graphic print.",
       "colors": [
         "black"
@@ -35,12 +35,12 @@
       "category": "Kurti",
       "price": 80,
       "rating": 5,
-      "image": "/images/catalog_images/kurti1.png",
+      "image": "/images/catalog_images/catalog_card2.png",
       "description": "Elegant white kurti for daily wear.",
       "colors": [
         "white",
-        "pink",
-        "yellow"
+        "yellow",
+        "pink"
       ],
       "sizes": [
         "XS",
@@ -64,7 +64,7 @@
       "category": "Joggers",
       "price": 60,
       "rating": 4,
-      "image": "/images/catalog_images/joggers1.png",
+      "image": "/images/catalog_images/catalog_card3.png",
       "description": "Comfortable navy joggers for active lifestyle.",
       "colors": [
         "navy",
@@ -94,7 +94,7 @@
       "category": "Full Sleeve T-Shirts",
       "price": 45,
       "rating": 3.5,
-      "image": "/images/catalog_images/fullsleeve1.png",
+      "image": "/images/catalog_images/catalog_card4.png",
       "description": "Warm red full sleeve T-shirt.",
       "colors": [
         "red",
@@ -123,7 +123,7 @@
       "category": "Jeans",
       "price": 90,
       "rating": 4.5,
-      "image": "/images/catalog_images/jeans1.png",
+      "image": "/images/catalog_images/catalog_card5.png",
       "description": "Classic blue jeans for all occasions.",
       "colors": [
         "blue",
@@ -153,7 +153,7 @@
       "category": "Pajamas",
       "price": 70,
       "rating": 4,
-      "image": "/images/catalog_images/pajamas1.png",
+      "image": "/images/catalog_images/catalog_card6.png",
       "description": "Cozy purple pajamas for sleep.",
       "colors": [
         "purple",
@@ -181,7 +181,7 @@
       "category": "Boxers",
       "price": 25,
       "rating": 3.5,
-      "image": "/images/catalog_images/boxers1.png",
+      "image": "/images/catalog_images/catalog_card7.png",
       "description": "Comfortable green boxers.",
       "colors": [
         "green",
@@ -211,7 +211,7 @@
       "category": "Plain T-Shirts",
       "price": 30,
       "rating": 4,
-      "image": "/images/catalog_images/plain1.png",
+      "image": "/images/catalog_images/catalog_card8.png",
       "description": "Simple yellow T-shirt for casual wear.",
       "colors": [
         "yellow",
@@ -241,7 +241,7 @@
       "category": "Kurti",
       "price": 100,
       "rating": 5,
-      "image": "/images/catalog_images/kurti2.png",
+      "image": "/images/catalog_images/catalog_card9.png",
       "description": "Elegant pink kurti for festive occasions.",
       "colors": [
         "pink",
@@ -271,7 +271,7 @@
       "category": "Tops & T-Shirts",
       "price": 50,
       "rating": 4.5,
-      "image": "/images/catalog_images/tops1.png",
+      "image": "/images/catalog_images/catalog_card10.png",
       "description": "Black T-shirt for formal settings.",
       "colors": [
         "black",
@@ -300,7 +300,7 @@
       "category": "Joggers",
       "price": 65,
       "rating": 4,
-      "image": "/images/catalog_images/joggers2.png",
+      "image": "/images/catalog_images/catalog_card11.png",
       "description": "Vibrant orange joggers for workouts.",
       "colors": [
         "orange",
@@ -329,7 +329,7 @@
       "category": "Full Sleeve T-Shirts",
       "price": 48,
       "rating": 4,
-      "image": "/images/catalog_images/fullsleeve2.png",
+      "image": "/images/catalog_images/catalog_card12.png",
       "description": "Comfortable white full sleeve T-shirt.",
       "colors": [
         "white",
@@ -358,7 +358,7 @@
       "category": "Jeans",
       "price": 95,
       "rating": 4.5,
-      "image": "/images/catalog_images/jeans2.png",
+      "image": "/images/catalog_images/catalog_card13.png",
       "description": "Stylish brown jeans for casual looks.",
       "colors": [
         "brown",
@@ -387,7 +387,7 @@
       "category": "Pajamas",
       "price": 75,
       "rating": 4.5,
-      "image": "/images/catalog_images/pajamas2.png",
+      "image": "/images/catalog_images/catalog_card14.png",
       "description": "Soft grey pajamas for relaxation.",
       "colors": [
         "grey",
@@ -416,7 +416,7 @@
       "category": "Boxers",
       "price": 20,
       "rating": 3.5,
-      "image": "/images/catalog_images/boxers2.png",
+      "image": "/images/catalog_images/catalog_card15.png",
       "description": "Light blue boxers for comfort.",
       "colors": [
         "blue",
@@ -445,7 +445,7 @@
       "category": "Printed T-Shirts",
       "price": 40,
       "rating": 4.5,
-      "image": "/images/catalog_images/tshirt2.png",
+      "image": "/images/catalog_images/catalog_card1.png",
       "description": "Bold red T-shirt with unique print.",
       "colors": [
         "red",
@@ -475,7 +475,7 @@
       "category": "Kurti",
       "price": 85,
       "rating": 5,
-      "image": "/images/catalog_images/kurti3.png",
+      "image": "/images/catalog_images/catalog_card2.png",
       "description": "Vibrant green kurti for elegance.",
       "colors": [
         "green",
@@ -504,7 +504,7 @@
       "category": "Joggers",
       "price": 55,
       "rating": 4,
-      "image": "/images/catalog_images/joggers3.png",
+      "image": "/images/catalog_images/catalog_card3.png",
       "description": "Sleek black joggers for sports.",
       "colors": [
         "black",
@@ -533,7 +533,7 @@
       "category": "Full Sleeve T-Shirts",
       "price": 50,
       "rating": 4.5,
-      "image": "/images/catalog_images/fullsleeve3.png",
+      "image": "/images/catalog_images/catalog_card4.png",
       "description": "Navy full sleeve T-shirt for cool weather.",
       "colors": [
         "navy",
@@ -562,7 +562,7 @@
       "category": "Jeans",
       "price": 100,
       "rating": 4.5,
-      "image": "/images/catalog_images/jeans3.png",
+      "image": "/images/catalog_images/catalog_card5.png",
       "description": "Modern grey jeans for casual wear.",
       "colors": [
         "grey",
@@ -591,7 +591,7 @@
       "category": "Pajamas",
       "price": 80,
       "rating": 4.5,
-      "image": "/images/catalog_images/pajamas3.png",
+      "image": "/images/catalog_images/catalog_card6.png",
       "description": "Soft white pajamas for comfort.",
       "colors": [
         "white",
@@ -620,7 +620,7 @@
       "category": "Boxers",
       "price": 22,
       "rating": 3.5,
-      "image": "/images/catalog_images/boxers3.png",
+      "image": "/images/catalog_images/catalog_card7.png",
       "description": "Bold red boxers for daily wear.",
       "colors": [
         "red",
@@ -649,7 +649,7 @@
       "category": "Plain T-Shirts",
       "price": 28,
       "rating": 4,
-      "image": "/images/catalog_images/plain2.png",
+      "image": "/images/catalog_images/catalog_card8.png",
       "description": "Simple purple T-shirt for versatility.",
       "colors": [
         "purple",
@@ -678,7 +678,7 @@
       "category": "Kurti",
       "price": 120,
       "rating": 5,
-      "image": "/images/catalog_images/kurti4.png",
+      "image": "/images/catalog_images/catalog_card8.png",
       "description": "Bright yellow kurti for special occasions.",
       "colors": [
         "yellow",
@@ -707,7 +707,7 @@
       "category": "Joggers",
       "price": 70,
       "rating": 4,
-      "image": "/images/catalog_images/joggers4.png",
+      "image": "/images/catalog_images/catalog_card9.png",
       "description": "Green joggers for active wear.",
       "colors": [
         "green",
@@ -736,7 +736,7 @@
       "category": "Tops & T-Shirts",
       "price": 35,
       "rating": 4.5,
-      "image": "/images/catalog_images/tops2.png",
+      "image": "/images/catalog_images/catalog_card10.png",
       "description": "Classic white T-shirt for all occasions.",
       "colors": [
         "white",
@@ -766,7 +766,7 @@
       "category": "Full Sleeve T-Shirts",
       "price": 55,
       "rating": 4.5,
-      "image": "/images/catalog_images/fullsleeve4.png",
+      "image": "/images/catalog_images/catalog_card11.png",
       "description": "Blue full sleeve T-shirt for cool days.",
       "colors": [
         "blue",
@@ -795,7 +795,7 @@
       "category": "Pajamas",
       "price": 85,
       "rating": 4.5,
-      "image": "/images/catalog_images/pajamas4.png",
+      "image": "/images/catalog_images/catalog_card12.png",
       "description": "Navy pajamas for ultimate comfort.",
       "colors": [
         "navy",
@@ -824,7 +824,7 @@
       "category": "Kurti",
       "price": 250,
       "rating": 5,
-      "image": "/images/catalog_images/kurti5.png",
+      "image": "/images/catalog_images/catalog_card13.png",
       "description": "Luxurious white kurti for formal events.",
       "colors": [
         "white",
@@ -852,28 +852,50 @@
       "productId": 1,
       "name": "Black Graphic T-Shirt",
       "price": 35,
-      "image": "/images/catalog_images/tshirt1.pn",
+      "image": "/images/catalog_images/catalog_card1.png",
       "color": "black",
       "size": "M",
-      "quantity": 1,
+      "quantity": 5,
       "shipping": 5,
       "id": 1
     },
     {
-      "productId": 1,
-      "name": "Black Graphic T-Shirt",
-      "price": 35,
-      "image": "/images/catalog_images/tshirt1.png",
-      "color": "black",
+      "productId": 4,
+      "name": "Red Full Sleeve T-Shirt",
+      "price": 45,
+      "image": "/images/catalog_images/catalog_card4.png",
+      "color": "red",
       "size": "S",
-      "quantity": 2,
+      "quantity": 1,
       "shipping": 5,
       "id": 2
+    },
+    {
+      "productId": 5,
+      "name": "Blue Jeans",
+      "price": 90,
+      "image": "/images/catalog_images/catalog_card5.png",
+      "color": "blue",
+      "size": "S",
+      "quantity": 1,
+      "shipping": 5,
+      "id": 3
+    },
+    {
+      "productId": 2,
+      "name": "White Plain Kurti",
+      "price": 80,
+      "image": "/images/catalog_images/catalog_card2.png",
+      "color": "white",
+      "size": "XS",
+      "quantity": 2,
+      "shipping": 5,
+      "id": 4
     }
   ],
   "favorites": [
     {
-      "userId": 1,
+      "userId": 3,
       "productId": 1,
       "product": {
         "id": 1,
@@ -882,15 +904,12 @@
         "category": "Printed T-Shirts",
         "price": 35,
         "rating": 4.5,
-        "image": "/images/catalog_images/tshirt1.png",
+        "image": "/images/catalog_images/catalog_card1.png",
         "description": "Stylish black T-shirt with graphic print.",
         "colors": [
-          "black",
-          "white",
-          "grey"
+          "black"
         ],
         "sizes": [
-          "S",
           "M",
           "L",
           "XL"
@@ -907,21 +926,125 @@
         }
       },
       "id": 1
+    },
+    {
+      "userId": 3,
+      "productId": 2,
+      "product": {
+        "id": 2,
+        "name": "White Plain Kurti",
+        "brand": "Flora's Brand",
+        "category": "Kurti",
+        "price": 80,
+        "rating": 5,
+        "image": "/images/catalog_images/catalog_card2.png",
+        "description": "Elegant white kurti for daily wear.",
+        "colors": [
+          "white",
+          "yellow",
+          "pink"
+        ],
+        "sizes": [
+          "XS",
+          "S"
+        ],
+        "style": "Elegant",
+        "video": "/videos/product-video.mp4",
+        "tableData": {
+          "Fabric": "Cotton",
+          "Pattern": "Solid",
+          "Fit": "A-line",
+          "Neck": "Round Neck",
+          "Sleeve": "Three-quarter",
+          "Style": "Elegant"
+        }
+      },
+      "id": 3
+    },
+    {
+      "userId": 3,
+      "productId": 3,
+      "product": {
+        "id": 3,
+        "name": "Navy Joggers",
+        "brand": "Sporty Brand",
+        "category": "Joggers",
+        "price": 60,
+        "rating": 4,
+        "image": "/images/catalog_images/catalog_card3.png",
+        "description": "Comfortable navy joggers for active lifestyle.",
+        "colors": [
+          "navy",
+          "black",
+          "grey"
+        ],
+        "sizes": [
+          "M",
+          "L",
+          "XL"
+        ],
+        "style": "Sport",
+        "video": "/videos/product-video.mp4",
+        "tableData": {
+          "Fabric": "Cotton Blend",
+          "Pattern": "Solid",
+          "Fit": "Slim",
+          "Waist": "Elastic",
+          "Length": "Full",
+          "Style": "Sport"
+        }
+      },
+      "id": 4
     }
   ],
   "users": [
     {
       "id": 1,
-      "phoneNumber": "+375291234567",
-      "email": "user@example.com",
-      "birthDate": "1990-01-01",
-      "password": "SecurePass123!",
-      "firstName": "John",
-      "lastName": "Doe",
+      "phoneNumber": "+375291111111",
+      "email": "admin@euphoria.com",
+      "birthDate": "1985-05-05",
+      "password": "AdminPass2023!",
+      "firstName": "Admin",
+      "lastName": "Euphoria",
       "middleName": null,
-      "nickname": "CoolStar123",
-      "username": "user",
-      "date-of birth": "01/011990"
+      "nickname": "EuphoriaAdmin",
+      "role": "admin"
+    },
+    {
+      "phoneNumber": "+375 29 555 44 33",
+      "email": "exmail@gg.com",
+      "birthDate": "0005-04-04",
+      "password": "5455Aa_gg",
+      "firstName": "ка",
+      "lastName": "gttg",
+      "middleName": "",
+      "nickname": "AlexBorshch",
+      "role": "user",
+      "id": 2
+    },
+    {
+      "phoneNumber": "+375 29 523 44 33",
+      "email": "gmailg@22.e",
+      "birthDate": "0004-04-04",
+      "password": "9FNIp_tNcAmH",
+      "firstName": "F",
+      "lastName": "f",
+      "middleName": "",
+      "nickname": "CoolTree851",
+      "role": "user",
+      "id": 3
+    },
+    {
+      "phoneNumber": "+375 29 123 44 33",
+      "email": "gfffeee@22.e",
+      "birthDate": "0003-03-03",
+      "password": "u%6t_%9ZojvG",
+      "firstName": "dev",
+      "lastName": "mod",
+      "middleName": "",
+      "nickname": "CleverCloud712",
+      "role": "user",
+      "id": 4
     }
   ]
 }
