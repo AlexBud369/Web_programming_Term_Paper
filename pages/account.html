@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/layouts/footer.css">
     <link rel="stylesheet" href="../css/layouts/modal-output.css">
     <link rel="stylesheet" href="../css/layouts/modal-form.css">
+    <link rel="stylesheet" href="../css/pages/a11y.css">
     <title data-i18n="page_title_account">Euphoria - My Account</title>
 </head>
 <body data-page-type="account" class="a11y-page">
@@ -23,7 +24,7 @@
             <a href="../index.html" class="logo" aria-label="Euphoria Home">
                 <img src="../images/Logo.png" alt="Euphoria Logo">
             </a>
-            <nav class="main-nav">
+            <nav class="main-nav" aria-label="Main navigation">
                 <ul>
                     <li><a href="./index.html" data-i18n="nav_home">Home</a></li>
                     <li><a href="catalog.html" data-i18n="nav_catalog">Catalog</a></li>
@@ -36,13 +37,13 @@
                 <div class="accessibility-toggle">
                     <input type="checkbox" id="a11y-toggle-desktop" class="toggle-input" aria-label="Toggle accessibility mode">
                     <label for="a11y-toggle-desktop" class="toggle-label">
-                        <span class="toggle-icon">👁️</span>
+                        <span class="toggle-icon" aria-hidden="true">👁️</span>
                     </label>
                 </div>
                 <div class="language-selector">
                     <button class="language-toggle" aria-expanded="false" aria-label="Select language">
                         <span class="current-language" data-i18n="lang_current">English</span>
-                        <span class="drop-icon">▼</span>
+                        <span class="drop-icon" aria-hidden="true">▼</span>
                     </button>
                     <div class="language-dropdown">
                         <button data-lang="en" data-i18n="lang_en">English</button>
@@ -69,7 +70,7 @@
             <div class="menu-container">
                 <button class="close-menu" aria-label="Close menu">✕</button>
                 <h2 class="menu-title" data-i18n="menu_title">Menu Navigation</h2>
-                <nav class="mobile-nav">
+                <nav class="mobile-nav" aria-label="Mobile navigation">
                     <ul>
                         <li><a href="../index.html" data-i18n="nav_home">Home</a></li>
                         <li><a href="catalog.html" data-i18n="nav_catalog">Catalog</a></li>
@@ -81,30 +82,40 @@
                 <div class="accessibility-toggle">
                     <input type="checkbox" id="a11y-toggle-mobile" class="toggle-input" aria-label="Toggle accessibility mode">
                     <label for="a11y-toggle-mobile" class="toggle-label">
-                        <span class="toggle-icon">👁️</span>
+                        <span class="toggle-icon" aria-hidden="true">👁️</span>
                     </label>
                 </div>
                 <div class="a11y-settings">
                     <div class="a11y-options">
                         <div class="option-group">
-                            <label data-i18n="a11y_text_size">Text Size:</label>
-                            <div class="font-size-buttons">
-                                <button class="font-size-btn" data-font-size="100">100%</button>
-                                <button class="font-size-btn" data-font-size="150">150%</button>
-                                <button class="font-size-btn" data-font-size="200">200%</button>
+                            <label for="font-size-buttons" data-i18n="a11y_text_size">Text Size:</label>
+                            <div class="font-size-buttons" id="font-size-buttons">
+                                <button class="font-size-btn" data-font-size="100" aria-label="Set font size to 100%">100%</button>
+                                <button class="font-size-btn" data-font-size="150" aria-label="Set font size to 150%">150%</button>
+                                <button class="font-size-btn" data-font-size="200" aria-label="Set font size to 200%">200%</button>
                             </div>
                         </div>
                         <div class="option-group">
                             <label data-i18n="a11y_color_scheme">Color Scheme:</label>
                             <div class="color-schemes">
-                                <label><input type="radio" name="color-scheme" value="black-white" data-i18n="a11y_black_white">Black background, white text</label>
-                                <label><input type="radio" name="color-scheme" value="beige-brown" data-i18n="a11y_beige_brown">Beige background, brown text</label>
-                                <label><input type="radio" name="color-scheme" value="blue-darkblue" data-i18n="a11y_blue_darkblue">Blue background, dark blue text</label>
+                                <label>
+                                    <input type="radio" name="color-scheme" value="black-white" aria-label="Black background, white text">
+                                    <span data-i18n="a11y_black_white">Black background, white text</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="color-scheme" value="beige-brown" aria-label="Beige background, brown text">
+                                    <span data-i18n="a11y_beige_brown">Beige background, brown text</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="color-scheme" value="blue-darkblue" aria-label="Blue background, dark blue text">
+                                    <span data-i18n="a11y_blue_darkblue">Blue background, dark blue text</span>
+                                </label>
                             </div>
                         </div>
                         <div class="option-group">
-                            <label>
-                                <input type="checkbox" id="images-toggle" checked data-i18n="a11y_show_images"> Show Images in Wishlist
+                            <label for="images-toggle">
+                                <input type="checkbox" id="images-toggle" checked aria-label="Toggle images in wishlist">
+                                <span data-i18n="a11y_show_images">Show Images in Wishlist</span>
                             </label>
                         </div>
                     </div>
@@ -112,7 +123,7 @@
                 <div class="language-selector">
                     <button class="language-toggle" aria-expanded="false" aria-label="Select language">
                         <span class="current-language" data-i18n="lang_current">English</span>
-                        <span class="drop-icon">▼</span>
+                        <span class="drop-icon" aria-hidden="true">▼</span>
                     </button>
                     <div class="language-dropdown">
                         <button data-lang="en" data-i18n="lang_en">English</button>
@@ -127,7 +138,7 @@
                         </span>
                     </label>
                 </div>
-                <button class="reset-btn" data-i18n="reset_btn" aria-label="Reset all settings">Reset Settings</button>
+                <button class="reset-btn" data-i18n="reset_btn" aria-label="Reset all accessibility settings">Reset Settings</button>
                 <div class="auth-section">
                     <button class="login-btn" data-i18n="login_btn">Login</button>
                     <button class="register-btn" data-i18n="register_btn">Register</button>
@@ -146,7 +157,7 @@
                 <div class="field-label" data-i18n="account_username">Username</div>
                 <div class="field-content">
                     <span class="field-value"></span>
-                    <button class="change-btn" data-i18n="account_change">Change</button>
+                    <button class="change-btn" data-i18n="account_change" aria-label="Change username">Change</button>
                 </div>
                 <hr class="divider">
             </div>
@@ -154,7 +165,7 @@
                 <div class="field-label" data-i18n="account_first_name">First Name</div>
                 <div class="field-content">
                     <span class="field-value"></span>
-                    <button class="change-btn" data-i18n="account_change">Change</button>
+                    <button class="change-btn" data-i18n="account_change" aria-label="Change first name">Change</button>
                 </div>
                 <hr class="divider">
             </div>
@@ -162,7 +173,7 @@
                 <div class="field-label" data-i18n="account_last_name">Last Name</div>
                 <div class="field-content">
                     <span class="field-value"></span>
-                    <button class="change-btn" data-i18n="account_change">Change</button>
+                    <button class="change-btn" data-i18n="account_change" aria-label="Change last name">Change</button>
                 </div>
                 <hr class="divider">
             </div>
@@ -170,7 +181,7 @@
                 <div class="field-label" data-i18n="account_phone">Phone Number</div>
                 <div class="field-content">
                     <span class="field-value"></span>
-                    <button class="change-btn" data-i18n="account_change">Change</button>
+                    <button class="change-btn" data-i18n="account_change" aria-label="Change phone number">Change</button>
                 </div>
                 <hr class="divider">
             </div>
@@ -178,7 +189,7 @@
                 <div class="field-label" data-i18n="account_email">Email</div>
                 <div class="field-content">
                     <span class="field-value"></span>
-                    <button class="change-btn" data-i18n="account_change">Change</button>
+                    <button class="change-btn" data-i18n="account_change" aria-label="Change email">Change</button>
                 </div>
                 <hr class="divider">
             </div>
@@ -186,7 +197,7 @@
                 <div class="field-label" data-i18n="account_dob">Date of Birth</div>
                 <div class="field-content">
                     <span class="field-value"></span>
-                    <button class="change-btn" data-i18n="account_change">Change</button>
+                    <button class="change-btn" data-i18n="account_change" aria-label="Change date of birth">Change</button>
                 </div>
                 <hr class="divider">
             </div>
@@ -194,7 +205,7 @@
                 <div class="field-label" data-i18n="account_password">Password</div>
                 <div class="field-content">
                     <span class="field-value">********</span>
-                    <button class="change-btn" data-i18n="account_change">Change</button>
+                    <button class="change-btn" data-i18n="account_change" aria-label="Change password">Change</button>
                 </div>
             </div>
         </section>
@@ -203,9 +214,9 @@
             <div class="products-grid" id="wishlist-grid"></div>
             <div class="no-results" id="no-results" style="display: none;" data-i18n="wishlist_no_results">No items in your favorites.</div>
             <div class="pagination" id="pagination">
-                <button class="page-btn prev-btn" disabled data-i18n="pagination_prev">Previous</button>
+                <button class="page-btn prev-btn" disabled data-i18n="pagination_prev" aria-label="Previous page">Previous</button>
                 <div class="page-numbers" id="page-numbers"></div>
-                <button class="page-btn next-btn" data-i18n="pagination_next">Next</button>
+                <button class="page-btn next-btn" data-i18n="pagination_next" aria-label="Next page">Next</button>
             </div>
         </section>
     </main>
