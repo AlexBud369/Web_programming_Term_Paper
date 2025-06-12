@@ -73,6 +73,7 @@ body, html {
   margin-bottom: calc(40px * var(--a11y-font-scale));
   font-family: var(--font-heading);
   text-align: center; 
+}
 
 .account-field {
   width: 894px;
@@ -521,5 +522,4 @@ body, html {
   .prev-btn, .next-btn {
     order: 2;
   }
-}
 }
