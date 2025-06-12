@@ -88,7 +88,7 @@ export function initLanguageSwitcher(selector = '.language-selector') {
     });
 }
 
-function updateLanguage(lang, translations) {
+export function updateLanguage(lang, translations) {
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.dataset.i18n;
         const translation = translations[key]?.[lang];
