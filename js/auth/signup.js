@@ -1,7 +1,17 @@
-import { validatePhoneNumber, validateEmail, validateBirthDate, validatePassword, generateRandomPassword, generateNickname, registerUser } from '../modules/auth.js';
+import { validatePhoneNumber, validateEmail, validateBirthDate, validatePassword, generateRandomPassword, generateNickname, registerUser, updateUserProfile } from '../modules/auth.js';
 import { initBurgerMenu } from '../modules/burgerMenu.js';
+import { initLanguageSwitcher } from '../modules/languageSwitcher.js';
+import { initThemeSwitcher } from '../modules/themeSwitcher.js';
+import { showErrorModal, showSuccessModal } from '../modules/modal.js';
+import { translations } from '../modules/pages-translations/signup_translations.js';
+import { showPreloader, hidePreloader, initPreloader } from '../modules/preloader.js';
+
+console.log('signup.js loaded');
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOMContentLoaded event fired');
+    initPreloader();
+
     const form = document.getElementById('signupForm');
     const phoneNumberInput = document.getElementById('phoneNumber');
     const emailInput = document.getElementById('email');
@@ -20,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nicknameInput = document.getElementById('nickname');
     const generateNicknameBtn = document.getElementById('generateNickname');
     const termsAgreementInput = document.getElementById('termsAgreement');
-    const submitBtn = document.getElementById('submit-btn');
+    const submitBtn = document.getElementById('submitBtn');
     const manualPasswordGroup = document.getElementById('manualPasswordGroup');
     const autoPasswordGroup = document.getElementById('autoPasswordGroup');
     const errorElements = {
@@ -28,70 +38,99 @@ document.addEventListener('DOMContentLoaded', () => {
         email: document.getElementById('emailError'),
         birthDate: document.getElementById('birthDateError'),
         password: document.getElementById('passwordError'),
-        passwordConfirm: document.getElementById('confirmPasswordError'),
+        confirmPassword: document.getElementById('confirmPasswordError'),
         autoPassword: document.getElementById('autoPasswordError'),
         firstName: document.getElementById('firstNameError'),
         lastName: document.getElementById('lastNameError'),
-        middleName: null,
+        middleName: document.getElementById('middleNameError'),
         nickname: document.getElementById('nicknameError'),
         termsAgreement: document.getElementById('termsAgreementError'),
     };
+
+    if (!form || !submitBtn) {
+        console.error('Form or submit button not found');
+        const lang = localStorage.getItem('language') || 'en';
+        showErrorModal(translations.form_initialization_error?.[lang] || 'Form initialization failed');
+        return;
+    }
 
     let nicknameAttempts = 0;
     let serverUnavailable = false;
 
     togglePasswordBtn.addEventListener('click', () => {
+        console.log('Toggle password visibility');
         const isHidden = passwordInput.type === 'password';
         passwordInput.type = isHidden ? 'text' : 'password';
-        togglePasswordBtn.textContent = isHidden ? 'Hide' : 'Show';
+        const lang = localStorage.getItem('language') || 'en';
+        togglePasswordBtn.textContent = translations[isHidden ? 'toggle_password_hide' : 'toggle_password_show']?.[lang] || (isHidden ? 'Hide' : 'Show');
     });
 
     toggleConfirmPasswordBtn.addEventListener('click', () => {
+        console.log('Toggle confirm password visibility');
         const isHidden = confirmPasswordInput.type === 'password';
         confirmPasswordInput.type = isHidden ? 'text' : 'password';
-        toggleConfirmPasswordBtn.textContent = isHidden ? 'Hide' : 'Show';
+        const lang = localStorage.getItem('language') || 'en';
+        toggleConfirmPasswordBtn.textContent = translations[isHidden ? 'toggle_password_hide' : 'toggle_password_show']?.[lang] || (isHidden ? 'Hide' : 'Show');
     });
 
     toggleAutoPasswordBtn.addEventListener('click', () => {
+        console.log('Toggle auto password visibility');
         const isHidden = autoPasswordInput.type === 'password';
         autoPasswordInput.type = isHidden ? 'text' : 'password';
-        toggleAutoPasswordBtn.textContent = isHidden ? 'Hide' : 'Show';
+        const lang = localStorage.getItem('language') || 'en';
+        toggleAutoPasswordBtn.textContent = translations[isHidden ? 'toggle_password_hide' : 'toggle_password_show']?.[lang] || (isHidden ? 'Hide' : 'Show');
     });
 
+    function updatePasswordFields() {
+        const passwordMethod = document.querySelector('input[name="passwordMethod"]:checked')?.value;
+        console.log('Password method changed:', passwordMethod);
+        if (passwordMethod === 'auto') {
+            manualPasswordGroup.style.display = 'none';
+            autoPasswordGroup.style.display = 'block';
+            autoPasswordInput.value = generateRandomPassword();
+            passwordInput.removeAttribute('required');
+            confirmPasswordInput.removeAttribute('required');
+            autoPasswordInput.setAttribute('required', '');
+        } else {
+            manualPasswordGroup.style.display = 'block';
+            autoPasswordGroup.style.display = 'none';
+            passwordInput.setAttribute('required', '');
+            confirmPasswordInput.setAttribute('required', '');
+            autoPasswordInput.removeAttribute('required');
+            passwordInput.value = '';
+            confirmPasswordInput.value = '';
+            autoPasswordInput.value = '';
+        }
+        updateForm();
+    }
+
     passwordMethodInputs.forEach((input) => {
-        input.addEventListener('change', () => {
-            if (input.value === 'auto') {
-                manualPasswordGroup.style.display = 'none';
-                autoPasswordGroup.style.display = 'block';
-                autoPasswordInput.value = generateRandomPassword();
-            } else {
-                manualPasswordGroup.style.display = 'block';
-                autoPasswordGroup.style.display = 'none';
-                passwordInput.value = '';
-                confirmPasswordInput.value = '';
-                autoPasswordInput.value = '';
-            }
-            validateForm();
-        });
+        input.addEventListener('change', updatePasswordFields);
     });
 
     generatePasswordBtn.addEventListener('click', () => {
+        console.log('Generate password clicked');
         autoPasswordInput.value = generateRandomPassword();
-        validateForm();
+        updateForm();
     });
 
     generateNicknameBtn.addEventListener('click', async () => {
+        console.log('Generate nickname clicked');
+        const lang = localStorage.getItem('language') || 'en';
         if (nicknameAttempts >= 5 || serverUnavailable) {
             generateNicknameBtn.disabled = true;
             nicknameInput.readOnly = false;
             nicknameInput.value = '';
-            errorElements.nickname.textContent = serverUnavailable ? 'Server unavailable, enter nickname manually' : 'Max attempts reached, enter nickname manually';
+            errorElements.nickname.textContent = serverUnavailable ? 
+                (translations.nickname_server_unavailable?.[lang] || 'Server unavailable, enter nickname manually') : 
+                (translations.nickname_max_attempts?.[lang] || 'Maximum attempts reached, enter nickname manually');
             errorElements.nickname.classList.add('active');
             return;
         }
 
         nicknameAttempts++;
         try {
+            showPreloader();
             const nickname = await generateNickname(nicknameAttempts);
             nicknameInput.value = nickname;
             errorElements.nickname.textContent = '';
@@ -101,14 +140,34 @@ document.addEventListener('DOMContentLoaded', () => {
             generateNicknameBtn.disabled = true;
             nicknameInput.readOnly = false;
             nicknameInput.value = '';
-            errorElements.nickname.textContent = 'Server unavailable, enter nickname manually';
+            errorElements.nickname.textContent = translations.nickname_server_unavailable?.[lang] || 'Server unavailable, enter nickname manually';
             errorElements.nickname.classList.add('active');
+        } finally {
+            hidePreloader();
         }
-        validateForm();
+        updateForm();
     });
 
+    function updateForm() {
+        console.log('Updating form state');
+        const passwordMethod = document.querySelector('input[name="passwordMethod"]:checked')?.value;
+        const isFormFilled = phoneNumberInput.value.trim()
+            && emailInput.value.trim()
+            && birthDateInput.value
+            && firstNameInput.value.trim()
+            && lastNameInput.value.trim()
+            && nicknameInput.value.trim()
+            && termsAgreementInput.checked
+            && (passwordMethod === 'auto' ? autoPasswordInput.value : passwordInput.value && confirmPasswordInput.value);
+
+        submitBtn.disabled = !isFormFilled;
+        console.log('Form filled status:', isFormFilled);
+    }
+
     function validateForm() {
+        console.log('Validating form');
         let isValid = true;
+        const lang = localStorage.getItem('language') || 'en';
         Object.values(errorElements).forEach((el) => {
             if (el) {
                 el.textContent = '';
@@ -120,9 +179,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = emailInput.value.trim();
         const birthDate = birthDateInput.value;
         const passwordMethod = document.querySelector('input[name="passwordMethod"]:checked')?.value;
-        const password = passwordInput.value;
-        const confirmPassword = confirmPasswordInput.value;
-        const autoPassword = autoPasswordInput.value;
+        const password = passwordInput.value.trim();
+        const confirmPassword = confirmPasswordInput.value.trim();
+        const autoPassword = autoPasswordInput.value.trim();
         const firstName = firstNameInput.value.trim();
         const lastName = lastNameInput.value.trim();
         const middleName = middleNameInput.value.trim();
@@ -130,81 +189,108 @@ document.addEventListener('DOMContentLoaded', () => {
         const termsAgreed = termsAgreementInput.checked;
 
         if (!phoneNumber || !validatePhoneNumber(phoneNumber)) {
-            errorElements.phoneNumber.textContent = 'Invalid Belarus phone number (+375 XX XXX XX XX)';
+            errorElements.phoneNumber.textContent = translations.phone_number_invalid?.[lang] || 'Invalid Belarus phone number (+375 XX XXX XX XX)';
             errorElements.phoneNumber.classList.add('active');
             isValid = false;
         }
 
         if (!email || !validateEmail(email)) {
-            errorElements.email.textContent = 'Invalid email address';
+            errorElements.email.textContent = translations.email_invalid?.[lang] || 'Invalid email address';
             errorElements.email.classList.add('active');
             isValid = false;
         }
 
         if (!birthDate || !validateBirthDate(birthDate)) {
-            errorElements.birthDate.textContent = 'You must be at least 16 years old';
+            errorElements.birthDate.textContent = translations.birth_date_invalid?.[lang] || 'You must be at least 16 years old';
             errorElements.birthDate.classList.add('active');
             isValid = false;
         }
 
         if (passwordMethod === 'manual') {
             if (!password || !validatePassword(password)) {
-                errorElements.password.textContent = 'Password must be 8-20 characters, include uppercase, lowercase, number, and special character';
+                errorElements.password.textContent = translations.password_invalid?.[lang] || 'Password must be 8-18 characters, include uppercase letters';
                 errorElements.password.classList.add('active');
                 isValid = false;
             }
             if (password !== confirmPassword) {
-                errorElements.confirmPassword.textContent = 'Passwords do not match';
+                errorElements.confirmPassword.textContent = translations.password_mismatch?.[lang] || 'Passwords do not match';
                 errorElements.confirmPassword.classList.add('active');
                 isValid = false;
             }
         } else if (passwordMethod === 'auto') {
             if (!autoPassword || !validatePassword(autoPassword)) {
-                errorElements.autoPassword.textContent = 'Generated password is invalid';
+                errorElements.autoPassword.textContent = translations.auto_password_invalid?.[lang] || 'Generated password is invalid';
                 errorElements.autoPassword.classList.add('active');
                 isValid = false;
             }
         } else {
-            errorElements.password.textContent = 'Please select a password method';
+            errorElements.password.textContent = translations.password_method_required?.[lang] || 'Please select a password method';
             errorElements.password.classList.add('active');
             isValid = false;
         }
 
-        if (!firstName) {
-            errorElements.firstName.textContent = 'First name is required';
+        if (!firstName || firstName.length > 50) {
+            errorElements.firstName.textContent = firstName ? 
+                (translations.first_name_too_long?.[lang] || 'First name is too long (max 50)') : 
+                (translations.first_name_required?.[lang] || 'First name is required');
             errorElements.firstName.classList.add('active');
             isValid = false;
         }
 
-        if (!lastName) {
-            errorElements.lastName.textContent = 'Last name is required';
+        if (!lastName || lastName.length > 50) {
+            errorElements.lastName.textContent = lastName ? 
+                (translations.last_name_too_long?.[lang] || 'Last name is too long (max 50 characters)') : 
+                (translations.last_name_required?.[lang] || 'Last name is required');
             errorElements.lastName.classList.add('active');
             isValid = false;
         }
 
-        if (!nickname) {
-            errorElements.nickname.textContent = 'Nickname is required';
+        if (middleName && middleName.length > 50) {
+            errorElements.middleName.textContent = translations.middle_name_too_long?.[lang] || 'Middle name is too long';
+            errorElements.middleName.classList.add('active');
+            isValid = false;
+        }
+
+        if (!nickname || nickname.length > 30) {
+            errorElements.nickname.textContent = nickname ? 
+                (translations.nickname_too_long?.[lang] || 'Nickname is too long (max 30 characters)') : 
+                (translations.nickname_required?.[lang] || 'Nickname is required');
             errorElements.nickname.classList.add('active');
             isValid = false;
         }
 
         if (!termsAgreed) {
-            errorElements.termsAgreement.textContent = 'You must agree to the Terms of Service';
+            errorElements.termsAgreement.textContent = translations.terms_agreement_required?.[lang] || 'You must agree to the Terms of Service';
             errorElements.termsAgreement.classList.add('active');
             isValid = false;
         }
 
         submitBtn.disabled = !isValid;
+        console.log('Form validation result:', isValid);
         return isValid;
     }
 
     [phoneNumberInput, emailInput, birthDateInput, passwordInput, confirmPasswordInput, autoPasswordInput, firstNameInput, lastNameInput, middleNameInput, nicknameInput, termsAgreementInput].forEach((input) => {
-        input.addEventListener('input', validateForm);
+        input.addEventListener('input', updateForm);
+        if (input === termsAgreementInput) {
+            input.addEventListener('change', updateForm);
+        }
     });
 
     form.addEventListener('submit', async (e) => {
+        console.log('Form submission');
         e.preventDefault();
-        if (!validateForm()) return;
+
+        Object.values(errorElements).forEach((el) => {
+            if (el) {
+                el.textContent = '';
+                el.classList.remove('active');
+            }
+        });
+
+        if (!validateForm()) {
+            return;
+        }
 
         const passwordMethod = document.querySelector('input[name="passwordMethod"]:checked')?.value;
         const userData = {
@@ -214,29 +300,111 @@ document.addEventListener('DOMContentLoaded', () => {
             password: passwordMethod === 'auto' ? autoPasswordInput.value : passwordInput.value,
             firstName: firstNameInput.value.trim(),
             lastName: lastNameInput.value.trim(),
-            middleName: middleNameInput.value.trim() || null,
+            middleName: middleNameInput.value.trim() || '',
             nickname: nicknameInput.value.trim(),
-            username: nicknameInput.value.trim(),
-            role: emailInput.value.trim() === 'admin@example.com' ? 'admin' : 'user',
+            role: 'user'
         };
 
         try {
+            showPreloader();
             console.log('Sending user data:', userData);
             const user = await registerUser(userData);
-            console.log('Registration response:', user);
-            localStorage.setItem('user', JSON.stringify({ id: user.id, email: user.email, nickname: user.nickname, role: user.role }));
-            window.location.href = user.role === 'admin' ? '../pages/admin.html' : '../pages/account.html';
+            console.log('Registration successful:', user);
+            localStorage.setItem('user', JSON.stringify({
+                id: user.id,
+                email: user.email || '',
+                nickname: user.nickname || '',
+                role: user.role || 'user',
+                firstName: user.firstName || '',
+                lastName: user.lastName || '',
+                phoneNumber: user.phoneNumber || '',
+                birthDate: user.birthDate || '',
+            }));
+            const lang = localStorage.getItem('language') || 'en';
+            showSuccessModal(translations.registration_success?.[lang] || 'Registration successful!');
+            updateUserProfile();
+            setTimeout(() => {
+                window.location.assign('../pages/account.html');
+                hidePreloader();
+            }, 1000);
         } catch (error) {
-            console.error('Registration error:', error.message);
-            errorElements.email.textContent = error.message || 'Registration failed';
-            errorElements.email.classList.add('active');
-            submitBtn.disabled = true;
+            console.log('Registration error:', error.message);
+            const lang = localStorage.getItem('language') || 'en';
+            showErrorModal(error.message || translations.registration_failed?.[lang] || 'Registration failed');
+            hidePreloader();
         }
     });
 
-    middleNameInput.parentElement.classList.add('non-required');
+    const headerResetBtn = document.querySelector('.header-controls .reset-btn');
+    if (headerResetBtn) {
+        console.log('Header reset button found, initializing');
+        headerResetBtn.addEventListener('click', () => {
+            console.log('Header reset button clicked');
+            try {
+                localStorage.setItem('language', 'en');
+                localStorage.setItem('theme', 'light');
+                document.documentElement.setAttribute('data-theme', 'light');
+                const languageChangedEvent = new CustomEvent('languageChanged', { detail: { lang: 'en' } });
+                window.dispatchEvent(languageChangedEvent);
+                console.log('Triggering page reload');
+                setTimeout(() => {
+                    window.location.reload(true);
+                }, 100);
+            } catch (error) {
+                console.error('Error during header reset:', error);
+            }
+        });
+    } else {
+        console.warn('Header reset button not found');
+    }
+
+    const burgerButton = document.querySelector('.burger-menu');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const closeButton = document.querySelector('.close-menu');
+    const menuOverlay = document.querySelector('.menu-overlay');
+    if (burgerButton && mobileMenu && closeButton && menuOverlay) {
+        console.log('Burger menu elements found, initializing');
+        initBurgerMenu(false, true, false);
+    } else {
+        console.error('Burger menu elements missing:', { burgerButton, mobileMenu, closeButton, menuOverlay });
+    }
+
+    const languageSelector = document.querySelector('.language-selector');
+    if (languageSelector) {
+        console.log('Language selector found, initializing');
+        initLanguageSwitcher();
+    } else {
+        console.warn('Language selector not found');
+    }
+
+    const headerThemeToggle = document.querySelector('#theme-toggle');
+    const mobileThemeToggle = document.querySelector('#theme-toggle-mobile');
+    if (headerThemeToggle) {
+        console.log('Header theme toggle found, initializing');
+        initThemeSwitcher(headerThemeToggle);
+    }
+    if (mobileThemeToggle) {
+        console.log('Mobile theme toggle found, initializing');
+        initThemeSwitcher(mobileThemeToggle);
+    }
+
+    window.addEventListener('languageChanged', () => {
+        console.log('Language changed, revalidating form');
+        validateForm();
+        const lang = localStorage.getItem('language') || 'en';
+        togglePasswordBtn.textContent = passwordInput.type === 'password' ? 
+            (translations.toggle_password_show?.[lang] || 'Show') : 
+            (translations.toggle_password_hide?.[lang] || 'Hide');
+        toggleConfirmPasswordBtn.textContent = confirmPasswordInput.type === 'password' ? 
+            (translations.toggle_password_show?.[lang] || 'Show') : 
+            (translations.toggle_password_hide?.[lang] || 'Hide');
+        toggleAutoPasswordBtn.textContent = autoPasswordInput.type === 'password' ? 
+            (translations.toggle_password_show?.[lang] || 'Show') : 
+            (translations.toggle_password_hide?.[lang] || 'Hide');
+    });
 
     autoPasswordGroup.style.display = 'none';
-
-    initBurgerMenu(false, true);
+    autoPasswordInput.removeAttribute('required');
+    updatePasswordFields();
+    updateForm();
 });
