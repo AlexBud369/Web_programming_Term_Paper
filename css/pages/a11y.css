@@ -1,0 +1,288 @@
+.a11y-page.a11y-mode {
+  --a11y-base-font-size: calc(1rem * var(--a11y-font-scale));
+  --a11y-line-height: calc(var(--a11y-base-font-size) * 1.5); 
+  --a11y-letter-spacing: calc(var(--a11y-base-font-size) * 0.12); 
+  --a11y-word-spacing: calc(var(--a11y-base-font-size) * 0.16); 
+  --a11y-paragraph-margin: calc(var(--a11y-line-height) * 1.5); 
+  --a11y-paragraph-margin-min: calc(var(--a11y-base-font-size) * 2);
+
+  *,
+  *::before,
+  *::after {
+    font-size: var(--a11y-base-font-size);
+    line-height: var(--a11y-line-height);
+    letter-spacing: var(--a11y-letter-spacing);
+    word-spacing: var(--a11y-word-spacing);
+    text-align: start;
+    background-color: var(--a11y-bg-color);
+    color: var(--a11y-text-color);
+  }
+
+  p,
+  .field-content,
+  .product-info > * {
+    margin-bottom: max(var(--a11y-paragraph-margin), var(--a11y-paragraph-margin-min));
+  }
+
+  main.account-container,
+  .account-info,
+  .wishlist,
+  .account-field,
+  .divider {
+    max-width: min(600px, 100%);
+    padding: 0 clamp(0.5rem, 2vw, 1rem);
+  }
+
+  body,
+  main.account-container,
+  header,
+  .footer {
+    overflow-x: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .account-field .field-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(0.5rem, 2vw, 1rem);
+    align-items: center;
+  }
+
+  .change-btn {
+    flex: 0 0 auto;
+    padding: clamp(0.4rem, 1.5vw, 0.5rem) clamp(0.75rem, 2vw, 1rem);
+    white-space: nowrap;
+  }
+
+
+  &.black-white {
+    --a11y-bg-color: #000000;
+    --a11y-text-color: #ffffff;
+    --a11y-accent-color: #ffffff;
+    --border-color: #ffffff;
+    --bg-hover: rgba(255, 255, 255, 0.1);
+    --footer-bg: #000000;
+    --footer-text: #ffffff;
+    --footer-accent: #ffffff;
+    --footer-border: #ffffff;
+  }
+
+  &.beige-brown {
+    --a11y-bg-color: #f5f5dc;
+    --a11y-text-color: #4b2e2e;
+    --a11y-accent-color: #4b2e2e;
+    --border-color: #4b2e2e;
+    --bg-hover: rgba(75, 46, 46);
+    --footer-bg: #f5f5dc;
+    --footer-text: #4b2e2e;
+    --footer-accent: #4b2e2e;
+    --footer-border: #4b2e2e;
+  }
+
+  &.blue-darkblue {
+    --a11y-bg-color: #add8e6;
+    --a11y-text-color: #00008b;
+    --a11y-accent-color: #00008b;
+    --border-color: #00008b;
+    --bg-hover: rgba(0, 0, 139, 0.1);
+    --footer-bg: #add8e6;
+    --footer-text: #00008b;
+    --footer-accent: #00008b;
+    --footer-border: #00008b;
+  }
+
+  .products-grid {
+    display: grid;
+    gap: clamp(1rem, 3vw, 1.5rem);
+    justify-content: center;
+  }
+
+  @media (min-width: 1440px) {
+  
+    &[style*="--a11y-font-scale: 1.5"] .products-grid {
+      grid-template-columns: repeat(2, minmax(400px, 1fr));
+    }
+
+    &[style*="--a11y-font-scale: 2"] .products-grid {
+      grid-template-columns: minmax(400px, 600px);
+    }
+  }
+
+  .product-card {
+    width: 100%;
+    min-width: 0;
+    max-width: 600px;
+    white-space: normal;
+  }
+
+  .product-info {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .product-info > * {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+
+  &.no-images {
+    .product-image-container img {
+      display: none;
+    }
+
+    .product-image-container::after {
+      content: attr(data-transcription);
+      display: block;
+      text-align: center;
+      padding: calc(10px * var(--a11y-font-scale));
+      color: var(--a11y-text-color);
+      font-size: var(--a11y-base-font-size);
+      background: var(--a11y-bg-color);
+    }
+
+    .product-image {
+      display: none;
+    }
+  }
+
+  header .main-nav a,
+  header .language-toggle,
+  header .current-language,
+  header .language-dropdown button,
+  header .toggle-icon,
+  header .close-menu,
+  header .menu-title,
+  header .mobile-nav a,
+  header .login-btn,
+  header .register-btn,
+  header .logout-btn,
+  header .username,
+  header .reset-btn {
+    color: var(--a11y-text-color);
+  }
+
+  header .toggle-track {
+    background: rgba(var(--a11y-accent-color-rgb), 0.1);
+    border-color: var(--a11y-text-color);
+  }
+
+  header .toggle-input:checked ~ .toggle-label .toggle-track {
+    background: rgba(var(--a11y-accent-color-rgb), 0.3);
+  }
+
+  header .toggle-knob {
+    background: var(--a11y-bg-color);
+  }
+
+  header .toggle-input:checked ~ .toggle-label .toggle-knob {
+    background: var(--a11y-accent-color);
+  }
+
+  header .bar {
+    background-color: var(--a11y-text-color);
+  }
+
+  .footer__link,
+  .footer__title,
+  .footer__text,
+  .footer__disclaimer,
+  .footer__copyright {
+    color: var(--footer-text);
+  }
+
+  .footer__link:hover {
+    color: var(--footer-accent);
+  }
+
+  .footer__input {
+    background-color: var(--a11y-bg-color);
+    color: var(--footer-text);
+    border-color: var(--footer-border);
+  }
+
+  .footer__input:focus {
+    border-color: var(--footer-accent);
+  }
+
+  .footer__button {
+    background-color: var(--footer-accent);
+    color: var(--a11y-bg-color);
+  }
+
+  .footer__button:hover {
+    background-color: var(--bg-hover);
+  }
+
+  .footer__title::after {
+    background: var(--footer-accent);
+  }
+
+  .footer__bottom {
+    border-top-color: var(--footer-border);
+  }
+
+  .footer__icon {
+    filter: invert(0);
+    opacity: 0.7;
+  }
+
+  .footer__icon:hover {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .a11y-page.a11y-mode {
+    --a11y-base-font-size: calc(0.875rem * var(--a11y-font-scale));
+    .products-grid {
+      grid-template-columns: minmax(300px, 500px);
+      gap: clamp(0.75rem, 2vw, 1rem);
+    }
+    .pagination {
+      max-width: min(500px, 100%);
+      padding: clamp(0.5rem, 2vw, 0.75rem);
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .a11y-page.a11y-mode {
+    --a11y-base-font-size: calc(0.75rem * var(--a11y-font-scale));
+    .products-grid {
+      grid-template-columns: minmax(250px, 400px);
+    }
+    .account-field .field-content {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .change-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .a11y-page.a11y-mode {
+    --a11y-base-font-size: calc(0.65rem * var(--a11y-font-scale));
+    .products-grid {
+      grid-template-columns: minmax(200px, 300px);
+      padding: 0 0.5rem;
+    }
+    .account-field,
+    .wishlist,
+    .account-info {
+      padding: 0 0.5rem;
+    }
+    .pagination {
+      font-size: calc(0.65rem * var(--a11y-font-scale));
+      padding: 0.5rem;
+    }
+    .page-btn {
+      padding: clamp(0.25rem, 1vw, 0.4rem);
+    }
+  }
+}
