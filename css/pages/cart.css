@@ -366,7 +366,7 @@ body, html {
     margin: 5px 0;
 }
 
-.place-order-btn {
+.modal-btn {
     max-width: 200px;
     padding: 12px 24px;
     background: var(--accent-color);
@@ -378,10 +378,10 @@ body, html {
     border-radius: 8px;
     cursor: pointer;
     transition: var(--transition-base);
-    align-self: flex-end;
+    align-self: center;
 }
 
-.place-order-btn:hover {
+.modal-btn:hover {
     background: var(--accent-color-hover);
 }
 
