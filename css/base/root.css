@@ -40,8 +40,8 @@
     --background-body: #FFFFFF;
     --text-body: #3C4242;
 }
+
 :root.dark-theme {
-  
     --primary-color: #1E1E1E;          
     --secondary-color: #E8E8E8;         
     --text-color: #C0C0C0;               
@@ -60,9 +60,7 @@
     --table-header-bg: #333333;
     --table-row-bg: #2A2A2A;
     --border-color: #444444;
-    --text-color: #FFFFFF;
     --text-secondary: #BBBBBB;
-    --secondary-color: #FFFFFF;
     
     --modal-success-bg: #2E4E2E;         
     --modal-success-text: #B8E6B8;       
@@ -124,31 +122,6 @@ body.a11y-mode label {
 
 body.a11y-mode p {
     margin-bottom: calc(3rem * var(--global-font-scale)); 
-}
-
-body.black-white {
-    background-color: black;
-    color: white;
-}
-
-body.black-green {
-    background-color: black;
-    color: green;
-}
-
-body.white-black {
-    background-color: white;
-    color: black;
-}
-
-body.beige-brown {
-    background-color: beige;
-    color: brown;
-}
-
-body.blue-darkblue {
-    background-color: #ADD8E6; 
-    color: #00008B; 
 }
 
 body.no-images img {
