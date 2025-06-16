@@ -15,6 +15,10 @@ export const translations = {
     en: "Account",
     ru: "Аккаунт"
   },
+  nav_admin_panel: {
+    en: "Admin Panel",
+    ru: "Панель админа"
+  },
   lang_current: {
     en: "EN",
     ru: "RU"

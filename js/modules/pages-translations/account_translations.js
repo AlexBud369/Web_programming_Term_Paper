@@ -191,8 +191,7 @@ export const translations = {
         en: 'Half Star',
         ru: 'Половина звезды'
     },
-    star_outline: {
-        icon: 'en_alt',
+    star_outline_icon: {
         en: 'Empty Star',
         ru: 'Пустая звезда'
     },
@@ -299,5 +298,57 @@ export const translations = {
     toggle_password_hide: {
         en: 'Hide',
         ru: 'Скрыть'
+    },
+    confirm_change: { 
+        en: 'Confirm changing {field} to {value}?',
+        ru: 'Подтвердить изменение {field} на {value}?'
+    },
+    success_title: { 
+        en: 'Success',
+        ru: 'Успех'
+    },
+    error_title: { 
+        en: 'Error',
+        ru: 'Ошибка'
+    },
+    invalid_name: {
+        en: 'Name must contain only letters and hyphens, max 50 characters',
+        ru: 'Имя должно содержать только буквы и дефисы, максимум 50 символов'
+    },
+    email_invalid: {
+        en: 'Invalid email format',
+        ru: 'Неверный формат email'
+    },
+    email_taken: {
+        en: 'Email is already taken',
+        ru: 'Email уже занят'
+    },
+    phone_number_invalid: {
+        en: 'Invalid Belarus phone number (+375 XX XXX XX XX)',
+        ru: 'Неверный формат белорусского номера телефона (+375 XX XXX XX XX)'
+    },
+    phone_taken: {
+        en: 'Phone number is already taken',
+        ru: 'Номер телефона уже занят'
+    },
+    birth_date_invalid: {
+        en: 'Invalid date format (YYYY-MM-DD) or user must be at least 16 years old',
+        ru: 'Неверный формат даты (ГГГГ-ММ-ДД) или пользователь должен быть старше 16 лет'
+    },
+    nickname_invalid: {
+        en: 'Nickname must be up to 30 characters, letters, numbers, underscores, or hyphens',
+        ru: 'Никнейм должен содержать до 30 символов, буквы, цифры, подчеркивания или дефисы'
+    },
+    nickname_taken: {
+        en: 'Nickname is already taken',
+        ru: 'Никнейм уже занят'
+    },
+    password_invalid: {
+        en: 'Password must be 8-20 characters, include uppercase, lowercase, digit, and special character',
+        ru: 'Пароль должен содержать 8-20 символов, включая заглавные и строчные буквы, цифры и специальные символы'
+    },
+    password_common: {
+        en: 'Password is too common, please choose a different one',
+        ru: 'Пароль слишком распространён, выберите другой'
     }
 };

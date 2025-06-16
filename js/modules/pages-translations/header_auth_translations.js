@@ -7,6 +7,10 @@ export const translations = {
     en: "Catalog",
     ru: "Каталог"
   },
+  nav_admin_panel: {
+    en: "Admin Panel",
+    ru: "Панель админа"
+  },
   lang_current: {
     en: "EN",
     ru: "RU"

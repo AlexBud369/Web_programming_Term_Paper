@@ -139,6 +139,58 @@ export const translations = {
     en: "Quick View",
     ru: "Посмотреть"
   },
+  success_title: {
+    en: "Success",
+    ru: "Успех"
+  },
+  error_title: {
+    en: "Error",
+    ru: "Ошибка"
+  },
+  close: {
+    en: "Close",
+    ru: "Закрыть"
+  },
+  confirm: {
+    en: "OK",
+    ru: "ОК"
+  },
+  form_validation_error: {
+    en: "Please select color and size.",
+    ru: "Пожалуйста, выберите цвет и размер."
+  },
+  add_to_cart_title: {
+    en: "Add {name} to Cart",
+    ru: "Добавить {name} в корзину"
+  },
+  added_to_cart: {
+    en: "Added to cart!",
+    ru: "Добавлено в корзину!"
+  },
+  color_label: {
+    en: "Color",
+    ru: "Цвет"
+  },
+  size_label: {
+    en: "Size",
+    ru: "Размер"
+  },
+  add_button: {
+    en: "Add to Cart",
+    ru: "Добавить в корзину"
+  },
+  cancel_button: {
+    en: "Cancel",
+    ru: "Отмена"
+  },
+  added_to_favorites: {
+    en: "Added to favorites!",
+    ru: "Добавлено в избранное!"
+  },
+  removed_from_favorites: {
+    en: "Removed from favorites!",
+    ru: "Удалено из избранного!"
+  },
   category_tops_tshirts: {
     en: "Tops & T-Shirts",
     ru: "Топы и футболки"

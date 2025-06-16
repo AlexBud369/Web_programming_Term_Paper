@@ -287,21 +287,37 @@ export const translations = {
     en: "Item added to cart!",
     ru: "Товар добавлен в корзину!"
   },
-  modal_success_title: {
+  success_title: {
     en: "Success",
     ru: "Успех"
-  },
-  modal_error_title: {
-    en: "Error",
-    ru: "Ошибка"
   },
   add_button: {
     en: "Add to Cart",
     ru: "Добавить в корзину"
   },
+    error_title: {
+    en: "Error",
+    ru: "Ошибка"
+  },
+  close: {
+    en: "Close",
+    ru: "Закрыть"
+  },
   cancel_button: {
     en: "Cancel",
     ru: "Отмена"
+  },
+  cart_limit: {
+    en: "Cannot add more items. The cart is limited to 10 items in total.",
+    ru: "Нельзя добавить больше товаров. Корзина ограничена 10 товарами."
+  },
+  error_updating_cart: {
+    en: "Failed to update cart item.",
+    ru: "Не удалось обновить товар в корзине."
+  },
+  error_removing_cart: {
+    en: "Failed to remove item from cart.",
+    ru: "Не удалось удалить товар из корзины."
   },
   color_purple: {
     en: "Purple",

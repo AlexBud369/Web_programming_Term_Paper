@@ -15,10 +15,6 @@ export const translations = {
     en: "+375 (XX) XXX-XX-XX",
     ru: "+375 (XX) XXX-XX-XX"
   },
-  phone_number_error: {
-    en: "",
-    ru: ""
-  },
   phone_number_invalid: {
     en: "Invalid Belarus phone number (+375 XX XXX XX XX)",
     ru: "Неверный формат номера телефона (+375 XX XXX XX XX)"
@@ -31,10 +27,6 @@ export const translations = {
     en: "Email",
     ru: "Электронная почта"
   },
-  email_error: {
-    en: "",
-    ru: ""
-  },
   email_invalid: {
     en: "Invalid email address",
     ru: "Неверный формат электронной почты"
@@ -46,10 +38,6 @@ export const translations = {
   birth_date_placeholder: {
     en: "Select date",
     ru: "Выберите дату"
-  },
-  birth_date_error: {
-    en: "",
-    ru: ""
   },
   birth_date_invalid: {
     en: "You must be at least 16 years old",
@@ -75,10 +63,6 @@ export const translations = {
     en: "Password",
     ru: "Пароль"
   },
-  password_error: {
-    en: "",
-    ru: ""
-  },
   password_invalid: {
     en: "Password must be 8-18 characters, include uppercase letters",
     ru: "Пароль должен быть 8-18 символов, включать заглавные буквы"
@@ -91,10 +75,6 @@ export const translations = {
     en: "Confirm password",
     ru: "Подтвердите пароль"
   },
-  confirm_password_error: {
-    en: "",
-    ru: ""
-  },
   confirm_password_mismatch: {
     en: "Passwords do not match",
     ru: "Пароли не совпадают"
@@ -106,10 +86,6 @@ export const translations = {
   auto_password_placeholder: {
     en: "Generated password",
     ru: "Сгенерированный пароль"
-  },
-  auto_password_error: {
-    en: "",
-    ru: ""
   },
   auto_password_invalid: {
     en: "Generated password is invalid",
@@ -139,10 +115,6 @@ export const translations = {
     en: "First name",
     ru: "Имя"
   },
-  first_name_error: {
-    en: "",
-    ru: ""
-  },
   first_name_required: {
     en: "First name is required",
     ru: "Требуется имя"
@@ -158,10 +130,6 @@ export const translations = {
   last_name_placeholder: {
     en: "Last name",
     ru: "Фамилия"
-  },
-  last_name_error: {
-    en: "",
-    ru: ""
   },
   last_name_required: {
     en: "Last name is required",
@@ -179,10 +147,6 @@ export const translations = {
     en: "Middle name",
     ru: "Отчество"
   },
-  middle_name_error: {
-    en: "",
-    ru: ""
-  },
   middle_name_too_long: {
     en: "Middle name is too long (max 50 characters)",
     ru: "Отчество слишком длинное (макс. 50 символов)"
@@ -194,10 +158,6 @@ export const translations = {
   nickname_placeholder: {
     en: "Nickname",
     ru: "Никнейм"
-  },
-  nickname_error: {
-    en: "",
-    ru: ""
   },
   nickname_required: {
     en: "Nickname is required",
@@ -220,12 +180,8 @@ export const translations = {
     ru: "Сгенерировать"
   },
   terms_agreement_label: {
-    en: "I agree to the <a href='#'>Terms of Service</a> <span class='required'>*</span>",
-    ru: "Я согласен с <a href='#'>Условиями использования</a> <span class='required'>*</span>"
-  },
-  terms_agreement_error: {
-    en: "",
-    ru: ""
+    en: "I agree to the Terms of Service <span class='required'>*</span>",
+    ru: "Я согласен с Условиями использования <span class='required'>*</span>"
   },
   terms_agreement_required: {
     en: "You must agree to the Terms of Service",
@@ -254,6 +210,14 @@ export const translations = {
   form_initialization_error: {
     en: "Form initialization failed",
     ru: "Ошибка инициализации формы"
+  },
+  toggle_password_show: {
+    en: "Show",
+    ru: "Показать"
+  },
+  toggle_password_hide: {
+    en: "Hide",
+    ru: "Скрыть"
   },
   login_btn: {
     en: "Login",
