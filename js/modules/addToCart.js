@@ -6,7 +6,9 @@ export async function initAddToCart(pageType, selector, products = []) {
     const lang = localStorage.getItem('language') || 'en';
 
     buttons.forEach(button => {
-        button.addEventListener('click', async () => {
+        button.addEventListener('click', async (e) => {
+            e.preventDefault(); 
+            console.log('Add to cart button clicked:', button.dataset.productId);
             const productId = parseInt(button.dataset.productId);
             let product = products.find(p => p.id === productId) || await fetchProduct(productId);
             if (!product) {
@@ -105,7 +107,7 @@ async function addToCart(product, color, size, quantity = 1) {
         }
 
         showSuccessModal(cartTranslations.item_added_to_cart?.[lang] || `${product.name} added to cart!`);
-        sessionStorage.setItem('showSuccessModal', 'true');
+        sessionStorage.removeItem('showSuccessModal'); 
         updateCartCount();
         return true;
     } catch (error) {
