@@ -34,7 +34,7 @@ const headerTranslationsByPage = {
   signup: headerAuthTranslations
 };
 
-export function initLanguageSwitcher(selector = '.language-selector') {
+export function initLanguageSwitcher(selector = '.language-selector', pageTranslations = {}) {
     const languageSelectors = document.querySelectorAll(selector);
     if (!languageSelectors.length) {
         console.warn('Language selector not found:', selector);
@@ -44,12 +44,14 @@ export function initLanguageSwitcher(selector = '.language-selector') {
     const pageType = document.body.dataset.pageType || 'home';
     const authSubType = pageType === 'auth' ? (window.location.pathname.includes('signin') ? 'signin' : 'signup') : pageType;
     console.log('Initializing language switcher for page type:', pageType, 'auth subtype:', authSubType);
-    const pageTranslations = translationsByPage[authSubType] || translationsByPage[pageType] || {};
+
+    const defaultPageTranslations = translationsByPage[authSubType] || translationsByPage[pageType] || {};
     const headerTranslations = headerTranslationsByPage[authSubType] || headerTranslationsByPage[pageType] || headerTranslations;
     const combinedTranslations = {
-        ...pageTranslations,
+        ...footerTranslations, 
+        ...defaultPageTranslations,
         ...headerTranslations,
-        ...footerTranslations
+        ...pageTranslations
     };
 
     const savedLanguage = localStorage.getItem('language') || 'en';
@@ -90,37 +92,39 @@ export function initLanguageSwitcher(selector = '.language-selector') {
 
 export function updateLanguage(lang, translations) {
     document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.dataset.i18n;
-        const translation = translations[key]?.[lang];
-        if (translation) {
+        const key = element.getAttribute('data-i18n');
+        if (!translations[key]) {
+            console.warn(`Translation missing for key: ${key}, lang: ${lang}`);
+            return;
+        }
+        const translation = translations[key]?.[lang] || translations[key]?.['en'] || key;
+        try {
             if (element.dataset.i18nData) {
-                try {
-                    const data = JSON.parse(element.dataset.i18nData);
-                    element.innerHTML = translation.replace(/\{(\w+)\}/g, (_, k) => data[k] || '');
-                } catch (e) {
-                    console.warn('Invalid i18n data:', element.dataset.i18nData);
-                    element.innerHTML = translation;
-                }
-            } else {
+                const data = JSON.parse(element.dataset.i18nData);
+                element.innerHTML = translation.replace(/\{(\w+)\}/g, (_, k) => data[k] || k);
+            } else if (typeof translation === 'string' && translation.includes('<')) {
                 element.innerHTML = translation;
+            } else {
+                element.textContent = translation;
             }
-        } else {
-            console.warn(`Translation missing for key "${key}" in language "${lang}"`);
+        } catch (e) {
+            console.warn(`Error applying translation for key: ${key}, lang: ${lang}, error: ${e.message}`);
+            element.textContent = translation;
         }
     });
 
     document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-        const key = element.dataset.i18nPlaceholder;
-        const translation = translations[key]?.[lang];
-        if (translation) {
-            element.placeholder = translation;
-        } else {
-            console.warn(`Placeholder translation missing for key "${key}" in language "${lang}"`);
+        const key = element.getAttribute('data-i18n-placeholder');
+        if (!translations[key]) {
+            console.warn(`Translation missing for key: ${key}, lang: ${lang}`);
+            return;
         }
+        const translation = translations[key]?.[lang] || translations[key]?.['en'] || key;
+        element.placeholder = translation;
     });
 
     document.querySelectorAll('.current-language').forEach(element => {
-        const translation = translations.lang_current?.[lang] || lang.toUpperCase();
+        const translation = translations.lang_current?.[lang] || translations.lang_current?.['en'] || lang.toUpperCase();
         element.textContent = translation;
     });
 }
