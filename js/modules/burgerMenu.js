@@ -1,9 +1,9 @@
 import { checkAuth, updateUserProfile, logoutUser } from './auth.js';
 import { initAccessibility, resetAccessibility } from './accessibility.js';
-import { translations } from './pages-translations/header_translations.js';
 import { updateLanguage } from './languageSwitcher.js';
+import { setTheme } from './themeSwitcher.js';
 
-export function initBurgerMenu(isIndexPage = false, isAuthPage = false, isSignInPage = false) {
+export function initBurgerMenu(isIndexPage = false, isAuthPage = false, isSignInPage = false, translations = {}) {
     const burgerBtn = document.querySelector('.burger-menu');
     const closeBtn = document.querySelector('.close-menu');
     const mobileMenu = document.querySelector('.mobile-menu');
@@ -11,6 +11,7 @@ export function initBurgerMenu(isIndexPage = false, isAuthPage = false, isSignIn
     const authSection = document.querySelector('.auth-section');
     const menuContainer = document.querySelector('.menu-container');
     const a11ySettings = document.querySelector('.a11y-settings');
+    const a11yToggles = document.querySelectorAll('.a11y-toggle .toggle-input');
 
     if (!burgerBtn || !mobileMenu || !menuOverlay || !closeBtn || !authSection || !menuContainer) {
         console.error('Burger menu elements not found', {
@@ -56,6 +57,7 @@ export function initBurgerMenu(isIndexPage = false, isAuthPage = false, isSignIn
             if (authBtn) {
                 authBtn.setAttribute('data-i18n', isSignInPage ? 'register_btn' : 'login_btn');
                 authBtn.addEventListener('click', () => {
+                    console.log('Auth button clicked:', isSignInPage ? 'signup' : 'signin');
                     window.location.href = `${basePath}auth/${isSignInPage ? 'signup.html' : 'signin.html'}`;
                     toggleMenu();
                 });
@@ -63,6 +65,7 @@ export function initBurgerMenu(isIndexPage = false, isAuthPage = false, isSignIn
             if (mobileAuthBtn) {
                 mobileAuthBtn.setAttribute('data-i18n', isSignInPage ? 'register_btn' : 'login_btn');
                 mobileAuthBtn.addEventListener('click', () => {
+                    console.log('Mobile auth button clicked:', isSignInPage ? 'signup' : 'signin');
                     window.location.href = `${basePath}auth/${isSignInPage ? 'signup.html' : 'signin.html'}`;
                     toggleMenu();
                 });
@@ -70,12 +73,14 @@ export function initBurgerMenu(isIndexPage = false, isAuthPage = false, isSignIn
         } else {
             if (loginBtn) {
                 loginBtn.addEventListener('click', () => {
+                    console.log('Login button clicked');
                     window.location.href = `${basePath}auth/signin.html`;
                     toggleMenu();
                 });
             }
             if (registerBtn) {
                 registerBtn.addEventListener('click', () => {
+                    console.log('Register button clicked');
                     window.location.href = `${basePath}auth/signup.html`;
                     toggleMenu();
                 });
@@ -109,34 +114,46 @@ export function initBurgerMenu(isIndexPage = false, isAuthPage = false, isSignIn
         }
 
         const currentLang = localStorage.getItem('language') || 'en';
-        resetBtn.textContent = translations.reset_btn?.[currentLang] || 'Reset Settings';
-        resetBtn.setAttribute('aria-label', translations.reset_btn?.[currentLang] || 'Reset Settings');
+        resetBtn.textContent = translations.reset_btn?.[currentLang] || translations.reset_btn?.['en'] || 'Reset Settings';
+        resetBtn.setAttribute('aria-label', translations.reset_btn?.[currentLang] || translations.reset_btn?.['en'] || 'Reset Settings');
 
         const isAccountPage = window.location.pathname.includes('account.html');
 
         resetBtn.addEventListener('click', () => {
             console.log('Reset button clicked');
             try {
-                localStorage.setItem('language', 'en');
-                localStorage.setItem('theme', 'light');
-                document.documentElement.setAttribute('data-theme', 'light');
+                const currentLang = localStorage.getItem('language') || 'en';
+                if (currentLang !== 'en') {
+                    localStorage.setItem('language', 'en');
+                    const languageChangedEvent = new CustomEvent('languageChanged', { detail: { lang: 'en' } });
+                    window.dispatchEvent(languageChangedEvent);
+                }
 
-               
+                const currentTheme = localStorage.getItem('theme') || 'light';
+                if (currentTheme !== 'light') {
+                    setTheme('light');
+                }
+
                 if (isAccountPage) {
                     console.log('Resetting accessibility settings for account page');
                     resetAccessibility();
-                } else {
-                    console.log('Skipping accessibility reset, not on account page');
+                    a11yToggles.forEach(toggle => {
+                        toggle.checked = false;
+                        toggle.setAttribute('aria-label', translations.a11y_enable?.[currentLang] || translations.a11y_enable?.['en'] || 'Enable Accessibility');
+                    });
+                    if (a11ySettings) {
+                        a11ySettings.classList.remove('a11y-active');
+                        console.log('A11y settings hidden after reset');
+                    }
                 }
 
-                const languageChangedEvent = new CustomEvent('languageChanged', { detail: { lang: 'en' } });
-                window.dispatchEvent(languageChangedEvent);
                 console.log('Calling updateUserProfile for reset');
                 try {
                     updateUserProfile();
                 } catch (error) {
                     console.error('Error in updateUserProfile during reset:', error);
                 }
+
                 toggleMenu();
                 console.log('Settings reset, UI updated');
             } catch (error) {
@@ -145,20 +162,62 @@ export function initBurgerMenu(isIndexPage = false, isAuthPage = false, isSignIn
             }
         });
 
+        if (isAccountPage && a11yToggles.length && a11ySettings) {
+            console.log('Initializing a11y toggles for account page');
+            const isA11yActive = localStorage.getItem('a11y-active') === 'true';
+            a11ySettings.classList.toggle('a11y-active', isA11yActive);
+            console.log('A11y settings class set to:', a11ySettings.classList.contains('a11y-active') ? 'a11y-active' : 'hidden');
+
+            a11yToggles.forEach(toggle => {
+                toggle.checked = isA11yActive;
+                toggle.setAttribute('aria-label', isA11yActive ? 
+                    translations.a11y_disable?.[currentLang] || translations.a11y_disable?.['en'] || 'Disable Accessibility' : 
+                    translations.a11y_enable?.[currentLang] || translations.a11y_enable?.['en'] || 'Enable Accessibility');
+                
+                toggle.addEventListener('change', () => {
+                    const newState = toggle.checked;
+                    console.log('A11y toggle changed, new state:', newState);
+                    localStorage.setItem('a11y-active', newState.toString());
+                    a11yToggles.forEach(t => {
+                        t.checked = newState;
+                        t.setAttribute('aria-label', newState ? 
+                            translations.a11y_disable?.[currentLang] || translations.a11y_disable?.['en'] || 'Disable Accessibility' : 
+                            translations.a11y_enable?.[currentLang] || translations.a11y_enable?.['en'] || 'Enable Accessibility');
+                    });
+
+                    if (newState) {
+                        console.log('Enabling accessibility settings');
+                        a11ySettings.classList.add('a11y-active');
+                        initAccessibility(a11ySettings);
+                    } else {
+                        console.log('Disabling accessibility settings');
+                        a11ySettings.classList.remove('a11y-active');
+                        resetAccessibility();
+                    }
+                });
+            });
+        } else if (a11yToggles.length) {
+            a11yToggles.forEach(toggle => {
+                toggle.parentElement.style.display = 'none';
+            });
+        }
+
         updateLanguage(currentLang, translations);
     }
 
     initAuthSection();
     initMobileMenu();
 
-    console.log('a11ySettings found:', a11ySettings);
-    if (isIndexPage && a11ySettings) {
-        console.log('Initializing accessibility with container:', a11ySettings);
-        initAccessibility(a11ySettings);
-    }
-
     window.addEventListener('languageChanged', (e) => {
         const newLang = e.detail.lang;
         updateLanguage(newLang, translations);
+        if (a11yToggles.length && window.location.pathname.includes('account.html')) {
+            const isA11yActive = localStorage.getItem('a11y-active') === 'true';
+            a11yToggles.forEach(toggle => {
+                toggle.setAttribute('aria-label', isA11yActive ? 
+                    translations.a11y_disable?.[newLang] || translations.a11y_disable?.['en'] || 'Disable Accessibility' : 
+                    translations.a11y_enable?.[newLang] || translations.a11y_enable?.['en'] || 'Enable Accessibility');
+            });
+        }
     });
 }
