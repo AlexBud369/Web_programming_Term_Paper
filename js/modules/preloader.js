@@ -2,6 +2,7 @@ export function showPreloader() {
     const preloader = document.querySelector('.preloader');
     if (preloader) {
         preloader.style.display = 'flex';
+        preloader.style.opacity = '1';
     }
 }
 
