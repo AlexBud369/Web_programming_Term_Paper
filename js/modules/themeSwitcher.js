@@ -1,7 +1,7 @@
 const htmlElement = document.documentElement;
 const colorSchemeRadios = document.querySelectorAll('input[name="color-scheme"]');
 
-function setTheme(theme) {
+export function setTheme(theme) {
     console.log('Applying theme:', theme);
     htmlElement.setAttribute('data-theme', theme);
     htmlElement.classList.toggle('dark-theme', theme === 'dark');
