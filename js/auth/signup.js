@@ -4,13 +4,40 @@ import { initLanguageSwitcher } from '../modules/languageSwitcher.js';
 import { initThemeSwitcher } from '../modules/themeSwitcher.js';
 import { showErrorModal, showSuccessModal } from '../modules/modal.js';
 import { translations } from '../modules/pages-translations/signup_translations.js';
+import { translations as footerTranslations } from '../modules/pages-translations/footer_translations.js';
+import { translations as headerTranslations } from '../modules/pages-translations/header_translations.js';
 import { showPreloader, hidePreloader, initPreloader } from '../modules/preloader.js';
 
-console.log('signup.js loaded');
+function applyTranslations(lang) {
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        const translation = translations[key]?.[lang] || translations[key]?.['en'] || key;
+        if (typeof translation === 'string' && translation.includes('<')) {
+            element.innerHTML = translation;
+        } else {
+            element.textContent = translation;
+        }
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-i18n-placeholder');
+        const translation = translations[key]?.[lang] || translations[key]?.['en'] || key;
+        element.placeholder = translation;
+    });
+
+    document.querySelectorAll('.current-language').forEach(element => {
+        const translation = translations.lang_current?.[lang] || translations.lang_current?.['en'] || lang.toUpperCase();
+        element.textContent = translation;
+    });
+
+    document.title = translations.signup_title?.[lang] || translations.signup_title?.['en'] || 'Sign Up - Euphoria';
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOMContentLoaded event fired');
     initPreloader();
+
+    const savedLanguage = localStorage.getItem('language') || 'en';
+    applyTranslations(savedLanguage);
 
     const form = document.getElementById('signupForm');
     const phoneNumberInput = document.getElementById('phoneNumber');
@@ -48,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (!form || !submitBtn) {
-        console.error('Form or submit button not found');
         const lang = localStorage.getItem('language') || 'en';
         showErrorModal(translations.form_initialization_error?.[lang] || 'Form initialization failed');
         return;
@@ -58,32 +84,28 @@ document.addEventListener('DOMContentLoaded', () => {
     let serverUnavailable = false;
 
     togglePasswordBtn.addEventListener('click', () => {
-        console.log('Toggle password visibility');
         const isHidden = passwordInput.type === 'password';
         passwordInput.type = isHidden ? 'text' : 'password';
         const lang = localStorage.getItem('language') || 'en';
-        togglePasswordBtn.textContent = translations[isHidden ? 'toggle_password_hide' : 'toggle_password_show']?.[lang] || (isHidden ? 'Hide' : 'Show');
+        togglePasswordBtn.textContent = translations[isHidden ? 'toggle_password_show' : 'toggle_password_hide']?.[lang] || (isHidden ? 'Show' : 'Hide');
     });
 
     toggleConfirmPasswordBtn.addEventListener('click', () => {
-        console.log('Toggle confirm password visibility');
         const isHidden = confirmPasswordInput.type === 'password';
         confirmPasswordInput.type = isHidden ? 'text' : 'password';
         const lang = localStorage.getItem('language') || 'en';
-        toggleConfirmPasswordBtn.textContent = translations[isHidden ? 'toggle_password_hide' : 'toggle_password_show']?.[lang] || (isHidden ? 'Hide' : 'Show');
+        toggleConfirmPasswordBtn.textContent = translations[isHidden ? 'toggle_password_show' : 'toggle_password_hide']?.[lang] || (isHidden ? 'Show' : 'Hide');
     });
 
     toggleAutoPasswordBtn.addEventListener('click', () => {
-        console.log('Toggle auto password visibility');
         const isHidden = autoPasswordInput.type === 'password';
         autoPasswordInput.type = isHidden ? 'text' : 'password';
         const lang = localStorage.getItem('language') || 'en';
-        toggleAutoPasswordBtn.textContent = translations[isHidden ? 'toggle_password_hide' : 'toggle_password_show']?.[lang] || (isHidden ? 'Hide' : 'Show');
+        toggleAutoPasswordBtn.textContent = translations[isHidden ? 'toggle_password_show' : 'toggle_password_hide']?.[lang] || (isHidden ? 'Show' : 'Hide');
     });
 
     function updatePasswordFields() {
         const passwordMethod = document.querySelector('input[name="passwordMethod"]:checked')?.value;
-        console.log('Password method changed:', passwordMethod);
         if (passwordMethod === 'auto') {
             manualPasswordGroup.style.display = 'none';
             autoPasswordGroup.style.display = 'block';
@@ -109,13 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     generatePasswordBtn.addEventListener('click', () => {
-        console.log('Generate password clicked');
         autoPasswordInput.value = generateRandomPassword();
         updateForm();
     });
 
     generateNicknameBtn.addEventListener('click', async () => {
-        console.log('Generate nickname clicked');
         const lang = localStorage.getItem('language') || 'en';
         if (nicknameAttempts >= 5 || serverUnavailable) {
             generateNicknameBtn.disabled = true;
@@ -149,7 +169,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function updateForm() {
-        console.log('Updating form state');
         const passwordMethod = document.querySelector('input[name="passwordMethod"]:checked')?.value;
         const isFormFilled = phoneNumberInput.value.trim()
             && emailInput.value.trim()
@@ -161,11 +180,9 @@ document.addEventListener('DOMContentLoaded', () => {
             && (passwordMethod === 'auto' ? autoPasswordInput.value : passwordInput.value && confirmPasswordInput.value);
 
         submitBtn.disabled = !isFormFilled;
-        console.log('Form filled status:', isFormFilled);
     }
 
     function validateForm() {
-        console.log('Validating form');
         let isValid = true;
         const lang = localStorage.getItem('language') || 'en';
         Object.values(errorElements).forEach((el) => {
@@ -213,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 isValid = false;
             }
             if (password !== confirmPassword) {
-                errorElements.confirmPassword.textContent = translations.password_mismatch?.[lang] || 'Passwords do not match';
+                errorElements.confirmPassword.textContent = translations.confirm_password_mismatch?.[lang] || 'Passwords do not match';
                 errorElements.confirmPassword.classList.add('active');
                 isValid = false;
             }
@@ -229,18 +246,22 @@ document.addEventListener('DOMContentLoaded', () => {
             isValid = false;
         }
 
-        if (!firstName || firstName.length > 50) {
-            errorElements.firstName.textContent = firstName ? 
-                (translations.first_name_too_long?.[lang] || 'First name is too long (max 50)') : 
-                (translations.first_name_required?.[lang] || 'First name is required');
+        if (!firstName) {
+            errorElements.firstName.textContent = translations.first_name_required?.[lang] || 'First name is required';
+            errorElements.firstName.classList.add('active');
+            isValid = false;
+        } else if (firstName.length > 50) {
+            errorElements.firstName.textContent = translations.first_name_too_long?.[lang] || 'First name is too long (max 50)';
             errorElements.firstName.classList.add('active');
             isValid = false;
         }
 
-        if (!lastName || lastName.length > 50) {
-            errorElements.lastName.textContent = lastName ? 
-                (translations.last_name_too_long?.[lang] || 'Last name is too long (max 50 characters)') : 
-                (translations.last_name_required?.[lang] || 'Last name is required');
+        if (!lastName) {
+            errorElements.lastName.textContent = translations.last_name_required?.[lang] || 'Last name is required';
+            errorElements.lastName.classList.add('active');
+            isValid = false;
+        } else if (lastName.length > 50) {
+            errorElements.lastName.textContent = translations.last_name_too_long?.[lang] || 'Last name is too long (max 50 characters)';
             errorElements.lastName.classList.add('active');
             isValid = false;
         }
@@ -251,10 +272,12 @@ document.addEventListener('DOMContentLoaded', () => {
             isValid = false;
         }
 
-        if (!nickname || nickname.length > 30) {
-            errorElements.nickname.textContent = nickname ? 
-                (translations.nickname_too_long?.[lang] || 'Nickname is too long (max 30 characters)') : 
-                (translations.nickname_required?.[lang] || 'Nickname is required');
+        if (!nickname) {
+            errorElements.nickname.textContent = translations.nickname_required?.[lang] || 'Nickname is required';
+            errorElements.nickname.classList.add('active');
+            isValid = false;
+        } else if (nickname.length > 30) {
+            errorElements.nickname.textContent = translations.nickname_too_long?.[lang] || 'Nickname is too long (max 30 characters)';
             errorElements.nickname.classList.add('active');
             isValid = false;
         }
@@ -266,21 +289,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         submitBtn.disabled = !isValid;
-        console.log('Form validation result:', isValid);
         return isValid;
     }
 
     [phoneNumberInput, emailInput, birthDateInput, passwordInput, confirmPasswordInput, autoPasswordInput, firstNameInput, lastNameInput, middleNameInput, nicknameInput, termsAgreementInput].forEach((input) => {
-        input.addEventListener('input', updateForm);
+        input.addEventListener('input', () => {
+            updateForm();
+            validateForm();
+        });
         if (input === termsAgreementInput) {
-            input.addEventListener('change', updateForm);
+            input.addEventListener('change', () => {
+                updateForm();
+                validateForm();
+            });
         }
     });
 
     form.addEventListener('submit', async (e) => {
-        console.log('Form submission');
         e.preventDefault();
-
         Object.values(errorElements).forEach((el) => {
             if (el) {
                 el.textContent = '';
@@ -307,9 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             showPreloader();
-            console.log('Sending user data:', userData);
             const user = await registerUser(userData);
-            console.log('Registration successful:', user);
             localStorage.setItem('user', JSON.stringify({
                 id: user.id,
                 email: user.email || '',
@@ -328,83 +352,46 @@ document.addEventListener('DOMContentLoaded', () => {
                 hidePreloader();
             }, 1000);
         } catch (error) {
-            console.log('Registration error:', error.message);
             const lang = localStorage.getItem('language') || 'en';
             showErrorModal(error.message || translations.registration_failed?.[lang] || 'Registration failed');
             hidePreloader();
         }
     });
 
-    const headerResetBtn = document.querySelector('.header-controls .reset-btn');
-    if (headerResetBtn) {
-        console.log('Header reset button found, initializing');
-        headerResetBtn.addEventListener('click', () => {
-            console.log('Header reset button clicked');
-            try {
-                localStorage.setItem('language', 'en');
-                localStorage.setItem('theme', 'light');
-                document.documentElement.setAttribute('data-theme', 'light');
-                const languageChangedEvent = new CustomEvent('languageChanged', { detail: { lang: 'en' } });
-                window.dispatchEvent(languageChangedEvent);
-                console.log('Triggering page reload');
-                setTimeout(() => {
-                    window.location.reload(true);
-                }, 100);
-            } catch (error) {
-                console.error('Error during header reset:', error);
-            }
-        });
-    } else {
-        console.warn('Header reset button not found');
-    }
+    initBurgerMenu(false, true, false, { ...translations, ...headerTranslations, ...footerTranslations });
 
-    const burgerButton = document.querySelector('.burger-menu');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    const closeButton = document.querySelector('.close-menu');
-    const menuOverlay = document.querySelector('.menu-overlay');
-    if (burgerButton && mobileMenu && closeButton && menuOverlay) {
-        console.log('Burger menu elements found, initializing');
-        initBurgerMenu(false, true, false);
-    } else {
-        console.error('Burger menu elements missing:', { burgerButton, mobileMenu, closeButton, menuOverlay });
-    }
+    setTimeout(() => {
+        initLanguageSwitcher('.language-selector', { ...translations, ...headerTranslations, ...footerTranslations });
+    }, 0);
 
-    const languageSelector = document.querySelector('.language-selector');
-    if (languageSelector) {
-        console.log('Language selector found, initializing');
-        initLanguageSwitcher();
-    } else {
-        console.warn('Language selector not found');
-    }
-
-    const headerThemeToggle = document.querySelector('#theme-toggle');
-    const mobileThemeToggle = document.querySelector('#theme-toggle-mobile');
+    const headerThemeToggle = document.querySelector('.header-controls .custom-toggle .toggle-input');
+    const mobileThemeToggle = document.querySelector('.mobile-menu .custom-toggle .toggle-input');
     if (headerThemeToggle) {
-        console.log('Header theme toggle found, initializing');
         initThemeSwitcher(headerThemeToggle);
     }
     if (mobileThemeToggle) {
-        console.log('Mobile theme toggle found, initializing');
         initThemeSwitcher(mobileThemeToggle);
     }
 
-    window.addEventListener('languageChanged', () => {
-        console.log('Language changed, revalidating form');
+    window.addEventListener('languageChanged', (e) => {
+        const lang = e.detail.lang;
+        applyTranslations(lang);
         validateForm();
-        const lang = localStorage.getItem('language') || 'en';
+        updateForm();
         togglePasswordBtn.textContent = passwordInput.type === 'password' ? 
-            (translations.toggle_password_show?.[lang] || 'Show') : 
-            (translations.toggle_password_hide?.[lang] || 'Hide');
+            translations.toggle_password_show?.[lang] || 'Show' : 
+            translations.toggle_password_hide?.[lang] || 'Hide';
         toggleConfirmPasswordBtn.textContent = confirmPasswordInput.type === 'password' ? 
-            (translations.toggle_password_show?.[lang] || 'Show') : 
-            (translations.toggle_password_hide?.[lang] || 'Hide');
+            translations.toggle_password_show?.[lang] || 'Show' : 
+            translations.toggle_password_hide?.[lang] || 'Hide';
         toggleAutoPasswordBtn.textContent = autoPasswordInput.type === 'password' ? 
-            (translations.toggle_password_show?.[lang] || 'Show') : 
-            (translations.toggle_password_hide?.[lang] || 'Hide');
+            translations.toggle_password_show?.[lang] || 'Show' : 
+            translations.toggle_password_hide?.[lang] || 'Hide';
     });
 
     autoPasswordGroup.style.display = 'none';
     autoPasswordInput.removeAttribute('required');
     updatePasswordFields();
     updateForm();
+    validateForm();
 });
