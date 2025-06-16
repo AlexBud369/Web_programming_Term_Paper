@@ -1,15 +1,17 @@
-import { applyFilters, initFilters} from './modules/filtering.js';
+import { applyFilters, initFilters } from './modules/filtering.js';
 import { initPagination, getPaginatedItems } from './modules/pagination.js';
 import { getSortParams } from './modules/sorting.js';
 import { initSearch } from './modules/search.js';
 import { initFavorites } from './modules/favorites.js';
 import { initAddToCart } from './modules/addToCart.js';
-import { showSuccessModalAfterReload, showSimpleModal } from './modules/modal.js';
+import { showSimpleModal, showAddToCartModal } from './modules/modal.js';
 import { checkAuth, updateUserProfile } from './modules/auth.js';
 import { initBurgerMenu } from './modules/burgerMenu.js';
 import { initLanguageSwitcher } from './modules/languageSwitcher.js';
 import { initThemeSwitcher } from './modules/themeSwitcher.js';
-import { translations } from './modules/pages-translations/catalog_translations.js';
+import { translations as catalogTranslations } from './modules/pages-translations/catalog_translations.js';
+import { translations as headerTranslations } from './modules/pages-translations/header_translations.js';
+import { translations as footerTranslations } from './modules/pages-translations/footer_translations.js';
 import { showPreloader, hidePreloader, initPreloader } from './modules/preloader.js';
 
 const productsGrid = document.getElementById('products-grid');
@@ -96,6 +98,11 @@ async function fetchProducts(sortOption, page = 1) {
         showPreloader();
         console.log('Fetching products from:', url);
         const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+        if (res.status === 404) {
+            console.log('404 error for products, redirecting');
+            window.location.assign('../pages/page_404_error.html');
+            return;
+        }
         if (!res.ok) throw new Error(`HTTP error: ${res.status} for ${url}`);
         const filteredProducts = await res.json();
 
@@ -106,6 +113,11 @@ async function fetchProducts(sortOption, page = 1) {
         let totalProducts = 0;
         try {
             const countRes = await fetch(countUrl, { headers: { 'Accept': 'application/json' } });
+            if (countRes.status === 404) {
+                console.log('404 error for count, redirecting');
+                window.location.assign('../pages/page_404_error.html');
+                return;
+            }
             if (!countRes.ok) throw new Error(`HTTP error: ${countRes.status} for ${countUrl}`);
             const allProductsData = await countRes.json();
             totalProducts = allProductsData.length;
@@ -118,8 +130,8 @@ async function fetchProducts(sortOption, page = 1) {
         allProducts = filteredProducts;
         renderProducts(filteredProducts, totalProducts, localStorage.getItem('language') || 'en');
     } catch (error) {
-        console.log('Error fetching products:', error.message);
-        noResults.textContent = translations.no_results[localStorage.getItem('language') || 'en'] || 'Failed to load products. Please check the server or try again later.';
+        console.error('Error fetching products:', error.message);
+        noResults.textContent = catalogTranslations.no_results?.[localStorage.getItem('language') || 'en'] || catalogTranslations.no_results?.['en'] || 'Failed to load products. Please check the server or try again later.';
         noResults.style.display = 'block';
         renderProducts([], 0);
     } finally {
@@ -151,17 +163,17 @@ function renderProducts(products, totalProducts, lang = localStorage.getItem('la
     console.log(`Rendering products: ${products.length} items, Total: ${totalProducts}, Language: ${lang}`);
     productsGrid.innerHTML = '';
     noResults.style.display = products.length === 0 ? 'block' : 'none';
-    noResults.innerHTML = `<span data-i18n="no_results">${translations.no_results[lang]}</span>`;
+    noResults.innerHTML = `<span data-i18n="no_results">${catalogTranslations.no_results?.[lang] || catalogTranslations.no_results?.['en'] || 'No results found'}</span>`;
 
     const countText = lang === 'ru'
         ? `${totalProducts} ${getPluralForm(totalProducts)}`
-        : translations.products_count[lang].replace('{count}', totalProducts);
+        : (catalogTranslations.products_count?.[lang] || catalogTranslations.products_count?.['en'] || '{count} items').replace('{count}', totalProducts);
     productsCount.innerHTML = `<span data-i18n="products_count" data-i18n-data='{"count": ${totalProducts}}'>${countText}</span>`;
 
     products.forEach(product => {
         const categoryKey = categoryTranslationKeys[product.category] || product.category.toLowerCase().replace(/ & /g, '_').replace(/\s+/g, '_');
-        const translatedCategory = translations[categoryKey]?.[lang] || product.category;
-        const translatedColors = product.colors.map(color => translations[colorTranslationKeys[color.toLowerCase()]]?.[lang] || color).join(', ');
+        const translatedCategory = catalogTranslations[categoryKey]?.[lang] || catalogTranslations[categoryKey]?.['en'] || product.category;
+        const translatedColors = product.colors.map(color => catalogTranslations[colorTranslationKeys[color.toLowerCase()]]?.[lang] || catalogTranslations[colorTranslationKeys[color.toLowerCase()]]?.['en'] || color).join(', ');
 
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
@@ -169,9 +181,9 @@ function renderProducts(products, totalProducts, lang = localStorage.getItem('la
         productCard.innerHTML = `
             <div class="product-image-container">
                 <img src="../images/catalog_images/catalog_card${product.id}.png" alt="${product.name}" class="product-image">
-                <button class="quick-view" data-product-id="${product.id}" data-i18n="quick_view">${translations.quick_view[lang]}</button>
-                <button class="favorite-btn" data-product-id="${product.id}">
-                    <img src="../images/home_page_icons/heart_icon.svg" alt="Add to Favorites" class="favorite-icon">
+                <button type="button" class="quick-view" data-product-id="${product.id}" data-i18n="quick_view">${catalogTranslations.quick_view?.[lang] || catalogTranslations.quick_view?.['en'] || 'Quick View'}</button>
+                <button type="button" class="favorite-btn" data-product-id="${product.id}">
+                    <img src="../images/home_page_icons/heart_icon.svg" alt="${catalogTranslations.add_to_favorites?.[lang] || catalogTranslations.add_to_favorites?.['en'] || 'Add to Favorites'}" class="favorite-icon">
                 </button>
             </div>
             <div class="product-info">
@@ -182,9 +194,9 @@ function renderProducts(products, totalProducts, lang = localStorage.getItem('la
                     <span class="rating-count">(${product.rating.toFixed(1)})</span>
                 </div>
                 <p class="product-price">$${product.price.toFixed(2)}</p>
-                <p class="product-colors">${translations.colors_title[lang]}: ${translatedColors}</p>
+                <p class="product-colors">${catalogTranslations.colors_title?.[lang] || catalogTranslations.colors_title?.['en'] || 'Colors'}: ${translatedColors}</p>
                 <p class="product-category">${translatedCategory}</p>
-                <button class="add-to-cart-btn" data-product-id="${product.id}" data-i18n="add_to_cart">${translations.add_to_cart[lang]}</button>
+                <button type="button" class="add-to-cart-btn" data-product-id="${product.id}" data-i18n="add_to_cart" data-context="product-card">${catalogTranslations.add_to_cart?.[lang] || catalogTranslations.add_to_cart?.['en'] || 'Add to Cart'}</button>
             </div>
         `;
         productsGrid.appendChild(productCard);
@@ -200,51 +212,97 @@ function renderProducts(products, totalProducts, lang = localStorage.getItem('la
                 button.classList.toggle('active', isFavorite);
                 const icon = button.querySelector('.favorite-icon');
                 icon.src = isFavorite 
-                    ? '../images/home_page_icons/heart_filled_icon.svg' 
+                    ? '../images/home_page_icons/heart_icon.svg' 
                     : '../images/home_page_icons/heart_icon.svg';
-                icon.alt = isFavorite ? 'Remove from Favorites' : 'Add to Favorites';
+                icon.alt = isFavorite 
+                    ? catalogTranslations.remove_from_favorites?.[lang] || catalogTranslations.remove_from_favorites?.['en'] || 'Remove from Favorites' 
+                    : catalogTranslations.add_to_favorites?.[lang] || catalogTranslations.add_to_favorites?.['en'] || 'Add to Favorites';
+                showSimpleModal(
+                    catalogTranslations.success_title?.[lang] || catalogTranslations.success_title?.['en'] || 'Success',
+                    isFavorite 
+                        ? catalogTranslations.added_to_favorites?.[lang] || catalogTranslations.added_to_favorites?.['en'] || 'Added to favorites!' 
+                        : catalogTranslations.removed_from_favorites?.[lang] || catalogTranslations.removed_from_favorites?.['en'] || 'Removed from favorites!',
+                    'modal-success',
+                    'catalog'
+                );
             }
         });
-        initAddToCart('catalog', '.add-to-cart-btn', products);
+        initAddToCart('catalog', '.add-to-cart-btn', products, showAddToCartModal);
     } else {
         productsGrid.querySelectorAll('.favorite-btn').forEach(button => {
-            button.addEventListener('click', () => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Favorite button clicked (unauthenticated):', button);
                 showSimpleModal(
-                    translations.modal_login_required[lang],
-                    translations.modal_favorites_message[lang],
-                    'modal-error'
+                    catalogTranslations.modal_login_required?.[lang] || catalogTranslations.modal_login_required?.['en'] || 'Login Required',
+                    catalogTranslations.modal_favorites_message?.[lang] || catalogTranslations.modal_favorites_message?.['en'] || 'Please log in to add to favorites.',
+                    'modal-error',
+                    'catalog'
                 );
-                setTimeout(() => window.location.assign('../auth/signin.html'), 1000);
+                setTimeout(() => window.location.assign('../auth/signin.html'), 1500);
             });
         });
         productsGrid.querySelectorAll('.add-to-cart-btn').forEach(button => {
-            button.addEventListener('click', () => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Add to cart button clicked (unauthenticated):', button);
                 showSimpleModal(
-                    translations.modal_login_required[lang],
-                    translations.modal_cart_message[lang],
-                    'modal-error'
+                    catalogTranslations.modal_login_required?.[lang] || catalogTranslations.modal_login_required?.['en'] || 'Login Required',
+                    catalogTranslations.modal_cart_message?.[lang] || catalogTranslations.modal_cart_message?.['en'] || 'Please log in to add to cart.',
+                    'modal-error',
+                    'catalog'
                 );
-                setTimeout(() => window.location.assign('../auth/signin.html'), 1000);
+                setTimeout(() => window.location.assign('../auth/signin.html'), 1500);
             });
         });
     }
 
-    initPagination(totalProducts || 0, currentPage, 9, (page) => {
-        currentPage = page;
-        fetchProducts(document.getElementById('sort-by')?.value || 'default', page);
-    }, translations, lang);
-
     productsGrid.querySelectorAll('.quick-view').forEach(button => {
-        button.addEventListener('click', () => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Quick view button clicked:', button);
             const productId = button.dataset.productId;
             window.location.assign(`../pages/product.html?id=${productId}`);
         });
     });
+
+    productsGrid.addEventListener('click', (e) => {
+        console.log('Click on products grid:', e.target, 'Class:', e.target.className, 'Parent:', e.target.closest('.product-card'));
+    });
+
+    productsGrid.querySelectorAll('button').forEach(button => {
+        const parentForm = button.closest('form');
+        if (parentForm) {
+            console.warn('Button inside form detected:', button);
+            parentForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                console.log('Prevented form submission for button:', button);
+            });
+        }
+    });
+
+    initPagination(totalProducts || 0, currentPage, 9, (page) => {
+        currentPage = page;
+        fetchProducts(document.getElementById('sort-by')?.value || 'default', page);
+    }, catalogTranslations, lang);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('error', (e) => {
+        console.error('Global error:', e.message, e.filename, e.lineno);
+        if (e.target?.src?.includes('kaspersky-labs.com')) {
+            console.warn('Ignoring Kaspersky script error:', e);
+            e.preventDefault();
+        }
+    }, true);
+
     console.log('catalog.js loaded');
     initPreloader();
+    sessionStorage.removeItem('showSuccessModal');
+    console.log('Calling updateUserProfile');
     updateUserProfile();
     initFilters(sortOption => {
         currentPage = 1;
@@ -255,9 +313,8 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchProducts(sortOption, currentPage);
     });
     fetchProducts('default', currentPage);
-    showSuccessModalAfterReload();
-    initBurgerMenu(false);
-    initLanguageSwitcher('.header-controls .language-selector, .mobile-menu .language-selector');
+    initBurgerMenu(false, false, false, headerTranslations);
+    initLanguageSwitcher('.header-controls .language-selector, .mobile-menu .language-selector', { ...catalogTranslations, ...headerTranslations, ...footerTranslations });
     const headerThemeToggle = document.querySelector('.header-controls .custom-toggle .toggle-input');
     const mobileThemeToggle = document.querySelector('.mobile-menu .custom-toggle .toggle-input');
     if (headerThemeToggle) {
@@ -275,6 +332,10 @@ document.addEventListener('DOMContentLoaded', () => {
         initPagination(allProducts.length || 0, currentPage, 9, (page) => {
             currentPage = page;
             fetchProducts(sortOption, page);
-        }, translations, newLang);
+        }, catalogTranslations, newLang);
     });
+
+    window.onbeforeunload = () => {
+        console.log('Page is about to reload');
+    };
 });

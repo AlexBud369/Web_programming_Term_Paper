@@ -1,5 +1,5 @@
 import { initAddToCart } from './modules/addToCart.js';
-import { showSuccessModalAfterReload, showSimpleModal } from './modules/modal.js';
+import { showSimpleModal } from './modules/modal.js';
 import { initBurgerMenu } from './modules/burgerMenu.js';
 import { checkAuth, updateUserProfile } from './modules/auth.js';
 import { initFavorites } from './modules/favorites.js';
@@ -15,6 +15,10 @@ async function fetchProduct(id) {
     try {
         showPreloader();
         const res = await fetch(`${API_URL}/${id}`);
+        if (res.status === 404) {
+            window.location.assign('../pages/page_404_error.html');
+            return null;
+        }
         if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
         return await res.json();
     } catch (error) {
@@ -30,6 +34,10 @@ async function fetchSimilarProducts(currentProduct) {
     try {
         showPreloader();
         const res = await fetch(API_URL);
+        if (res.status === 404) {
+            window.location.assign('../pages/page_404_error.html');
+            return [];
+        }
         if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
         const products = await res.json();
         return products
@@ -174,7 +182,8 @@ function renderProduct(product, lang = 'en') {
     } else {
         [favoriteButton, addToCartButton].forEach(button => {
             if (button) {
-                button.addEventListener('click', () => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
                     showSimpleModal(
                         translations.modal_login_required?.[lang],
                         button.classList.contains('favorite-btn')
@@ -245,7 +254,8 @@ function renderSimilarProducts(products, lang = 'en') {
         });
     } else {
         similarGrid.querySelectorAll('.favorite-btn, .add-to-cart-btn').forEach(button => {
-            button.addEventListener('click', () => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
                 showSimpleModal(
                     translations.modal_login_required?.[lang],
                     button.classList.contains('favorite-btn')
@@ -260,6 +270,7 @@ function renderSimilarProducts(products, lang = 'en') {
 }
 
 function handleSimilarGridClick(e) {
+    e.preventDefault();
     const lang = localStorage.getItem('language') || 'en';
     const button = e.target.closest('.quick-view');
     if (button) {
@@ -292,8 +303,6 @@ async function init() {
             container.innerHTML = `<p data-i18n="product_not_found">${translations.product_not_found?.[lang] || 'Product not found'}</p>`;
         }
     }
-
-    showSuccessModalAfterReload();
 }
 
 function updateLanguage(lang, translations) {
@@ -326,6 +335,7 @@ function updateLanguage(lang, translations) {
 document.addEventListener('DOMContentLoaded', () => {
     console.log('product-details.js loaded');
     initPreloader();
+    sessionStorage.removeItem('showSuccessModal');
     updateUserProfile();
     init();
     initBurgerMenu(false);
