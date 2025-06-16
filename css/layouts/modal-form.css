@@ -1,17 +1,41 @@
+#modal-container {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 9999 !important;
+    pointer-events: none !important;
+}
+
+#modal-container * {
+    pointer-events: auto !important;
+}
+
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 10000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
 }
 
-.modal-content {
+.modal-overlay.product-form-modal {
+    background: rgba(0, 0, 0, 0.6) !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 10000 !important;
+}
+
+.modal-dialog-content {
     background: var(--primary-color, #fff);
     padding: 20px;
     border-radius: 8px;
@@ -26,11 +50,17 @@
     transition: opacity var(--transition-base, 0.3s ease), transform var(--transition-base, 0.3s ease);
     font-family: var(--font-main, 'CoreSansC', sans-serif);
     animation: fadeIn var(--transition-base, 0.3s ease) forwards;
+    margin: 0 !important;
 }
 
-.modal-content.show {
+.modal-dialog-content.show {
     opacity: 1;
     transform: translateY(0);
+}
+
+.modal-dialog-content.product-form-modal {
+    max-width: 700px !important;
+    text-align: left !important;
 }
 
 .add-to-cart-modal {
@@ -40,20 +70,13 @@
     gap: 20px;
 }
 
-.product-form-modal {
-    max-width: 700px;
-    text-align: left;
-}
-
-.modal-success .modal-content {
-    background: #e6f4e6;
-    color: #2e7d32;
+.modal-success .modal-dialog-content {
+    color: var(--success-color, #2e7d32);
     box-shadow: var(--shadow-md, 0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
-.modal-error .modal-content {
-    background: #ffe6e6;
-    color: #d32f2f;
+.modal-error .modal-dialog-content {
+    color: var(--error-color, #d32f2f);
     box-shadow: var(--shadow-md, 0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
@@ -72,7 +95,7 @@
     margin-bottom: 20px;
 }
 
-.modal-btn {
+.modal-dialog-btn {
     font-family: var(--font-main, 'CoreSansC', sans-serif);
     padding: 8px 16px;
     border: none;
@@ -83,24 +106,24 @@
     transition: var(--transition-base, 0.3s ease);
 }
 
-.modal-btn.confirm-btn,
+.modal-dialog-btn.confirm-btn,
 .modal-ok-btn {
     background: #8A33FD;
     color: var(--primary-color, #fff);
 }
 
-.modal-btn.confirm-btn:hover,
+.modal-dialog-btn.confirm-btn:hover,
 .modal-ok-btn:hover {
     background: #6d28c4;
 }
 
-.modal-btn.cancel-btn {
+.modal-dialog-btn.cancel-btn {
     background: var(--bg-color, #F6F6F6);
     color: var(--secondary-color, #3C4242);
     border: 1px solid var(--text-color, #807D7E);
 }
 
-.modal-btn.cancel-btn:hover {
+.modal-dialog-btn.cancel-btn:hover {
     background: #e0e0e0;
 }
 
@@ -111,14 +134,14 @@
     padding: 10px 0;
 }
 
-.product-form .form-group {
+.modal-form-group {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
 }
 
-.product-form label {
+.modal-form-group label {
     font-family: var(--font-main, 'CoreSansC', sans-serif);
     font-size: 0.875rem;
     font-weight: 600;
@@ -220,7 +243,7 @@
     border-color: #8A33FD;
 }
 
-.modal-actions {
+.modal-dialog-actions {
     display: flex;
     gap: 10px;
     justify-content: center;
@@ -232,15 +255,14 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-
 @media (max-width: 768px) {
-    .modal-content {
+    .modal-dialog-content {
         max-width: 90%;
         max-height: 90vh;
         padding: 15px;
     }
 
-    .product-form-modal {
+    .modal-dialog-content.product-form-modal {
         max-width: 95%;
         gap: 15px;
     }
@@ -249,7 +271,7 @@
         font-size: 1.25rem;
     }
 
-    .modal-btn {
+    .modal-dialog-btn {
         padding: 6px 12px;
         font-size: 0.75rem;
     }
@@ -273,18 +295,18 @@
 }
 
 @media (max-width: 480px) {
-    .modal-content {
+    .modal-dialog-content {
         width: 95%;
         max-height: 85vh;
         padding: 10px;
     }
 
-    .modal-actions {
+    .modal-dialog-actions {
         flex-direction: column;
         gap: 8px;
     }
 
-    .form-group {
+    .modal-form-group {
         margin-bottom: 12px;
     }
 
