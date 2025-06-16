@@ -34,9 +34,9 @@
                 </ul>
             </nav>
             <div class="header-controls">
-                <div class="accessibility-toggle">
-                    <input type="checkbox" id="a11y-toggle-desktop" class="toggle-input" aria-label="Toggle accessibility mode">
-                    <label for="a11y-toggle-desktop" class="toggle-label">
+                <div class="accessibility-toggle a11y-toggle">
+                    <input type="checkbox" id="a11y-toggle-header" class="toggle-input" aria-label="Toggle accessibility mode">
+                    <label for="a11y-toggle-header" class="toggle-label">
                         <span class="toggle-icon" aria-hidden="true">👁️</span>
                     </label>
                 </div>
@@ -79,9 +79,9 @@
                         <li class="admin-only"><a href="./admin.html" class="admin-link" data-i18n="nav_admin_panel">Admin Panel</a></li>
                     </ul>
                 </nav>
-                <div class="accessibility-toggle">
-                    <input type="checkbox" id="a11y-toggle-mobile" class="toggle-input" aria-label="Toggle accessibility mode">
-                    <label for="a11y-toggle-mobile" class="toggle-label">
+                <div class="accessibility-toggle a11y-toggle">
+                    <input type="checkbox" id="a11y-toggle-burger" class="toggle-input" aria-label="Toggle accessibility mode">
+                    <label for="a11y-toggle-burger" class="toggle-label">
                         <span class="toggle-icon" aria-hidden="true">👁️</span>
                     </label>
                 </div>
@@ -113,8 +113,8 @@
                             </div>
                         </div>
                         <div class="option-group">
-                            <label for="images-toggle">
-                                <input type="checkbox" id="images-toggle" checked aria-label="Toggle images in wishlist">
+                            <label for="show-images">
+                                <input type="checkbox" id="show-images" checked aria-label="Toggle images in wishlist">
                                 <span data-i18n="a11y_show_images">Show Images in Wishlist</span>
                             </label>
                         </div>
@@ -194,7 +194,7 @@
                 <hr class="divider">
             </div>
             <div class="account-field">
-                <div class="field-label" data-i18n="account_dob">Date of Birth</div>
+                <div class="field-label" data-i11n="account_dob">Date of Birth</div>
                 <div class="field-content">
                     <span class="field-value"></span>
                     <button class="change-btn" data-i18n="account_change" aria-label="Change date of birth">Change</button>
