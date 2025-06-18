@@ -381,35 +381,6 @@
       }
     },
     {
-      "id": 14,
-      "name": "Grey Pajamas",
-      "brand": "EcoWear",
-      "category": "Pajamas",
-      "price": 75,
-      "rating": 4.5,
-      "image": "/images/catalog_images/catalog_card14.png",
-      "description": "Soft grey pajamas for relaxation.",
-      "colors": [
-        "grey",
-        "navy"
-      ],
-      "sizes": [
-        "M",
-        "L",
-        "XL"
-      ],
-      "style": "Casual",
-      "video": "/videos/product-video.mp4",
-      "tableData": {
-        "Fabric": "Cotton",
-        "Pattern": "Solid",
-        "Fit": "Loose",
-        "Neck": "Crew Neck",
-        "Sleeve": "Long Sleeve",
-        "Style": "Casual"
-      }
-    },
-    {
       "id": 15,
       "name": "Blue Boxers",
       "brand": "PureThread",
@@ -855,31 +826,9 @@
       "image": "/images/catalog_images/catalog_card1.png",
       "color": "black",
       "size": "M",
-      "quantity": 5,
+      "quantity": 1,
       "shipping": 5,
       "id": 1
-    },
-    {
-      "productId": 4,
-      "name": "Red Full Sleeve T-Shirt",
-      "price": 45,
-      "image": "/images/catalog_images/catalog_card4.png",
-      "color": "red",
-      "size": "S",
-      "quantity": 1,
-      "shipping": 5,
-      "id": 2
-    },
-    {
-      "productId": 5,
-      "name": "Blue Jeans",
-      "price": 90,
-      "image": "/images/catalog_images/catalog_card5.png",
-      "color": "blue",
-      "size": "S",
-      "quantity": 1,
-      "shipping": 5,
-      "id": 3
     },
     {
       "productId": 2,
@@ -890,7 +839,7 @@
       "size": "XS",
       "quantity": 2,
       "shipping": 5,
-      "id": 4
+      "id": 2
     }
   ],
   "favorites": [
@@ -995,6 +944,247 @@
         }
       },
       "id": 4
+    },
+    {
+      "userId": 1,
+      "productId": 1,
+      "product": {
+        "id": 1,
+        "name": "Black Graphic T-Shirt",
+        "brand": "Jewel's Brand",
+        "category": "Printed T-Shirts",
+        "price": 35,
+        "rating": 4.5,
+        "image": "/images/catalog_images/catalog_card1.png",
+        "description": "Stylish black T-shirt with graphic print.",
+        "colors": [
+          "black"
+        ],
+        "sizes": [
+          "M",
+          "L",
+          "XL"
+        ],
+        "style": "Casual",
+        "video": "/videos/product-video.mp4",
+        "tableData": {
+          "Fabric": "Cotton",
+          "Pattern": "Printed",
+          "Fit": "Regular",
+          "Neck": "Crew Neck",
+          "Sleeve": "Short Sleeve",
+          "Style": "Casual"
+        }
+      },
+      "id": 5
+    },
+    {
+      "userId": 1,
+      "productId": 2,
+      "product": {
+        "id": 2,
+        "name": "White Plain Kurti",
+        "brand": "Flora's Brand",
+        "category": "Kurti",
+        "price": 80,
+        "rating": 5,
+        "image": "/images/catalog_images/catalog_card2.png",
+        "description": "Elegant white kurti for daily wear.",
+        "colors": [
+          "white",
+          "yellow",
+          "pink"
+        ],
+        "sizes": [
+          "XS",
+          "S"
+        ],
+        "style": "Elegant",
+        "video": "/videos/product-video.mp4",
+        "tableData": {
+          "Fabric": "Cotton",
+          "Pattern": "Solid",
+          "Fit": "A-line",
+          "Neck": "Round Neck",
+          "Sleeve": "Three-quarter",
+          "Style": "Elegant"
+        }
+      },
+      "id": 6
+    },
+    {
+      "userId": 1,
+      "productId": 3,
+      "product": {
+        "id": 3,
+        "name": "Navy Joggers",
+        "brand": "Sporty Brand",
+        "category": "Joggers",
+        "price": 60,
+        "rating": 4,
+        "image": "/images/catalog_images/catalog_card3.png",
+        "description": "Comfortable navy joggers for active lifestyle.",
+        "colors": [
+          "navy",
+          "black",
+          "grey"
+        ],
+        "sizes": [
+          "M",
+          "L",
+          "XL"
+        ],
+        "style": "Sport",
+        "video": "/videos/product-video.mp4",
+        "tableData": {
+          "Fabric": "Cotton Blend",
+          "Pattern": "Solid",
+          "Fit": "Slim",
+          "Waist": "Elastic",
+          "Length": "Full",
+          "Style": "Sport"
+        }
+      },
+      "id": 7
+    },
+    {
+      "userId": 1,
+      "productId": 4,
+      "product": {
+        "id": 4,
+        "name": "Red Full Sleeve T-Shirt",
+        "brand": "CozyFit",
+        "category": "Full Sleeve T-Shirts",
+        "price": 45,
+        "rating": 3.5,
+        "image": "/images/catalog_images/catalog_card4.png",
+        "description": "Warm red full sleeve T-shirt.",
+        "colors": [
+          "red",
+          "black"
+        ],
+        "sizes": [
+          "S",
+          "M",
+          "L"
+        ],
+        "style": "Casual",
+        "video": "/videos/product-video.mp4",
+        "tableData": {
+          "Fabric": "Cotton",
+          "Pattern": "Solid",
+          "Fit": "Regular",
+          "Neck": "Crew Neck",
+          "Sleeve": "Long Sleeve",
+          "Style": "Casual"
+        }
+      },
+      "id": 8
+    },
+    {
+      "userId": 1,
+      "productId": 5,
+      "product": {
+        "id": 5,
+        "name": "Blue Jeans",
+        "brand": "River's Brand",
+        "category": "Jeans",
+        "price": 90,
+        "rating": 4.5,
+        "image": "/images/catalog_images/catalog_card5.png",
+        "description": "Classic blue jeans for all occasions.",
+        "colors": [
+          "blue",
+          "black"
+        ],
+        "sizes": [
+          "S",
+          "M",
+          "L",
+          "XL"
+        ],
+        "style": "Casual",
+        "video": "/videos/product-video.mp4",
+        "tableData": {
+          "Fabric": "Denim",
+          "Pattern": "Solid",
+          "Fit": "Slim",
+          "Waist": "Mid-rise",
+          "Length": "Full",
+          "Style": "Casual"
+        }
+      },
+      "id": 9
+    },
+    {
+      "userId": 1,
+      "productId": 8,
+      "product": {
+        "id": 8,
+        "name": "Yellow Plain T-Shirt",
+        "brand": "Helm's Brand",
+        "category": "Plain T-Shirts",
+        "price": 30,
+        "rating": 4,
+        "image": "/images/catalog_images/catalog_card8.png",
+        "description": "Simple yellow T-shirt for casual wear.",
+        "colors": [
+          "yellow",
+          "white",
+          "grey"
+        ],
+        "sizes": [
+          "XS",
+          "S",
+          "M"
+        ],
+        "style": "Casual",
+        "video": "/videos/product-video.mp4",
+        "tableData": {
+          "Fabric": "Cotton",
+          "Pattern": "Solid",
+          "Fit": "Regular",
+          "Neck": "Crew Neck",
+          "Sleeve": "Short Sleeve",
+          "Style": "Casual"
+        }
+      },
+      "id": 10
+    },
+    {
+      "userId": 1,
+      "productId": 9,
+      "product": {
+        "id": 9,
+        "name": "Pink Kurti",
+        "brand": "Flora's Brand",
+        "category": "Kurti",
+        "price": 100,
+        "rating": 5,
+        "image": "/images/catalog_images/catalog_card9.png",
+        "description": "Elegant pink kurti for festive occasions.",
+        "colors": [
+          "pink",
+          "white",
+          "red"
+        ],
+        "sizes": [
+          "S",
+          "M",
+          "L"
+        ],
+        "style": "Formal Evening",
+        "video": "/videos/product-video.mp4",
+        "tableData": {
+          "Fabric": "Silk",
+          "Pattern": "Embroidered",
+          "Fit": "A-line",
+          "Neck": "V-neck",
+          "Sleeve": "Three-quarter",
+          "Style": "Formal Evening"
+        }
+      },
+      "id": 11
     }
   ],
   "users": [
