@@ -299,18 +299,6 @@ export const translations = {
         en: 'Hide',
         ru: 'Скрыть'
     },
-    confirm_change: { 
-        en: 'Confirm changing {field} to {value}?',
-        ru: 'Подтвердить изменение {field} на {value}?'
-    },
-    success_title: { 
-        en: 'Success',
-        ru: 'Успех'
-    },
-    error_title: { 
-        en: 'Error',
-        ru: 'Ошибка'
-    },
     invalid_name: {
         en: 'Name must contain only letters and hyphens, max 50 characters',
         ru: 'Имя должно содержать только буквы и дефисы, максимум 50 символов'
@@ -350,5 +338,13 @@ export const translations = {
     password_common: {
         en: 'Password is too common, please choose a different one',
         ru: 'Пароль слишком распространён, выберите другой'
+    },
+    phone_format_hint: {
+        en: 'Format: +375 XX XXX XX XX',
+        ru: 'Формат: +375 XX XXX XX XX'
+    },
+    date_format_hint: {
+        en: 'Format: YYYY-MM-DD',
+        ru: 'Формат: ГГГГ-ММ-ДД'
     }
 };

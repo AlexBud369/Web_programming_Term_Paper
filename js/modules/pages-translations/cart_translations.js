@@ -207,14 +207,6 @@ export const translations = {
     en: "Order Now",
     ru: "Заказать сейчас"
   },
-  order_success_message: {
-    en: "Order Successfully Placed!",
-    ru: "Заказ успешно оформлен!"
-  },
-  close: {
-    en: "Close",
-    ru: "Закрыть"
-  },
   cart_notification: {
     en: "Cart updated successfully",
     ru: "Корзина успешно обновлена"
@@ -271,41 +263,9 @@ export const translations = {
     en: "Item removed from cart",
     ru: "Товар удален из корзины"
   },
-  form_validation_error: {
-    en: "Please fill out all required fields correctly",
-    ru: "Пожалуйста, заполните все обязательные поля корректно"
-  },
   reset_btn: {
     en: "Reset Settings",
     ru: "Сбросить настройки"
-  },
-  add_to_cart_title: {
-    en: "Add {name} to Cart",
-    ru: "Добавить {name} в корзину"
-  },
-  item_added_to_cart: {
-    en: "Item added to cart!",
-    ru: "Товар добавлен в корзину!"
-  },
-  success_title: {
-    en: "Success",
-    ru: "Успех"
-  },
-  add_button: {
-    en: "Add to Cart",
-    ru: "Добавить в корзину"
-  },
-    error_title: {
-    en: "Error",
-    ru: "Ошибка"
-  },
-  close: {
-    en: "Close",
-    ru: "Закрыть"
-  },
-  cancel_button: {
-    en: "Cancel",
-    ru: "Отмена"
   },
   cart_limit: {
     en: "Cannot add more items. The cart is limited to 10 items in total.",

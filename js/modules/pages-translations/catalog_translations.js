@@ -107,22 +107,6 @@ export const translations = {
     en: "No products found matching your criteria.",
     ru: "Товары, соответствующие вашим критериям, не найдены."
   },
-  modal_login_required: {
-    en: "Login Required",
-    ru: "Требуется вход"
-  },
-  modal_login_message: {
-    en: "Please log in to add items to cart.",
-    ru: "Пожалуйста, войдите, чтобы добавить товары в корзину."
-  },
-  modal_cart_message: {
-    en: "Please log in to add items to your cart.",
-    ru: "Пожалуйста, войдите, чтобы добавить товары в корзину."
-  },
-  modal_favorites_message: {
-    en: "Please log in to add items to favorites.",
-    ru: "Пожалуйста, войдите, чтобы добавить товары в избранное."
-  },
   pagination_prev: {
     en: "Previous",
     ru: "Предыдущая"
@@ -138,50 +122,6 @@ export const translations = {
   quick_view: {
     en: "Quick View",
     ru: "Посмотреть"
-  },
-  success_title: {
-    en: "Success",
-    ru: "Успех"
-  },
-  error_title: {
-    en: "Error",
-    ru: "Ошибка"
-  },
-  close: {
-    en: "Close",
-    ru: "Закрыть"
-  },
-  confirm: {
-    en: "OK",
-    ru: "ОК"
-  },
-  form_validation_error: {
-    en: "Please select color and size.",
-    ru: "Пожалуйста, выберите цвет и размер."
-  },
-  add_to_cart_title: {
-    en: "Add {name} to Cart",
-    ru: "Добавить {name} в корзину"
-  },
-  added_to_cart: {
-    en: "Added to cart!",
-    ru: "Добавлено в корзину!"
-  },
-  color_label: {
-    en: "Color",
-    ru: "Цвет"
-  },
-  size_label: {
-    en: "Size",
-    ru: "Размер"
-  },
-  add_button: {
-    en: "Add to Cart",
-    ru: "Добавить в корзину"
-  },
-  cancel_button: {
-    en: "Cancel",
-    ru: "Отмена"
   },
   added_to_favorites: {
     en: "Added to favorites!",

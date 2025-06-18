@@ -167,22 +167,6 @@ export const translations = {
         en: 'Failed to load product data.',
         ru: 'Не удалось загрузить данные товара.'
     },
-    error_delete_product: {
-        en: 'Failed to delete product.',
-        ru: 'Не удалось удалить товар.'
-    },
-    confirm_delete_product: {
-        en: 'Confirm Deletion',
-        ru: 'Подтвердить удаление'
-    },
-    confirm_delete_product_prompt: {
-        en: 'Are you sure you want to delete product',
-        ru: 'Вы уверены, что хотите удалить товар'
-    },
-    delete_product_success: {
-        en: 'Product deleted successfully!',
-        ru: 'Товар успешно удален!'
-    },
     access_denied: {
         en: 'Access denied: Admin privileges required',
         ru: 'Доступ запрещен: требуются права администратора'
@@ -190,14 +174,6 @@ export const translations = {
     error_missing_elements: {
         en: 'Required page elements are missing',
         ru: 'Отсутствуют необходимые элементы страницы'
-    },
-    confirmation_yes: {
-        en: 'Yes',
-        ru: 'Да'
-    },
-    confirmation_no: {
-        en: 'No',
-        ru: 'Нет'
     },
     pagination_prev: {
         en: 'Previous',
@@ -207,7 +183,6 @@ export const translations = {
         en: 'Next',
         ru: 'Следующая'
     },
-
     add_product_title: {
         en: 'Add New Product',
         ru: 'Добавить новый товар'
@@ -331,46 +306,5 @@ export const translations = {
     cancel_button: {
         en: 'Cancel',
         ru: 'Отмена'
-    },
-    add_product_success: {
-        en: 'Product added successfully!',
-        ru: 'Товар успешно добавлен!'
-    },
-    update_product_success: {
-        en: 'Product updated successfully!',
-        ru: 'Товар успешно обновлен!'
-    },
-    error_adding_product: {
-        en: 'Failed to add product.',
-        ru: 'Не удалось добавить товар.'
-    },
-    error_updating_product: {
-        en: 'Failed to update product.',
-        ru: 'Не удалось обновить товар.'
-    },
-    error_invalid_id: {
-        en: 'Invalid product ID.',
-        ru: 'Неверный ID товара.'
-    },
-    duplicate_product_updated: {
-        en: 'Product updated: new colors/sizes added to existing product.',
-        ru: 'Товар обновлен: добавлены новые цвета/размеры к существующему товару.'
-    },
-    
-    modal_success_title: {
-        en: 'Success',
-        ru: 'Успех'
-    },
-    modal_error_title: {
-        en: 'Error',
-        ru: 'Ошибка'
-    },
-    modal_info_title: {
-        en: 'Info',
-        ru: 'Информация'
-    },
-    ok_button: {
-        en: 'OK',
-        ru: 'ОК'
     }
 };

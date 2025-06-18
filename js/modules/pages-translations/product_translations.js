@@ -67,22 +67,6 @@ export const translations = {
         en: 'Failed to load product',
         ru: 'Не удалось загрузить товар'
     },
-    modal_login_required: {
-        en: 'Login Required',
-        ru: 'Требуется вход'
-    },
-    modal_login_message: {
-        en: 'Please log in to add products to cart or favorites.',
-        ru: 'Пожалуйста, войдите, чтобы добавить товары в корзину или избранное.'
-    },
-    modal_cart_message: {
-        en: 'Please log in to add items to your cart.',
-        ru: 'Пожалуйста, войдите, чтобы добавить товары в корзину.'
-    },
-    modal_favorites_message: {
-        en: 'Please log in to add items to favorites.',
-        ru: 'Пожалуйста, войдите, чтобы добавить товары в избранное.'
-    },
     add_to_favorites: {
         en: 'Add to Favorites',
         ru: 'Добавить в избранное'
