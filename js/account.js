@@ -1,7 +1,7 @@
 import { initPagination, getPaginatedItems } from './modules/pagination.js';
 import { getFavorites, initFavorites } from './modules/favorites.js';
 import { initAddToCart } from './modules/addToCart.js';
-import { showSimpleModal } from './modules/modal.js';
+import { showSimpleModal, showAddToCartModal } from './modules/modal.js';
 import { initProfileEditing } from './modules/profile.js';
 import { checkAuth, updateUserProfile } from './modules/auth.js';
 import { initBurgerMenu } from './modules/burgerMenu.js';
@@ -16,31 +16,31 @@ const noResults = document.getElementById('no-results');
 let currentPage = 1;
 
 const categoryTranslationKeys = {
-  'Tops & T-Shirts': 'category_tops_tshirts',
-  'Printed T-Shirts': 'category_printed',
-  'Plain T-Shirts': 'category_plain',
-  'Kurti': 'category_kurti',
-  'Boxers': 'category_boxers',
-  'Full Sleeve T-Shirts': 'category_full_sleeve_tshirts',
-  'Joggers': 'category_joggers',
-  'Pajamas': 'category_pajamas',
-  'Jeans': 'category_jeans'
+    'Tops & T-Shirts': 'category_tops_tshirts',
+    'Printed T-Shirts': 'category_printed',
+    'Plain T-Shirts': 'category_plain',
+    'Kurti': 'category_kurti',
+    'Boxers': 'category_boxers',
+    'Full Sleeve T-Shirts': 'category_full_sleeve_tshirts',
+    'Joggers': 'category_joggers',
+    'Pajamas': 'category_pajamas',
+    'Jeans': 'category_jeans'
 };
 
 const colorTranslationKeys = {
-  purple: 'color_purple',
-  black: 'color_black',
-  white: 'color_white',
-  red: 'color_red',
-  orange: 'color_orange',
-  navy: 'color_navy',
-  brown: 'color_brown',
-  green: 'color_green',
-  yellow: 'color_yellow',
-  grey: 'color_grey',
-  pink: 'color_pink',
-  blue: 'color_blue',
-  gold: 'color_gold'
+    purple: 'color_purple',
+    black: 'color_black',
+    white: 'color_white',
+    red: 'color_red',
+    orange: 'color_orange',
+    navy: 'color_navy',
+    brown: 'color_brown',
+    green: 'color_green',
+    yellow: 'color_yellow',
+    grey: 'color_grey',
+    pink: 'color_pink',
+    blue: 'color_blue',
+    gold: 'color_gold'
 };
 
 function getTranslation(key, lang, fallback) {
@@ -56,38 +56,30 @@ function updateNavigation(lang = localStorage.getItem('language') || 'en') {
 }
 
 async function renderWishlist(page = 1) {
-    console.log('Rendering wishlist, page:', page);
+    const lang = localStorage.getItem('language') || 'en';
     if (!wishlistGrid || !noResults) {
         console.error('Wishlist grid or no-results element not found');
-        showSimpleModal(
-            getTranslation('error_title', lang, 'Error'),
-            getTranslation('error_missing_elements', lang, 'Page elements not found'),
-            'modal-error',
-            'account'
-        );
+        showSimpleModal('error_title', 'error_missing_elements', 'modal-error', null, lang);
         return;
     }
 
     const auth = checkAuth();
-    const lang = localStorage.getItem('language') || 'en';
     if (!auth.isAuthenticated) {
-        console.log('User not authenticated, showing not_authenticated message');
         wishlistGrid.innerHTML = `<p data-i18n="not_authenticated">${getTranslation('not_authenticated', lang, 'Please log in to view your wishlist.')}</p>`;
         noResults.style.display = 'block';
         noResults.setAttribute('data-i18n', 'not_authenticated');
         noResults.textContent = getTranslation('not_authenticated', lang, 'Please log in to view your wishlist.');
+        showSimpleModal('error_title', 'not_authenticated', 'modal-error', null, lang);
         setTimeout(() => window.location.assign('../auth/signin.html'), 1500);
         return;
     }
 
     const user = JSON.parse(localStorage.getItem('user'));
-    console.log('User for wishlist:', user);
     const USER_ID = user.id;
 
     try {
         showPreloader();
         const favorites = await getFavorites(USER_ID);
-        console.log('Favorites fetched:', favorites);
         const products = favorites
             .filter(fav => {
                 if (!fav || !fav.product || typeof fav.product.id !== 'number') {
@@ -96,23 +88,18 @@ async function renderWishlist(page = 1) {
                 }
                 return true;
             })
-            .map(fav => {
-                console.log('Processing favorite product:', fav.product);
-                return {
-                    id: fav.product.id,
-                    name: fav.product.name || 'Unnamed Product',
-                    brand: fav.product.brand || 'Unknown Brand',
-                    price: fav.product.price || 0,
-                    rating: fav.product.rating || 0,
-                    colors: Array.isArray(fav.product.colors) ? fav.product.colors : ['Unknown'],
-                    sizes: Array.isArray(fav.product.sizes) ? fav.product.sizes : ['M'],
-                    category: fav.product.category || 'Unknown',
-                    image: fav.product.image || `../images/catalog_images/catalog_card${fav.product.id}.png`,
-                    favoriteId: fav.id
-                };
-            });
-
-        console.log('Processed products:', products);
+            .map(fav => ({
+                id: fav.product.id,
+                name: fav.product.name || 'Unnamed Product',
+                brand: fav.product.brand || 'Unknown Brand',
+                price: fav.product.price || 0,
+                rating: fav.product.rating || 0,
+                colors: Array.isArray(fav.product.colors) ? fav.product.colors : ['Unknown'],
+                sizes: Array.isArray(fav.product.sizes) ? fav.product.sizes : ['M'],
+                category: fav.product.category || 'Unknown',
+                image: fav.product.image || `../images/catalog_images/catalog_card${fav.product.id}.png`,
+                favoriteId: fav.id
+            }));
 
         const paginatedItems = getPaginatedItems(products, page, 6);
         wishlistGrid.innerHTML = '';
@@ -134,7 +121,7 @@ async function renderWishlist(page = 1) {
                     <img src="${product.image}" alt="${product.name}" class="product-image">
                     <button class="quick-view" data-product-id="${product.id}" data-i18n="quick_view">${getTranslation('quick_view', lang, 'Quick View')}</button>
                     <button class="favorite-btn active" data-product-id="${product.id}" data-favorite-id="${product.favoriteId}">
-                        <img src="../images/home_page_icons/heart_filled_icon.svg" alt="${getTranslation('remove_from_favorites', lang, 'Remove from Favorites')}" class="favorite-icon">
+                        <img src="../images/home_page_icons/heart_icon.svg" alt="${getTranslation('remove_from_favorites', lang, 'Remove from Favorites')}" class="favorite-icon">
                     </button>
                 </div>
                 <div class="product-info">
@@ -183,24 +170,11 @@ async function renderWishlist(page = 1) {
                             renderWishlist(newPage);
                         }, accountTranslations, lang);
                     }
-                    showSimpleModal(
-                        getTranslation('success_title', lang, 'Success'),
-                        getTranslation('removed_from_favorites', lang, 'Removed from favorites!'),
-                        'modal-success',
-                        'account'
-                    );
-                } else {
-                    showSimpleModal(
-                        getTranslation('success_title', lang, 'Success'),
-                        getTranslation('added_to_favorites', lang, 'Added to favorites!'),
-                        'modal-success',
-                        'account'
-                    );
                 }
             }
         });
 
-        initAddToCart('wishlist', '.add-to-cart-btn', products);
+        initAddToCart('wishlist', '.add-to-cart-btn', products, showAddToCartModal);
         initPagination(products.length, currentPage, 6, (newPage) => {
             currentPage = newPage;
             renderWishlist(newPage);
@@ -211,6 +185,7 @@ async function renderWishlist(page = 1) {
         noResults.style.display = 'block';
         noResults.setAttribute('data-i18n', 'error_loading');
         noResults.textContent = getTranslation('error_loading', lang, 'Failed to load wishlist.');
+        showSimpleModal('error_title', 'error_loading', 'modal-error', null, lang);
     } finally {
         hidePreloader();
     }
@@ -234,50 +209,32 @@ function generateStars(rating) {
 document.addEventListener('DOMContentLoaded', () => {
     console.log('account.js loaded');
     initPreloader();
-    sessionStorage.removeItem('showSuccessModal');
     const auth = checkAuth();
-    console.log('Auth status:', auth);
     const lang = localStorage.getItem('language') || 'en';
     if (!auth.isAuthenticated) {
-        console.log('Redirecting to signin.html due to unauthenticated user');
-        showSimpleModal(
-            getTranslation('error_title', lang, 'Error'),
-            getTranslation('please_login', lang, 'Please log in to access this page.'),
-            'modal-error',
-            'account'
-        );
+        showSimpleModal('error_title', 'please_login', 'modal-error', null, lang);
         setTimeout(() => window.location.assign('../auth/signin.html'), 1500);
         return;
     }
 
-    console.log('Calling updateUserProfile');
     updateUserProfile();
     renderWishlist(currentPage);
     initProfileEditing();
     initLanguageSwitcher('.language-selector', { ...accountTranslations, ...headerTranslations });
     initBurgerMenu(false, false, false, headerTranslations);
-    updateNavigation(lang);
 
     const headerThemeToggle = document.querySelector('.header-controls .custom-toggle .toggle-input');
     const mobileThemeToggle = document.querySelector('.mobile-menu .custom-toggle .toggle-input');
     if (headerThemeToggle) {
-        console.log('Header theme toggle found:', headerThemeToggle);
         initThemeSwitcher(headerThemeToggle);
     }
     if (mobileThemeToggle) {
-        console.log('Mobile theme toggle found:', mobileThemeToggle);
         initThemeSwitcher(mobileThemeToggle);
     }
 
     window.addEventListener('languageChanged', () => {
-        console.log('Language changed, re-rendering');
         const newLang = localStorage.getItem('language') || 'en';
-        renderWishlist(currentPage);
-        initProfileEditing();
         updateNavigation(newLang);
-        initPagination(wishlistGrid.querySelectorAll('.product-card').length, currentPage, 6, (newPage) => {
-            currentPage = newPage;
-            renderWishlist(newPage);
-        }, accountTranslations, newLang);
+        renderWishlist(currentPage);
     });
 });

@@ -8,6 +8,7 @@ export async function updateCartItemQuantity(itemId, newQuantity) {
         const res = await fetch('http://localhost:3000/cart');
         if (res.status === 404) {
             console.warn('Fetch cart returned 404, redirecting');
+            showErrorModal('page_not_found', lang);
             window.location.assign('../pages/page_404_error.html');
             return false;
         }
@@ -19,10 +20,7 @@ export async function updateCartItemQuantity(itemId, newQuantity) {
         if (newQuantity > item.quantity) {
             const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
             if (totalQuantity >= 10) {
-                showErrorModal(
-                    translations.cart_limit?.[lang] || translations.cart_limit?.['en'] || 'Cannot add more items. The cart is limited to 10 items in total.',
-                    'cart'
-                );
+                showErrorModal('error_cart_limit', lang);
                 return false;
             }
         }
@@ -32,6 +30,7 @@ export async function updateCartItemQuantity(itemId, newQuantity) {
             const deleteRes = await fetch(`http://localhost:3000/cart/${itemId}`, { method: 'DELETE' });
             if (deleteRes.status === 404) {
                 console.warn('Delete item returned 404, redirecting');
+                showErrorModal('page_not_found', lang);
                 window.location.assign('../pages/page_404_error.html');
                 return false;
             }
@@ -46,6 +45,7 @@ export async function updateCartItemQuantity(itemId, newQuantity) {
             });
             if (patchRes.status === 404) {
                 console.warn('Patch item returned 404, redirecting');
+                showErrorModal('page_not_found', lang);
                 window.location.assign('../pages/page_404_error.html');
                 return false;
             }
@@ -55,10 +55,7 @@ export async function updateCartItemQuantity(itemId, newQuantity) {
         return true;
     } catch (error) {
         console.error('Error updating cart item:', error);
-        showErrorModal(
-            translations.error_updating_cart?.[lang] || translations.error_updating_cart?.['en'] || 'Failed to update cart item.',
-            'cart'
-        );
+        showErrorModal('error_updating_cart', lang);
         return false;
     }
 }
@@ -70,6 +67,7 @@ export async function removeFromCart(itemId) {
         const res = await fetch(`http://localhost:3000/cart/${itemId}`, { method: 'DELETE' });
         if (res.status === 404) {
             console.warn('Remove item returned 404, redirecting');
+            showErrorModal('page_not_found', lang);
             window.location.assign('../pages/page_404_error.html');
             return false;
         }
@@ -78,20 +76,19 @@ export async function removeFromCart(itemId) {
         return true;
     } catch (error) {
         console.error('Error removing cart item:', error);
-        showErrorModal(
-            translations.error_removing_cart?.[lang] || translations.error_removing_cart?.['en'] || 'Failed to remove item from cart.',
-            'cart'
-        );
+        showErrorModal('error_removing_cart', lang);
         return false;
     }
 }
 
 export function updateCartCount() {
+    const lang = localStorage.getItem('language') || 'en';
     console.log('Updating cart count');
     fetch('http://localhost:3000/cart')
         .then(res => {
             if (res.status === 404) {
                 console.warn('Cart count fetch returned 404, redirecting');
+                showErrorModal('page_not_found', lang);
                 window.location.assign('../pages/page_404_error.html');
                 return [];
             }
@@ -107,5 +104,8 @@ export function updateCartCount() {
                 cartLink.style.setProperty('--cart-count', `"${totalItems}"`);
             }
         })
-        .catch(error => console.error('Error updating cart count:', error));
+        .catch(error => {
+            console.error('Error updating cart count:', error);
+            showErrorModal('error_check_cart', lang);
+        });
 }

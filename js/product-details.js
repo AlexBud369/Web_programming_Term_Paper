@@ -1,11 +1,11 @@
 import { initAddToCart } from './modules/addToCart.js';
-import { showSimpleModal } from './modules/modal.js';
+import { showSimpleModal, showAddToCartModal } from './modules/modal.js';
 import { initBurgerMenu } from './modules/burgerMenu.js';
 import { checkAuth, updateUserProfile } from './modules/auth.js';
 import { initFavorites } from './modules/favorites.js';
 import { initLanguageSwitcher } from './modules/languageSwitcher.js';
 import { initThemeSwitcher } from './modules/themeSwitcher.js';
-import { translations } from './modules/pages-translations/product_translations.js';
+import { translations as productTranslations } from './modules/pages-translations/product_translations.js';
 import { showPreloader, hidePreloader, initPreloader } from './modules/preloader.js';
 
 const API_URL = 'http://localhost:3000/products';
@@ -16,14 +16,15 @@ async function fetchProduct(id) {
         showPreloader();
         const res = await fetch(`${API_URL}/${id}`);
         if (res.status === 404) {
-            window.location.assign('../pages/page_404_error.html');
+            showSimpleModal('error_title', 'product_not_found', 'modal-error', lang);
+            setTimeout(() => window.location.assign('../pages/page_404_error.html'), 1500);
             return null;
         }
         if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
         return await res.json();
-    } catch (error) {
-        console.log('Error fetching product:', error.message);
-        showSimpleModal('Error', translations.error_loading?.[lang] || 'Failed to load product.', 'modal-error');
+    } catch (error) {     
+        console.error('Error fetching product:', error.message);
+        showSimpleModal('error_title', 'error_loading_product', 'modal-error', lang);
         return null;
     } finally {
         hidePreloader();
@@ -31,11 +32,13 @@ async function fetchProduct(id) {
 }
 
 async function fetchSimilarProducts(currentProduct) {
+    const lang = localStorage.getItem('language') || 'en';
     try {
         showPreloader();
         const res = await fetch(API_URL);
         if (res.status === 404) {
-            window.location.assign('../pages/page_404_error.html');
+            showSimpleModal('error_title', 'no_similar_products', 'modal-error', lang);
+            setTimeout(() => window.location.assign('../pages/page_404_error.html'), 1500);
             return [];
         }
         if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
@@ -51,7 +54,8 @@ async function fetchSimilarProducts(currentProduct) {
             })
             .slice(0, 4);
     } catch (error) {
-        console.log('Error fetching similar products:', error.message);
+        console.error('Error fetching similar products:', error.message);
+        showSimpleModal('error_title', 'no_similar_products', 'modal-error', lang);
         return [];
     } finally {
         hidePreloader();
@@ -65,18 +69,21 @@ function generateStars(rating) {
     const emptyStars = 5 - fullStars - halfStar;
 
     return [
-        ...Array(fullStars).fill(`<img src="../images/home_page_icons/full_star_icon.svg" alt="${translations.star_alt?.[lang] || 'Full Star'}" class="rating-icon">`),
-        ...(halfStar ? [`<img src="../images/home_page_icons/half_star_icon.svg" alt="${translations.star_half?.[lang] || 'Half Star'}" class="rating-icon">`] : []),
-        ...Array(emptyStars).fill(`<img src="../images/home_page_icons/star_outline_icon.svg" alt="${translations.star_outline_alt?.[lang] || 'Empty Star'}" class="rating-icon">`)
+        ...Array(fullStars).fill(`<img src="../images/home_page_icons/full_star_icon.svg" alt="${productTranslations.star_alt?.[lang] || 'Full Star'}" class="rating-icon">`),
+        ...(halfStar ? [`<img src="../images/home_page_icons/half_star_icon.svg" alt="${productTranslations.star_half?.[lang] || 'Half Star'}" class="rating-icon">`] : []),
+        ...Array(emptyStars).fill(`<img src="../images/home_page_icons/star_outline_icon.svg" alt="${productTranslations.star_outline_alt?.[lang] || 'Empty Star'}" class="rating-icon">`)
     ].join('');
 }
 
 function renderProduct(product, lang = 'en') {
+    const container = document.querySelector('.product-detail-container');
+    if (!container) {
+        showSimpleModal('error_title', 'error_missing_elements', 'modal-error', lang);
+        return;
+    }
+
     if (!product) {
-        const container = document.querySelector('.product-detail-container');
-        if (container) {
-            container.innerHTML = `<p data-i18n="product_not_found">${translations.product_not_found?.[lang] || 'Product not found'}</p>`;
-        }
+        container.innerHTML = `<p data-i18n="product_not_found">${productTranslations.product_not_found?.[lang] || 'Product not found'}</p>`;
         return;
     }
 
@@ -122,13 +129,13 @@ function renderProduct(product, lang = 'en') {
 
     const description = document.querySelector('.description-content p');
     if (description) {
-        description.textContent = product.description || translations.no_description?.[lang] || 'No description available.';
+        description.textContent = product.description || productTranslations.no_description?.[lang] || 'No description available.';
     }
 
     const featuresTable = document.querySelector('.features-table');
     if (featuresTable) {
         featuresTable.innerHTML = `
-            <tr>${Object.keys(product.tableData || {}).map(key => `<td data-i18n="${key.toLowerCase().replace(/\s/g, '_')}">${translations[key.toLowerCase().replace(/\s/g, '_')]?.[lang] || key}</td>`).join('')}</tr>
+            <tr>${Object.keys(product.tableData || {}).map(key => `<td data-i18n="${key.toLowerCase().replace(/\s/g, '_')}">${productTranslations[key.toLowerCase().replace(/\s/g, '_')]?.[lang] || key}</td>`).join('')}</tr>
             <tr>${Object.values(product.tableData || {}).map(value => `<td>${value}</td>`).join('')}</tr>
         `;
     }
@@ -140,14 +147,14 @@ function renderProduct(product, lang = 'en') {
             source.src = product.video || '';
         }
         video.poster = product.image || '../images/default-image.jpg';
-        video.innerHTML += `<p data-i18n="video_not_supported">${translations.video_not_supported?.[lang] || 'Video not supported'}</p>`;
+        video.innerHTML += `<p data-i18n="video_not_supported">${productTranslations.video_not_supported?.[lang] || 'Video not supported'}</p>`;
     }
 
     const favoriteButton = document.querySelector('.favorite-btn');
     if (favoriteButton) {
         favoriteButton.dataset.productId = product.id;
         favoriteButton.innerHTML = `
-            <img src="../images/home_page_icons/heart_icon.svg" alt="${translations.add_to_favorites?.[lang] || 'Add to Favorites'}" class="favorite-icon">
+            <img src="../images/home_page_icons/heart_icon.svg" alt="${productTranslations.add_to_favorites?.[lang] || 'Add to Favorites'}" class="favorite-icon">
         `;
     }
 
@@ -156,7 +163,7 @@ function renderProduct(product, lang = 'en') {
         addToCartButton.dataset.productId = product.id;
         addToCartButton.innerHTML = `
             <img src="../images/product_images/cart_icon.svg" alt="Cart" class="cart-icon">
-            <span data-i18n="add_to_cart">${translations.add_to_cart?.[lang] || 'Add to Cart'}</span>
+            <span data-i18n="add_to_cart">${productTranslations.add_to_cart?.[lang] || 'Add to Cart'}</span>
         `;
     }
 
@@ -164,7 +171,7 @@ function renderProduct(product, lang = 'en') {
     if (auth.isAuthenticated) {
         const user = JSON.parse(localStorage.getItem('user'));
         const USER_ID = user.id;
-        initAddToCart('product', '.add-to-cart', [product]);
+        initAddToCart('product', '.add-to-cart', [product], showAddToCartModal);
         initFavorites([product], USER_ID, (productId, isFavorite) => {
             if (favoriteButton) {
                 favoriteButton.classList.toggle('active', isFavorite);
@@ -174,8 +181,9 @@ function renderProduct(product, lang = 'en') {
                         ? '../images/home_page_icons/heart_filled_icon.svg' 
                         : '../images/home_page_icons/heart_icon.svg';
                     icon.alt = isFavorite 
-                        ? translations.remove_from_favorites?.[lang] || 'Remove from Favorites' 
-                        : translations.add_to_favorites?.[lang] || 'Add to Favorites';
+                        ? productTranslations.remove_from_favorites?.[lang] || 'Remove from Favorites' 
+                        : productTranslations.add_to_favorites?.[lang] || 'Add to Favorites';
+                    showSimpleModal('success_title', isFavorite ? 'added_to_favorites' : 'removed_from_favorites', 'modal-success', lang);
                 }
             }
         });
@@ -185,11 +193,10 @@ function renderProduct(product, lang = 'en') {
                 button.addEventListener('click', (e) => {
                     e.preventDefault();
                     showSimpleModal(
-                        translations.modal_login_required?.[lang],
-                        button.classList.contains('favorite-btn')
-                            ? translations.modal_favorites_message?.[lang]
-                            : translations.modal_cart_message?.[lang],
-                        'modal-error'
+                        'modal_login_required',
+                        button.classList.contains('favorite-btn') ? 'modal_favorites_message' : 'modal_cart_message',
+                        'modal-error',
+                        lang
                     );
                     setTimeout(() => window.location.assign('../auth/signin.html'), 1000);
                 });
@@ -209,9 +216,9 @@ function renderSimilarProducts(products, lang = 'en') {
         <div class="product-card" data-id="${product.id}">
             <div class="product-image-container">
                 <img src="${product.image || '../images/product-image.jpg'}" alt="${product.name}" class="product-image">
-                <button class="quick-view" data-product-id="${product.id}" data-i18n="quick_view">${translations.quick_view?.[lang] || 'Quick View'}</button>
+                <button class="quick-view" data-product-id="${product.id}" data-i18n="quick_view">${productTranslations.quick_view?.[lang] || 'Quick View'}</button>
                 <button class="favorite-btn" data-product-id="${product.id}">
-                    <img src="../images/home_page_icons/heart_icon.png" alt="${translations.add_to_favorites?.[lang] || 'Add to Favorites'}" class="favorite-icon">
+                    <img src="../images/home_page_icons/heart_icon.svg" alt="${productTranslations.add_to_favorites?.[lang] || 'Add to Favorites'}" class="favorite-icon">
                 </button>
             </div>
             <div class="product-info">
@@ -222,12 +229,12 @@ function renderSimilarProducts(products, lang = 'en') {
                     <span class="rating-count">(${product.rating.toFixed(1)})</span>
                 </div>
                 <p class="product-price">$${product.price.toFixed(2)}</p>
-                <p class="product-colors"><span data-i18n="colors_title">${translations.colors_title?.[lang] || 'Colors'}</span>: ${product.colors?.join(', ') || 'Unknown'}</p>
-                <p class="product-category"><span data-i18n="category_title">${translations.category_title?.[lang] || 'Category'}</span>: ${product.category || 'Unknown'}</p>
-                <button class="add-to-cart-btn" data-product-id="${product.id}" data-i18n="add_to_cart" data-context="product-card">${translations.add_to_cart?.[lang] || 'Add to Cart'}</button>
+                <p class="product-colors"><span data-i18n="colors_title">${productTranslations.colors_title?.[lang] || 'Colors'}</span>: ${product.colors?.join(', ') || 'Unknown'}</p>
+                <p class="product-category"><span data-i18n="category_title">${productTranslations.category_title?.[lang] || 'Category'}</span>: ${product.category || 'Unknown'}</p>
+                <button class="add-to-cart-btn" data-product-id="${product.id}" data-i18n="add_to_cart" data-context="product-card">${productTranslations.add_to_cart?.[lang] || 'Add to Cart'}</button>
             </div>
         </div>
-    `).join('') : `<p data-i18n="no_similar_products">${translations.no_similar_products?.[lang] || 'No similar products found.'}</p>`;
+    `).join('') : `<p data-i18n="no_similar_products">${productTranslations.no_similar_products?.[lang] || 'No similar products found.'}</p>`;
 
     similarGrid.removeEventListener('click', handleSimilarGridClick);
     similarGrid.addEventListener('click', handleSimilarGridClick);
@@ -236,7 +243,7 @@ function renderSimilarProducts(products, lang = 'en') {
     if (auth.isAuthenticated) {
         const user = JSON.parse(localStorage.getItem('user'));
         const USER_ID = user.id;
-        initAddToCart('catalog', '.add-to-cart-btn[data-context="product-card"]', products);
+        initAddToCart('catalog', '.add-to-cart-btn[data-context="product-card"]', products, showAddToCartModal);
         initFavorites(products, USER_ID, (productId, isFavorite) => {
             const button = similarGrid.querySelector(`.favorite-btn[data-product-id="${productId}"]`);
             if (button) {
@@ -247,8 +254,9 @@ function renderSimilarProducts(products, lang = 'en') {
                         ? '../images/home_page_icons/heart_filled_icon.svg' 
                         : '../images/home_page_icons/heart_icon.svg';
                     icon.alt = isFavorite 
-                        ? translations.remove_from_favorites?.[lang] || 'Remove from Favorites' 
-                        : translations.add_to_favorites?.[lang] || 'Add to Favorites';
+                        ? productTranslations.remove_from_favorites?.[lang] || 'Remove from Favorites' 
+                        : productTranslations.add_to_favorites?.[lang] || 'Add to Favorites';
+                    showSimpleModal('success_title', isFavorite ? 'added_to_favorites' : 'removed_from_favorites', 'modal-success', lang);
                 }
             }
         });
@@ -257,11 +265,10 @@ function renderSimilarProducts(products, lang = 'en') {
             button.addEventListener('click', (e) => {
                 e.preventDefault();
                 showSimpleModal(
-                    translations.modal_login_required?.[lang],
-                    button.classList.contains('favorite-btn')
-                        ? translations.modal_favorites_message?.[lang]
-                        : translations.modal_cart_message?.[lang],
-                    'modal-error'
+                    'modal_login_required',
+                    button.classList.contains('favorite-btn') ? 'modal_favorites_message' : 'modal_cart_message',
+                    'modal-error',
+                    lang
                 );
                 setTimeout(() => window.location.assign('../auth/signin.html'), 1000);
             });
@@ -271,7 +278,6 @@ function renderSimilarProducts(products, lang = 'en') {
 
 function handleSimilarGridClick(e) {
     e.preventDefault();
-    const lang = localStorage.getItem('language') || 'en';
     const button = e.target.closest('.quick-view');
     if (button) {
         const productId = button.dataset.productId;
@@ -284,11 +290,8 @@ async function init() {
     const productId = parseInt(urlParams.get('id'));
     const lang = localStorage.getItem('language') || 'en';
 
-    if (!productId) {
-        const container = document.querySelector('.product-detail-container');
-        if (container) {
-            container.innerHTML = `<p data-i18n="invalid_product_id">${translations.invalid_product_id?.[lang] || 'Invalid product ID'}</p>`;
-        }
+    if (!productId || isNaN(productId)) {
+        showSimpleModal('error_title', 'invalid_product_id', 'modal-error', lang);
         return;
     }
 
@@ -297,39 +300,29 @@ async function init() {
         renderProduct(product, lang);
         const similarProducts = await fetchSimilarProducts(product);
         renderSimilarProducts(similarProducts, lang);
-    } else {
-        const container = document.querySelector('.product-detail-container');
-        if (container) {
-            container.innerHTML = `<p data-i18n="product_not_found">${translations.product_not_found?.[lang] || 'Product not found'}</p>`;
-        }
     }
 }
 
-function updateLanguage(lang, translations) {
+function updateLanguage(lang) {
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.dataset.i18n;
-        const translation = translations[key]?.[lang];
-        if (translation) {
-            element.innerHTML = translation;
-        } else {
-            console.warn(`Translation missing for key "${key}" in language "${lang}"`);
-        }
+        const translation = productTranslations[key]?.[lang] || element.innerHTML;
+        element.innerHTML = translation;
     });
 
     document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
         const key = element.dataset.i18nPlaceholder;
-        const translation = translations[key]?.[lang];
-        if (translation) {
-            element.placeholder = translation;
-        } else {
-            console.warn(`Placeholder translation missing for key "${key}" in language "${lang}"`);
-        }
+        const translation = productTranslations[key]?.[lang] || element.placeholder;
+        element.placeholder = translation;
     });
 
     document.querySelectorAll('.current-language').forEach(element => {
-        const translation = translations.lang_current?.[lang] || lang.toUpperCase();
+        const translation = productTranslations.lang_current?.[lang] || lang.toUpperCase();
         element.textContent = translation;
     });
+
+    // Повторный рендеринг для обновления переводов
+    init();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -339,20 +332,17 @@ document.addEventListener('DOMContentLoaded', () => {
     updateUserProfile();
     init();
     initBurgerMenu(false);
-    initLanguageSwitcher('.header-controls .language-selector, .mobile-menu .language-selector');
+    initLanguageSwitcher('.header-controls .language-selector, .mobile-menu .language-selector', productTranslations);
     const headerThemeToggle = document.querySelector('.header-controls .custom-toggle .toggle-input');
     const mobileThemeToggle = document.querySelector('.mobile-menu .custom-toggle .toggle-input');
     if (headerThemeToggle) {
-        console.log('Header theme toggle found:', headerThemeToggle);
         initThemeSwitcher(headerThemeToggle);
     }
     if (mobileThemeToggle) {
-        console.log('Mobile theme toggle found:', mobileThemeToggle);
         initThemeSwitcher(mobileThemeToggle);
     }
     window.addEventListener('languageChanged', () => {
         const lang = localStorage.getItem('language') || 'en';
-        init();
-        updateLanguage(lang, translations);
+        updateLanguage(lang);
     });
 });

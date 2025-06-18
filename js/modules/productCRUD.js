@@ -1,4 +1,4 @@
-import { showSimpleModal, closeModal } from './modal.js';
+import { showSimpleModal, closeModal, showErrorModal, showSuccessModal } from './modal.js';
 import { validateProduct } from './adminValidation.js';
 import { getNextAvailableId } from './idManager.js';
 import { translations } from './pages-translations/admin_translations.js';
@@ -8,6 +8,11 @@ async function fetchProducts() {
     try {
         const res = await fetch('http://localhost:3000/products');
         if (res.status === 404) {
+            sessionStorage.setItem('modal_state', JSON.stringify({
+                operation: 'fetch',
+                success: false,
+                errorKey: 'page_not_found'
+            }));
             window.location.assign('../pages/page_404_error.html');
             return [];
         }
@@ -17,11 +22,12 @@ async function fetchProducts() {
         return await res.json();
     } catch (error) {
         console.error('Error fetching products:', error);
-        showSimpleModal(
-            translations.modal_error_title?.[lang] || 'Error',
-            translations.error_loading_product?.[lang] || 'Failed to load product',
-            'modal-error'
-        );
+        sessionStorage.setItem('modal_state', JSON.stringify({
+            operation: 'fetch',
+            success: false,
+            errorKey: 'error_loading_product'
+        }));
+        window.location.reload();
         throw error;
     }
 }
@@ -61,8 +67,7 @@ async function handleProductSubmit(productData, isEditMode, productId) {
                 Pattern: productData.tableData.Pattern,
                 Fit: productData.tableData.Fit,
                 Neck: productData.tableData.Neck,
-                Sleeve: productData.tableData.Sleeve,
-                Style: productData.style
+                Sleeve: productData.tableData.Sleeve
             }
         };
         
@@ -85,20 +90,34 @@ async function createProduct(product) {
             body: JSON.stringify(newProduct)
         });
         if (res.status === 404) {
+            sessionStorage.setItem('modal_state', JSON.stringify({
+                operation: 'create',
+                success: false,
+                errorKey: 'page_not_found'
+            }));
             window.location.assign('../pages/page_404_error.html');
             return null;
         }
         if (!res.ok) {
             throw new Error(`HTTP error: ${res.status}`);
         }
+        sessionStorage.setItem('modal_state', JSON.stringify({
+            operation: 'create',
+            success: true,
+            successKey: 'add_product_success'
+        }));
+        sessionStorage.setItem('catalog_refresh_needed', 'true'); 
+        window.location.reload();
         return await res.json();
     } catch (error) {
         console.error('Error creating product:', error);
-        showSimpleModal(
-            translations.modal_error_title?.[lang] || 'Error',
-            translations.error_adding_product?.[lang] || 'Failed to add product',
-            'modal-error'
-        );
+        sessionStorage.setItem('modal_state', JSON.stringify({
+            operation: 'create',
+            success: false,
+            errorKey: 'error_adding_product',
+            message: error.message
+        }));
+        window.location.reload();
         throw error;
     }
 }
@@ -113,20 +132,33 @@ async function updateProduct(id, product) {
             body: JSON.stringify(product)
         });
         if (res.status === 404) {
+            sessionStorage.setItem('modal_state', JSON.stringify({
+                operation: 'update',
+                success: false,
+                errorKey: 'page_not_found'
+            }));
             window.location.assign('../pages/page_404_error.html');
             return null;
         }
         if (!res.ok) {
             throw new Error(`HTTP error: ${res.status}`);
         }
+        sessionStorage.setItem('modal_state', JSON.stringify({
+            operation: 'update',
+            success: true,
+            successKey: 'update_product_success'
+        }));
+        window.location.reload();
         return await res.json();
     } catch (error) {
         console.error('Error updating product:', error);
-        showSimpleModal(
-            translations.modal_error_title?.[lang] || 'Error',
-            translations.error_updating_product?.[lang] || 'Failed to update product',
-            'modal-error'
-        );
+        sessionStorage.setItem('modal_state', JSON.stringify({
+            operation: 'update',
+            success: false,
+            errorKey: 'error_updating_product',
+            message: error.message
+        }));
+        window.location.reload();
         throw error;
     }
 }
@@ -139,19 +171,32 @@ async function deleteProduct(id) {
             method: 'DELETE'
         });
         if (res.status === 404) {
+            sessionStorage.setItem('modal_state', JSON.stringify({
+                operation: 'delete',
+                success: false,
+                errorKey: 'page_not_found'
+            }));
             window.location.assign('../pages/page_404_error.html');
             return;
         }
         if (!res.ok) {
             throw new Error(`HTTP error: ${res.status}`);
         }
+        sessionStorage.setItem('modal_state', JSON.stringify({
+            operation: 'delete',
+            success: true,
+            successKey: 'delete_product_success'
+        }));
+        window.location.reload();
     } catch (error) {
         console.error('Error deleting product:', error);
-        showSimpleModal(
-            translations.modal_error_title?.[lang] || 'Error',
-            translations.error_delete_product?.[lang] || 'Failed to delete product',
-            'modal-error'
-        );
+        sessionStorage.setItem('modal_state', JSON.stringify({
+            operation: 'delete',
+            success: false,
+            errorKey: 'error_delete_product',
+            message: error.message
+        }));
+        window.location.reload();
         throw error;
     }
 }
@@ -163,11 +208,12 @@ export function showProductForm(product = null, callback) {
     const modalContainer = document.querySelector('#modal-container');
     if (!modalContainer) {
         console.error('Modal container not found');
-        showSimpleModal(
-            translations.modal_error_title?.[lang] || 'Error',
-            translations.error_missing_elements?.[lang] || 'Page elements not found',
-            'modal-error'
-        );
+        sessionStorage.setItem('modal_state', JSON.stringify({
+            operation: 'form',
+            success: false,
+            errorKey: 'error_missing_elements'
+        }));
+        window.location.reload();
         return;
     }
 
@@ -234,9 +280,9 @@ export function showProductForm(product = null, callback) {
                     <label for="fit">${translations.product_fit_label?.[lang] || 'Fit'}:</label>
                     <input type="text" id="fit" name="fit" class="form-input" placeholder="${translations.product_fit_placeholder?.[lang] || 'Enter fit'}" value="${product?.tableData?.Fit || ''}" required>
                     <label for="neck">${translations.product_neck_label?.[lang] || 'Neck'}:</label>
-                    <input type="text" id="neck" name="neck" class="form-input" placeholder="${translations.product_neck_placeholder?.[lang] || 'Enter neck'}" value="${product?.tableData?.Neck || ''}" required>
+                    <input type="text" id="neck" name="neck" class="form-input" placeholder="${translations.product_neck_placeholder?.[lang] || 'Enter neck'}" value="${product?.tableData?.Neck || ''}" ${isEdit ? '' : 'required'}>
                     <label for="sleeve">${translations.product_sleeve_label?.[lang] || 'Sleeve'}:</label>
-                    <input type="text" id="sleeve" name="sleeve" class="form-input" placeholder="${translations.product_sleeve_placeholder?.[lang] || 'Enter sleeve'}" value="${product?.tableData?.Sleeve || ''}" required>
+                    <input type="text" id="sleeve" name="sleeve" class="form-input" placeholder="${translations.product_sleeve_placeholder?.[lang] || 'Enter sleeve'}" value="${product?.tableData?.Sleeve || ''}" ${isEdit ? '' : 'required'}>
                     <div class="modal-dialog-actions">
                         <button type="button" class="modal-dialog-btn confirm-btn" id="save-btn">${isEdit ? translations.update_button?.[lang] || 'Update' : translations.save_button?.[lang] || 'Save'}</button>
                         <button type="button" class="modal-dialog-btn cancel-btn" id="cancel-btn">${translations.cancel_button?.[lang] || 'Cancel'}</button>
@@ -249,11 +295,12 @@ export function showProductForm(product = null, callback) {
     const modalContentElement = modalContainer.querySelector('.modal-dialog-content');
     if (!modalContentElement) {
         console.error('Modal dialog content element not found after rendering');
-        showSimpleModal(
-            translations.modal_error_title?.[lang] || 'Error',
-            translations.error_missing_elements?.[lang] || 'Page elements not found',
-            'modal-error'
-        );
+        sessionStorage.setItem('modal_state', JSON.stringify({
+            operation: 'form',
+            success: false,
+            errorKey: 'error_missing_elements'
+        }));
+        window.location.reload();
         return;
     }
 
@@ -264,11 +311,12 @@ export function showProductForm(product = null, callback) {
     const formWrapper = document.getElementById('product-form-wrapper');
     if (!formWrapper) {
         console.error('Product form wrapper not found');
-        showSimpleModal(
-            translations.modal_error_title?.[lang] || 'Error',
-            translations.error_missing_elements?.[lang] || 'Page elements not found',
-            'modal-error'
-        );
+        sessionStorage.setItem('modal_state', JSON.stringify({
+            operation: 'form',
+            success: false,
+            errorKey: 'error_missing_elements'
+        }));
+        window.location.reload();
         return;
     }
 
@@ -313,19 +361,15 @@ export function showProductForm(product = null, callback) {
                     Pattern: document.getElementById('pattern')?.value.trim(),
                     Fit: document.getElementById('fit')?.value.trim(),
                     Neck: document.getElementById('neck')?.value.trim(),
-                    Sleeve: document.getElementById('sleeve')?.value.trim(),
-                    Style: document.getElementById('style')?.value
+                    Sleeve: document.getElementById('sleeve')?.value.trim()
                 }
             };
 
-            if (!validateProduct(formData)) {
-                console.log('Validation failed');
-                showSimpleModal(
-                    translations.modal_error_title?.[lang] || 'Error',
-                    translations.error_validation_failed?.[lang] || 'Please fill in all required fields correctly',
-                    'modal-error'
-                );
-                return;
+            console.log('Validating formData:', formData, 'isEdit:', isEdit);
+            const validationResult = validateProduct(formData, isEdit);
+            if (validationResult !== true) {
+                console.log('Validation failed:', validationResult);
+                return; 
             }
 
             try {
@@ -333,38 +377,43 @@ export function showProductForm(product = null, callback) {
                 const { isDuplicate, product: updatedProduct } = await handleProductSubmit(formData, isEdit, product?.id);
                 
                 if (isDuplicate) {
-                    showSimpleModal(
-                        translations.modal_info_title?.[lang] || 'Info',
-                        translations.duplicate_product_updated?.[lang] || 'Duplicate product updated',
-                        'modal-success'
-                    );
+                    console.log('Duplicate product updated:', updatedProduct);
+                    sessionStorage.setItem('modal_state', JSON.stringify({
+                        operation: 'update',
+                        success: true,
+                        successKey: 'duplicate_product_updated'
+                    }));
+                    window.location.reload();
                 } else {
                     if (isEdit) {
                         await updateProduct(product.id, formData);
-                        showSimpleModal(
-                            translations.modal_success_title?.[lang] || 'Success',
-                            translations.update_product_success?.[lang] || 'Product updated successfully',
-                            'modal-success'
-                        );
+                        console.log('Product updated');
+                        sessionStorage.setItem('modal_state', JSON.stringify({
+                            operation: 'update',
+                            success: true,
+                            successKey: 'update_product_success'
+                        }));
+                        window.location.reload();
                     } else {
                         await createProduct(formData);
-                        showSimpleModal(
-                            translations.modal_success_title?.[lang] || 'Success',
-                            translations.add_product_success?.[lang] || 'Product added successfully',
-                            'modal-success'
-                        );
+                        console.log('Product created');
+                        sessionStorage.setItem('modal_state', JSON.stringify({
+                            operation: 'create',
+                            success: true,
+                            successKey: 'add_product_success'
+                        }));
+                        window.location.reload();
                     }
                 }
-                closeModal();
-                console.log('Calling callback after save');
-                callback();
             } catch (error) {
                 console.error(`Error ${isEdit ? 'updating' : 'adding'} product:`, error);
-                showSimpleModal(
-                    translations.modal_error_title?.[lang] || 'Error',
-                    translations[`error_${isEdit ? 'updating' : 'adding'}_product`]?.[lang] || `Failed to ${isEdit ? 'update' : 'add'} product: ${error.message}`,
-                    'modal-error'
-                );
+                sessionStorage.setItem('modal_state', JSON.stringify({
+                    operation: isEdit ? 'update' : 'create',
+                    success: false,
+                    errorKey: isEdit ? 'error_updating_product' : 'error_adding_product',
+                    message: error.message
+                }));
+                window.location.reload();
             }
         });
     } else {

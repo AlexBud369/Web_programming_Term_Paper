@@ -1,18 +1,13 @@
-import { showErrorModal, showSuccessModal, showSimpleModal } from './modules/modal.js';
+import { showErrorModal, showSuccessModal } from './modules/modal.js';
 import { updateCartItemQuantity, removeFromCart, updateCartCount } from './modules/cartOperations.js';
 import { validateCheckoutForm } from './modules/formValidation.js';
 import { checkAuth, updateUserProfile } from './modules/auth.js';
 import { initBurgerMenu } from './modules/burgerMenu.js';
 import { initLanguageSwitcher } from './modules/languageSwitcher.js';
 import { initThemeSwitcher } from './modules/themeSwitcher.js';
-import { translations as cartTranslations } from './modules/pages-translations/cart_translations.js';
 import { translations as headerTranslations } from './modules/pages-translations/header_translations.js';
 import { translations as footerTranslations } from './modules/pages-translations/footer_translations.js';
 import { showPreloader, hidePreloader, initPreloader } from './modules/preloader.js';
-
-function getTranslation(key, lang, fallback) {
-    return cartTranslations[key]?.[lang] || cartTranslations[key]?.['en'] || fallback || key;
-}
 
 export async function initCart() {
     const elements = {
@@ -27,12 +22,7 @@ export async function initCart() {
     const lang = localStorage.getItem('language') || 'en';
     if (!elements.cartItems || !elements.cartTotal) {
         console.error('Cart elements not found');
-        showSimpleModal(
-            getTranslation('modal_error_title', lang, 'Error'),
-            getTranslation('error_missing_elements', lang, 'Required page elements are missing.'),
-            'modal-error',
-            'cart'
-        );
+        showErrorModal('error_missing_elements', lang);
         return;
     }
 
@@ -47,6 +37,7 @@ export async function initCart() {
             const res = await fetch('http://localhost:3000/cart');
             if (res.status === 404) {
                 console.warn('Cart fetch returned 404, redirecting');
+                showErrorModal('page_not_found', lang);
                 window.location.assign('../pages/page_404_error.html');
                 return [];
             }
@@ -54,12 +45,7 @@ export async function initCart() {
             return await res.json();
         } catch (error) {
             console.error('Error fetching cart:', error);
-            showSimpleModal(
-                getTranslation('modal_error_title', lang, 'Error'),
-                getTranslation('error_loading_cart', lang, 'Failed to load cart. Please try again.'),
-                'modal-error',
-                'cart'
-            );
+            showErrorModal('error_loading_cart', lang);
             return [];
         } finally {
             hidePreloader();
@@ -146,6 +132,10 @@ export async function initCart() {
         });
     }
 
+    function getTranslation(key, lang, fallback) {
+        return headerTranslations[key]?.[lang] || footerTranslations[key]?.[lang] || headerTranslations[key]?.['en'] || footerTranslations[key]?.['en'] || fallback || key;
+    }
+
     elements.cartItems.addEventListener('click', async (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -173,19 +163,22 @@ export async function initCart() {
             console.log('Decrease button clicked, itemId:', itemId);
             const item = (await fetchCart()).find(item => item.id === itemId);
             if (item) {
-                sessionStorage.setItem('cartModal', JSON.stringify({
-                    type: 'success',
-                    message: getTranslation('quantity_updated', lang, 'Quantity updated successfully!'),
-                    pageType: 'cart'
+                sessionStorage.setItem('showSuccessModal', JSON.stringify({
+                    messageKey: 'quantity_updated',
+                    params: {}
                 }));
                 showPreloader();
                 const success = await updateCartItemQuantity(itemId, item.quantity - 1);
                 hidePreloader();
                 if (success) {
-                    sessionStorage.removeItem('cartModal');
-                    showSuccessModal(getTranslation('quantity_updated', lang, 'Quantity updated successfully!'), 'cart');
+                    showSuccessModal('quantity_updated', lang);
                     await renderCart(lang);
                     updateCartCount();
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    sessionStorage.removeItem('showSuccessModal');
                 }
             }
         }
@@ -194,38 +187,44 @@ export async function initCart() {
             console.log('Increase button clicked, itemId:', itemId);
             const item = (await fetchCart()).find(item => item.id === itemId);
             if (item) {
-                sessionStorage.setItem('cartModal', JSON.stringify({
-                    type: 'success',
-                    message: getTranslation('quantity_updated', lang, 'Quantity updated successfully!'),
-                    pageType: 'cart'
+                sessionStorage.setItem('showSuccessModal', JSON.stringify({
+                    messageKey: 'quantity_updated',
+                    params: {}
                 }));
                 showPreloader();
                 const success = await updateCartItemQuantity(itemId, item.quantity + 1);
                 hidePreloader();
                 if (success) {
-                    sessionStorage.removeItem('cartModal');
-                    showSuccessModal(getTranslation('quantity_updated', lang, 'Quantity updated successfully!'), 'cart');
+                    showSuccessModal('quantity_updated', lang);
                     await renderCart(lang);
                     updateCartCount();
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    sessionStorage.removeItem('showSuccessModal');
                 }
             }
         }
 
         if (e.target.closest('.delete-btn')) {
             console.log('Delete button clicked, itemId:', itemId);
-            sessionStorage.setItem('cartModal', JSON.stringify({
-                type: 'success',
-                message: getTranslation('item_removed', lang, 'Item removed from cart!'),
-                pageType: 'cart'
+            sessionStorage.setItem('showSuccessModal', JSON.stringify({
+                messageKey: 'item_removed',
+                params: {}
             }));
             showPreloader();
             const success = await removeFromCart(itemId);
             hidePreloader();
             if (success) {
-                sessionStorage.removeItem('cartModal');
-                showSuccessModal(getTranslation('item_removed', lang, 'Item removed from cart!'), 'cart');
+                showSuccessModal('item_removed', lang);
                 await renderCart(lang);
                 updateCartCount();
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            } else {
+                sessionStorage.removeItem('showSuccessModal');
             }
         }
     });
@@ -236,35 +235,20 @@ export async function initCart() {
         const lang = localStorage.getItem('language') || 'en';
         const auth = checkAuth();
         if (!auth.isAuthenticated) {
-            showSimpleModal(
-                getTranslation('modal_error_title', lang, 'Error'),
-                getTranslation('error_not_authenticated', lang, 'Please log in to proceed.'),
-                'modal-error',
-                'cart'
-            );
+            showErrorModal('error_not_authenticated_cart', lang);
             setTimeout(() => window.location.assign('../auth/signin.html'), 1500);
             return;
         }
 
         const cart = await fetchCart();
         if (cart.length === 0) {
-            showSimpleModal(
-                getTranslation('modal_error_title', lang, 'Error'),
-                getTranslation('cart_empty_message', lang, 'Your cart is empty.'),
-                'modal-error',
-                'cart'
-            );
+            showErrorModal('cart_empty_message', lang);
             return;
         }
 
         const isValid = await validateCheckoutForm(elements.checkoutForm);
         if (!isValid) {
-            showSimpleModal(
-                getTranslation('modal_error_title', lang, 'Error'),
-                getTranslation('form_validation_error', lang, 'Please fill out the form correctly.'),
-                'modal-error',
-                'cart'
-            );
+            showErrorModal('checkout_form_validation_error', lang);
             return;
         }
 
@@ -274,22 +258,25 @@ export async function initCart() {
                 const res = await fetch(`http://localhost:3000/cart/${item.id}`, { method: 'DELETE' });
                 if (res.status === 404) {
                     console.warn('Delete cart item returned 404, redirecting');
+                    showErrorModal('page_not_found', lang);
                     window.location.assign('../pages/page_404_error.html');
                     return;
                 }
                 if (!res.ok) throw new Error(`Failed to delete item ${item.id}`);
             }
-            showSuccessModal(getTranslation('order_success_message', lang, 'Order Successfully Placed!'), 'cart');
+            sessionStorage.setItem('showSuccessModal', JSON.stringify({
+                messageKey: 'order_success_message',
+                params: {}
+            }));
+            showSuccessModal('order_success_message', lang);
             await renderCart(lang);
             updateCartCount();
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
         } catch (error) {
             console.error('Error processing order:', error);
-            showSimpleModal(
-                getTranslation('modal_error_title', lang, 'Error'),
-                getTranslation('error_place_order', lang, 'Failed to place order. Please try again.'),
-                'modal-error',
-                'cart'
-            );
+            showErrorModal('error_place_order', lang);
         } finally {
             hidePreloader();
         }
@@ -306,33 +293,29 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.removeItem('showCartModal');
     localStorage.removeItem('showOrderSuccessModal');
 
-    const pendingModal = sessionStorage.getItem('cartModal');
+    const pendingModal = sessionStorage.getItem('showSuccessModal');
     if (pendingModal) {
-        const { type, message, pageType } = JSON.parse(pendingModal);
-        if (type === 'success') {
-            showSuccessModal(message, pageType);
-        } else if (type === 'error') {
-            showErrorModal(message, pageType);
+        try {
+            const { messageKey, params } = JSON.parse(pendingModal);
+            const lang = localStorage.getItem('language') || 'en';
+            showSuccessModal(messageKey, lang, params);
+        } catch (error) {
+            console.error('Error parsing showSuccessModal data:', error);
         }
-        sessionStorage.removeItem('cartModal');
+        sessionStorage.removeItem('showSuccessModal');
     }
 
     const lang = localStorage.getItem('language') || 'en';
     const auth = checkAuth();
     if (!auth.isAuthenticated) {
-        showSimpleModal(
-            getTranslation('modal_error_title', lang, 'Error'),
-            getTranslation('error_not_authenticated', lang, 'Please log in to proceed.'),
-            'modal-error',
-            'cart'
-        );
+        showErrorModal('error_not_authenticated_cart', lang);
         setTimeout(() => window.location.assign('../auth/signin.html'), 1500);
         return;
     }
 
     initCart();
     initBurgerMenu(false, false, false, headerTranslations);
-    initLanguageSwitcher('.header-controls .language-selector, .mobile-menu .language-selector', { ...cartTranslations, ...headerTranslations, ...footerTranslations });
+    initLanguageSwitcher('.header-controls .language-selector, .mobile-menu .language-selector', { ...headerTranslations, ...footerTranslations });
     const headerThemeToggle = document.querySelector('.header-controls .custom-toggle .toggle-input');
     const mobileThemeToggle = document.querySelector('.mobile-menu .custom-toggle .toggle-input');
     if (headerThemeToggle) {

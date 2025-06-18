@@ -1,6 +1,6 @@
 import { checkAuth, validatePassword } from './auth.js';
-import { showSimpleModal } from './modal.js';
-import { translations } from './pages-translations/account_translations.js';
+import { showSimpleModal, showErrorModal } from './modal.js';
+import { translations as profileTranslations } from './pages-translations/account_translations.js';
 import { showPreloader, hidePreloader } from './preloader.js';
 import { COMMON_PASSWORDS } from './constants.js';
 
@@ -10,13 +10,13 @@ function validateName(value) {
 }
 
 function validateEmail(email) {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return regex.test(email) && email.length <= 100;
 }
 
 function validatePhoneNumber(phone) {
-    const regex = /^\+375\s?(29|25|44|33)\s?\d{3}\s?\d{2}\s?\d{2}$/;
-    return regex.test(phone);
+    const regex = /^\+375\s?(29|25|44|33)\s?-?\d{3}\s?-?\d{2}\s?-?\d{2}$/;
+    return regex.test(phone.replace(/\s+/g, ' ').trim());
 }
 
 function validateBirthDate(date) {
@@ -33,20 +33,27 @@ function validateBirthDate(date) {
 }
 
 async function checkUniqueField(field, value, currentUserId) {
+    const lang = localStorage.getItem('language') || 'en';
     try {
         showPreloader();
         const res = await fetch(`http://localhost:3000/users?${field}=${encodeURIComponent(value)}`);
+        console.log(`Checking ${field} availability: Status ${res.status}`);
         if (res.status === 404) {
-            window.location.assign('../pages/page_404_error.html');
+            showErrorModal('page_not_found', lang);
+            setTimeout(() => window.location.assign('../pages/page_404_error.html'), 1500);
             return false;
         }
         if (!res.ok) {
+            const errorData = await res.json().catch(() => ({}));
+            console.error(`Error checking ${field}: HTTP ${res.status}`, errorData);
             throw new Error(`HTTP error: ${res.status}`);
         }
         const users = await res.json();
+        console.log(`Checking ${field} response:`, users);
         return !users.some(user => user.id !== currentUserId);
     } catch (error) {
         console.error(`Error checking unique ${field}:`, error.message);
+        showErrorModal('error_checking_field', lang, { field: profileTranslations[`account_${field}`]?.[lang] || field });
         return false;
     } finally {
         hidePreloader();
@@ -60,32 +67,29 @@ export function initProfileEditing() {
 
     if (!auth.isAuthenticated) {
         console.log('User not authenticated, redirecting to signin.html');
-        showSimpleModal(
-            translations.error_title?.[lang] || 'Error',
-            translations.please_login?.[lang] || 'Please log in',
-            'modal-error'
-        );
+        showErrorModal('please_login', lang);
         setTimeout(() => window.location.assign('../auth/signin.html'), 1000);
         return;
     }
 
     const user = JSON.parse(localStorage.getItem('user'));
-    console.log('User data from localStorage:', user);
-
     async function loadUserData() {
         try {
             showPreloader();
-            console.log(`Fetching user data for ID: ${user.id}`);
             const res = await fetch(`http://localhost:3000/users/${user.id}`);
+            console.log(`Loading user data: Status ${res.status}`);
             if (res.status === 404) {
-                window.location.assign('../pages/page_404_error.html');
+                showErrorModal('user_not_found', lang);
+                setTimeout(() => window.location.assign('../pages/page_404_error.html'), 1500);
                 return user;
             }
             if (!res.ok) {
+                const errorData = await res.json().catch(() => ({}));
+                console.error(`Error loading user data: HTTP ${res.status}`, errorData);
                 throw new Error(`HTTP error: ${res.status}`);
             }
             const fetchedUser = await res.json();
-            console.log('Fetched user data:', fetchedUser);
+            console.log('Loading user data response:', fetchedUser);
 
             localStorage.setItem('user', JSON.stringify({
                 id: fetchedUser.id,
@@ -101,11 +105,7 @@ export function initProfileEditing() {
             return fetchedUser;
         } catch (error) {
             console.error('Error fetching user data:', error.message);
-            showSimpleModal(
-                translations.error_title?.[lang] || 'Error',
-                translations.error_loading?.[lang] || 'Failed to load user data',
-                'modal-error'
-            );
+            showErrorModal('error_loading_user', lang);
             return user;
         } finally {
             hidePreloader();
@@ -123,16 +123,24 @@ export function initProfileEditing() {
     };
 
     loadUserData().then(userData => {
-        console.log('Populating profile fields with user data:', userData);
         document.querySelectorAll('.account-field').forEach(field => {
-            const dataI18n = field.querySelector('.field-label').getAttribute('data-i18n');
+            const fieldLabel = field.querySelector('.field-label');
+            if (!fieldLabel) {
+                console.error('Field label not found in account-field:', field);
+                return;
+            }
+            const dataI18n = fieldLabel.getAttribute('data-i18n');
+            if (!dataI18n) {
+                console.error('data-i18n attribute missing on field-label:', fieldLabel);
+                return;
+            }
             const fieldKey = fieldMap[dataI18n];
             const fieldElement = field.querySelector('.field-value');
             if (fieldKey && fieldElement) {
-                fieldElement.textContent = fieldKey === 'password' ? '********' : userData[fieldKey] || translations.no_data?.[lang] || 'Not provided';
-                console.log(`Set ${fieldKey} to:`, fieldElement.textContent);
+                const value = userData[fieldKey] || '';
+                fieldElement.textContent = fieldKey === 'password' ? '********' : (value || profileTranslations.no_data?.[lang] || 'Not provided');
             } else {
-                console.warn(`Field not found or invalid key for data-i18n: ${dataI18n}`);
+                console.error(`Invalid fieldKey (${fieldKey}) or fieldElement for data-i18n: ${dataI18n}`);
             }
         });
     });
@@ -140,57 +148,67 @@ export function initProfileEditing() {
     document.querySelectorAll('.change-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
-            console.log('Change button clicked');
-            const fieldElement = btn.closest('.account-field').querySelector('.field-value');
-            const dataI18n = btn.closest('.account-field').querySelector('.field-label').getAttribute('data-i18n');
+            const accountField = btn.closest('.account-field');
+            if (!accountField) {
+                console.error('Account field not found for button:', btn);
+                return;
+            }
+            const fieldElement = accountField.querySelector('.field-value');
+            const fieldLabelElement = accountField.querySelector('.field-label');
+            if (!fieldElement || !fieldLabelElement) {
+                console.error('Field element or label not found in account-field:', accountField);
+                return;
+            }
+            const dataI18n = fieldLabelElement.getAttribute('data-i18n');
+            if (!dataI18n) {
+                console.error('data-i18n attribute not found on field-label:', fieldLabelElement);
+                return;
+            }
             const fieldKey = fieldMap[dataI18n];
-            const currentValue = fieldElement.textContent === '********' ? '' : fieldElement.textContent;
-
-            console.log(`Editing field: ${fieldKey}, data-i18n: ${dataI18n}`);
+            if (!fieldKey) {
+                console.error(`No fieldKey mapped for data-i18n: ${dataI18n}`);
+                return;
+            }
+            let currentValue = fieldElement.textContent === '********' ? '' : fieldElement.textContent;
+            if (currentValue === profileTranslations.no_data?.[lang] || currentValue === 'Not provided') {
+                currentValue = '';
+            }
 
             if (fieldKey === 'password') {
                 showPasswordVerificationModal(async (verified) => {
                     if (verified) {
                         showEditModal({
-                            title: translations.change_password?.[lang] || 'Change Password',
+                            title: profileTranslations.change_password?.[lang] || 'Change Password',
                             currentValue: '',
                             fieldType: 'password',
                             fieldKey,
                             onConfirm: async (newValue) => {
                                 const validationResult = await validateField(fieldKey, newValue, user.id, lang);
                                 if (!validationResult.isValid) {
-                                    showSimpleModal(
-                                        translations.error_title?.[lang] || 'Error',
-                                        validationResult.message,
-                                        'modal-error'
-                                    );
+                                    showErrorModal(validationResult.messageKey, lang);
                                     return;
                                 }
-                                const confirmMessage = translations.confirm_change?.[lang] || 'Confirm changing {field} to {value}?';
-                                if (!confirm(confirmMessage.replace('{field}', translations.account_password?.[lang] || 'Password').replace('{value}', newValue))) return;
+                                const confirmMessage = profileTranslations.confirm_change?.[lang] || 'Confirm changing {field} to {value}?';
+                                if (!confirm(confirmMessage.replace('{field}', profileTranslations.account_password?.[lang] || 'Password').replace('{value}', newValue))) return;
                                 await updateUserField(fieldKey, newValue, fieldElement);
                             }
                         });
                     }
                 });
             } else {
-                const fieldLabel = translations[dataI18n]?.[lang] || dataI18n.replace('account_', '').replace('_', ' ');
+                const fieldLabel = profileTranslations[dataI18n]?.[lang] || dataI18n.replace('account_', '').replace('_', ' ');
                 showEditModal({
-                    title: `${translations.change?.[lang] || 'Change'} ${fieldLabel}`,
+                    title: `${profileTranslations.change?.[lang] || 'Change'} ${fieldLabel}`,
                     currentValue,
                     fieldType: fieldKey === 'email' ? 'email' : fieldKey === 'phoneNumber' ? 'tel' : fieldKey === 'birthDate' ? 'date' : 'text',
                     fieldKey,
                     onConfirm: async (newValue) => {
                         const validationResult = await validateField(fieldKey, newValue, user.id, lang);
                         if (!validationResult.isValid) {
-                            showSimpleModal(
-                                translations.error_title?.[lang] || 'Error',
-                                validationResult.message,
-                                'modal-error'
-                            );
+                            showErrorModal(validationResult.messageKey, lang);
                             return;
                         }
-                        const confirmMessage = translations.confirm_change?.[lang] || 'Confirm changing {field} to {value}?';
+                        const confirmMessage = profileTranslations.confirm_change?.[lang] || 'Confirm changing {field} to {value}?';
                         if (!confirm(confirmMessage.replace('{field}', fieldLabel).replace('{value}', newValue))) return;
                         await updateUserField(fieldKey, newValue, fieldElement);
                     }
@@ -201,51 +219,51 @@ export function initProfileEditing() {
 
     async function validateField(fieldKey, value, currentUserId, lang) {
         if (!value.trim()) {
-            return { isValid: false, message: translations.empty_field?.[lang] || 'Field cannot be empty' };
+            return { isValid: false, messageKey: 'required_field' };
         }
 
         switch (fieldKey) {
             case 'firstName':
             case 'lastName':
                 if (!validateName(value)) {
-                    return { isValid: false, message: translations.invalid_name?.[lang] || 'Name must contain only letters and hyphens, max 50 characters' };
+                    return { isValid: false, messageKey: 'invalid_name' };
                 }
                 break;
             case 'email':
                 if (!validateEmail(value)) {
-                    return { isValid: false, message: translations.email_invalid?.[lang] || 'Invalid email format' };
+                    return { isValid: false, messageKey: 'email_invalid' };
                 }
                 if (!(await checkUniqueField('email', value, currentUserId))) {
-                    return { isValid: false, message: translations.email_taken?.[lang] || 'Email is already taken' };
+                    return { isValid: false, messageKey: 'email_taken' };
                 }
                 break;
             case 'phoneNumber':
                 if (!validatePhoneNumber(value)) {
-                    return { isValid: false, message: translations.phone_number_invalid?.[lang] || 'Invalid Belarus phone number (+375 XX XXX XX XX)' };
+                    return { isValid: false, messageKey: 'invalid_phone' };
                 }
                 if (!(await checkUniqueField('phoneNumber', value, currentUserId))) {
-                    return { isValid: false, message: translations.phone_taken?.[lang] || 'Phone number is already taken' };
+                    return { isValid: false, messageKey: 'phone_taken' };
                 }
                 break;
             case 'birthDate':
                 if (!validateBirthDate(value)) {
-                    return { isValid: false, message: translations.birth_date_invalid?.[lang] || 'Invalid date format (YYYY-MM-DD) or user must be at least 16 years old' };
+                    return { isValid: false, messageKey: 'birth_date_invalid' };
                 }
                 break;
             case 'nickname':
                 if (value.length > 30 || !/^[A-Za-z0-9_-]+$/.test(value)) {
-                    return { isValid: false, message: translations.nickname_invalid?.[lang] || 'Nickname must be up to 30 characters, letters, numbers, underscores, or hyphens' };
+                    return { isValid: false, messageKey: 'nickname_invalid' };
                 }
                 if (!(await checkUniqueField('nickname', value, currentUserId))) {
-                    return { isValid: false, message: translations.nickname_taken?.[lang] || 'Nickname is already taken' };
+                    return { isValid: false, messageKey: 'nickname_taken' };
                 }
                 break;
             case 'password':
                 if (!validatePassword(value)) {
-                    return { isValid: false, message: translations.password_invalid?.[lang] || 'Password must be 8-20 characters, include uppercase, lowercase, digit, and special character' };
+                    return { isValid: false, messageKey: 'password_invalid' };
                 }
                 if (COMMON_PASSWORDS.includes(value)) {
-                    return { isValid: false, message: translations.password_common?.[lang] || 'Password is too common, please choose a different one' };
+                    return { isValid: false, messageKey: 'password_common' };
                 }
                 break;
             default:
@@ -254,73 +272,107 @@ export function initProfileEditing() {
         return { isValid: true };
     }
 
-    async function updateUserField(field, newValue, fieldElement) {
+    async function updateUserField(fieldKey, newValue, fieldElement) {
+        const lang = localStorage.getItem('language') || 'en';
         try {
             showPreloader();
-            console.log(`Updating ${field} to ${newValue}`);
             const res = await fetch(`http://localhost:3000/users/${user.id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ [field]: newValue })
+                body: JSON.stringify({ [fieldKey]: newValue })
             });
+            console.log(`Updating ${fieldKey}: Status ${res.status}, Headers:`, res.headers);
+
             if (res.status === 404) {
-                window.location.assign('../pages/page_404_error.html');
+                showErrorModal('page_not_found', lang);
+                setTimeout(() => window.location.assign('../pages/page_404_error.html'), 1500);
                 return;
             }
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.message || `HTTP error: ${res.status}`);
+
+            let updatedUser = {};
+            const contentType = res.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                updatedUser = await res.json();
+            } else {
+                console.warn(`Non-JSON response for ${fieldKey} update:`, await res.text());
             }
-            fieldElement.textContent = field === 'password' ? '********' : newValue;
+
+            if (!res.ok) {
+                console.error(`Error updating ${fieldKey}: HTTP ${res.status}`, updatedUser);
+                if (updatedUser.message === 'Email already exists') {
+                    showErrorModal('email_taken', lang);
+                } else if (updatedUser.message === 'Phone number already exists') {
+                    showErrorModal('phone_taken', lang);
+                } else if (updatedUser.message === 'Nickname already exists') {
+                    showErrorModal('nickname_taken', lang);
+                } else {
+                    showErrorModal('error_updating_profile', lang);
+                }
+                return;
+            }
+
+            console.log(`Updating ${fieldKey} response:`, updatedUser);
+            fieldElement.textContent = fieldKey === 'password' ? '********' : newValue;
             localStorage.setItem('user', JSON.stringify({
                 ...user,
-                [field]: newValue
+                [fieldKey]: newValue
             }));
-            showSimpleModal(
-                translations.success_title?.[lang] || 'Success',
-                translations[`${field}_updated`]?.[lang] || 'Field updated successfully',
-                'modal-success'
-            );
+            sessionStorage.setItem('showSuccessModal', JSON.stringify({
+                messageKey: `${fieldKey}_updated`,
+                params: {}
+            }));
+            showSimpleModal('success_title', `${fieldKey}_updated`, 'modal-success', null, lang);
+            setTimeout(() => {
+                const modal = document.querySelector('.modal-overlay');
+                if (modal) modal.remove();
+                window.location.reload();
+            }, 2000);
         } catch (error) {
-            console.error(`Error updating ${field}:`, error.message);
-            showSimpleModal(
-                translations.error_title?.[lang] || 'Error',
-                error.message || translations.error_updating?.[lang] || 'Failed to update field',
-                'modal-error'
-            );
+            console.error(`Error updating ${fieldKey}:`, error.message);
+            showErrorModal('error_updating_profile', lang);
         } finally {
             hidePreloader();
         }
     }
 
     function showEditModal({ title, currentValue, fieldType, fieldKey, onConfirm }) {
-        console.log('Showing edit modal:', title);
+        const lang = localStorage.getItem('language') || 'en';
         const modalContainer = document.getElementById('modal-container');
         modalContainer.innerHTML = '';
-        const lang = localStorage.getItem('language') || 'en';
 
         const modal = document.createElement('div');
         modal.className = 'modal-overlay';
-        let inputHtml = `
-            <input type="${fieldType}" value="${fieldType === 'password' ? '' : currentValue}" class="form-input" id="edit-field-input"
-                ${fieldKey === 'phoneNumber' ? 'placeholder="+375 XX XXX XX XX"' : ''}
-                ${fieldKey === 'birthDate' ? 'pattern="\\d{4}-\\d{2}-\\d{2}" placeholder="YYYY-MM-DD"' : ''}>
-        `;
-        if (fieldKey === 'password') {
+        let inputHtml = '';
+        if (fieldKey === 'phoneNumber') {
+            inputHtml = `
+                <input type="tel" value="${currentValue}" class="form-input" id="edit-field-input" placeholder="+375 XX XXX XX XX">
+                <small class="form-hint">${profileTranslations.phone_format_hint?.[lang] || 'Format: +375 XX XXX XX XX'}</small>
+            `;
+        } else if (fieldKey === 'password') {
             inputHtml = `
                 <div class="password-wrapper">
                     <input type="password" value="" class="form-input" id="edit-field-input">
-                    <button type="button" class="toggle-password">${translations.toggle_password_show?.[lang] || 'Show'}</button>
+                    <button type="button" class="toggle-password">${profileTranslations.toggle_password_show?.[lang] || 'Show'}</button>
                 </div>
             `;
+        } else if (fieldKey === 'birthDate') {
+            inputHtml = `
+                <input type="date" value="${currentValue}" class="form-input" id="edit-field-input" placeholder="YYYY-MM-DD">
+                <small class="form-hint">${profileTranslations.date_format_hint?.[lang] || 'Format: YYYY-MM-DD'}</small>
+            `;
+        } else {
+            inputHtml = `
+                <input type="${fieldType}" value="${currentValue}" class="form-input" id="edit-field-input">
+            `;
         }
+
         modal.innerHTML = `
             <div class="modal-dialog-content">
                 <h3 class="modal-title">${title}</h3>
                 ${inputHtml}
                 <div class="modal-dialog-actions">
-                    <button type="button" class="modal-dialog-btn confirm-btn">${translations.confirm?.[lang] || 'Confirm'}</button>
-                    <button type="button" class="modal-dialog-btn cancel-btn">${translations.cancel?.[lang] || 'Cancel'}</button>
+                    <button type="button" class="modal-dialog-btn confirm-btn">${profileTranslations.confirm?.[lang] || 'Confirm'}</button>
+                    <button type="button" class="modal-dialog-btn cancel-btn">${profileTranslations.cancel?.[lang] || 'Cancel'}</button>
                 </div>
             </div>
         `;
@@ -338,7 +390,7 @@ export function initProfileEditing() {
                 e.preventDefault();
                 const isHidden = input.type === 'password';
                 input.type = isHidden ? 'text' : 'password';
-                toggleBtn.textContent = translations[isHidden ? 'toggle_password_hide' : 'toggle_password_show']?.[lang] || (isHidden ? 'Hide' : 'Show');
+                toggleBtn.textContent = profileTranslations[isHidden ? 'toggle_password_hide' : 'toggle_password_show']?.[lang] || (isHidden ? 'Hide' : 'Show');
             });
         }
 
@@ -359,33 +411,32 @@ export function initProfileEditing() {
     }
 
     function showPasswordVerificationModal(onVerified) {
-        console.log('Showing password verification modal');
+        const lang = localStorage.getItem('language') || 'en';
         const modalContainer = document.getElementById('modal-container');
         modalContainer.innerHTML = '';
-        const lang = localStorage.getItem('language') || 'en';
 
         const modal = document.createElement('div');
         modal.className = 'modal-overlay';
         modal.innerHTML = `
             <div class="modal-dialog-content">
-                <h3 class="modal-title">${translations.verify_password?.[lang] || 'Verify Current Password'}</h3>
+                <h3 class="modal-title">${profileTranslations.verify_password?.[lang] || 'Verify Current Password'}</h3>
                 <div class="modal-form-group">
-                    <label for="current-password-1">${translations.current_password?.[lang] || 'Current Password'}</label>
+                    <label for="current-password-1">${profileTranslations.current_password?.[lang] || 'Current Password'}</label>
                     <div class="password-wrapper">
                         <input type="password" class="form-input" id="current-password-1">
-                        <button type="button" class="toggle-password">${translations.toggle_password_show?.[lang] || 'Show'}</button>
+                        <button type="button" class="toggle-password">${profileTranslations.toggle_password_show?.[lang] || 'Show'}</button>
                     </div>
                 </div>
                 <div class="modal-form-group">
-                    <label for="current-password-2">${translations.confirm_password?.[lang] || 'Confirm Password'}</label>
+                    <label for="current-password-2">${profileTranslations.confirm_password?.[lang] || 'Confirm Password'}</label>
                     <div class="password-wrapper">
                         <input type="password" class="form-input" id="current-password-2">
-                        <button type="button" class="toggle-password">${translations.toggle_password_show?.[lang] || 'Show'}</button>
+                        <button type="button" class="toggle-password">${profileTranslations.toggle_password_show?.[lang] || 'Show'}</button>
                     </div>
                 </div>
                 <div class="modal-dialog-actions">
-                    <button type="button" class="modal-dialog-btn confirm-btn">${translations.verify?.[lang] || 'Verify'}</button>
-                    <button type="button" class="modal-dialog-btn cancel-btn">${translations.cancel?.[lang] || 'Cancel'}</button>
+                    <button type="button" class="modal-dialog-btn confirm-btn">${profileTranslations.verify?.[lang] || 'Verify'}</button>
+                    <button type="button" class="modal-dialog-btn cancel-btn">${profileTranslations.cancel?.[lang] || 'Cancel'}</button>
                 </div>
             </div>
         `;
@@ -405,7 +456,7 @@ export function initProfileEditing() {
                 const input = index === 0 ? password1 : password2;
                 const isHidden = input.type === 'password';
                 input.type = isHidden ? 'text' : 'password';
-                toggleBtn.textContent = translations[isHidden ? 'toggle_password_hide' : 'toggle_password_show']?.[lang] || (isHidden ? 'Hide' : 'Show');
+                toggleBtn.textContent = profileTranslations[isHidden ? 'toggle_password_hide' : 'toggle_password_show']?.[lang] || (isHidden ? 'Hide' : 'Show');
             });
         });
 
@@ -415,52 +466,40 @@ export function initProfileEditing() {
             const pass2 = password2.value.trim();
 
             if (!pass1 || !pass2) {
-                showSimpleModal(
-                    translations.error_title?.[lang] || 'Error',
-                    translations.required_fields?.[lang] || 'All fields are required',
-                    'modal-error'
-                );
+                showErrorModal('required_fields', lang);
                 return;
             }
 
             if (pass1 !== pass2) {
-                showSimpleModal(
-                    translations.error_title?.[lang] || 'Error',
-                    translations.passwords_not_match?.[lang] || 'Passwords do not match',
-                    'modal-error'
-                );
+                showErrorModal('passwords_not_match', lang);
                 return;
             }
 
             try {
                 showPreloader();
                 const res = await fetch(`http://localhost:3000/users/${user.id}`);
+                console.log(`Password verification: Status ${res.status}`);
                 if (res.status === 404) {
-                    window.location.assign('../pages/page_404_error.html');
+                    showErrorModal('page_not_found', lang);
+                    setTimeout(() => window.location.assign('../pages/page_404_error.html'), 1500);
                     return;
                 }
                 if (!res.ok) {
+                    const errorData = await res.json().catch(() => ({}));
+                    console.error(`Error verifying password: HTTP ${res.status}`, errorData);
                     throw new Error(`HTTP error: ${res.status}`);
                 }
                 const fetchedUser = await res.json();
-
+                console.log('Password verification response:', fetchedUser);
                 if (fetchedUser.password === pass1) {
                     modal.remove();
                     onVerified(true);
                 } else {
-                    showSimpleModal(
-                        translations.error_title?.[lang] || 'Error',
-                        translations.incorrect_password?.[lang] || 'Incorrect password',
-                        'modal-error'
-                    );
+                    showErrorModal('incorrect_password', lang);
                 }
             } catch (error) {
                 console.error('Error verifying password:', error.message);
-                showSimpleModal(
-                    translations.error_title?.[lang] || 'Error',
-                    translations.error_verifying?.[lang] || 'Failed to verify password',
-                    'modal-error'
-                );
+                showErrorModal('error_verifying', lang);
             } finally {
                 hidePreloader();
             }

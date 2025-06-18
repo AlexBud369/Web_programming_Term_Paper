@@ -61,9 +61,11 @@ export function generateRandomPassword() {
 }
 
 export async function generateNickname(attempts = 0) {
+    const lang = localStorage.getItem('language') || 'en';
     console.log(`Generating nickname, attempt ${attempts + 1}`);
     const maxAttempts = 4;
     if (attempts >= maxAttempts) {
+        showErrorModal('error_nickname_generation', lang);
         throw new Error('Maximum nickname generation attempts reached');
     }
 
@@ -80,6 +82,7 @@ export async function generateNickname(attempts = 0) {
         const response = await fetch(`${apiUrl}/users?nickname=${encodeURIComponent(nickname)}`);
         if (!response.ok) {
             console.log('Nickname check failed:', response.statusText);
+            showErrorModal('error_check_nickname', lang);
             throw new Error('Failed to check nickname availability');
         }
         const users = await response.json();
@@ -202,6 +205,7 @@ export function updateUserProfile() {
 }
 
 export async function registerUser(userData) {
+    const lang = localStorage.getItem('language') || 'en';
     console.log('Registering user:', userData);
     try {
         const apiUrl = API_URL || FALLBACK_API_URL;
@@ -210,13 +214,13 @@ export async function registerUser(userData) {
         const phoneResponse = await fetch(`${apiUrl}/users?phoneNumber=${encodeURIComponent(userData.phoneNumber)}`);
         if (!phoneResponse.ok) {
             console.log('Phone check failed:', phoneResponse.statusText);
-            showErrorModal('Failed to check phone availability');
+            showErrorModal('error_check_phone', lang);
             throw new Error('Failed to check phone availability');
         }
         const existingPhone = await phoneResponse.json();
         if (existingPhone.length > 0) {
             console.log('Phone number already registered');
-            showErrorModal('Phone number already registered');
+            showErrorModal('phone_taken', lang);
             throw new Error('Phone number already registered');
         }
 
@@ -224,13 +228,13 @@ export async function registerUser(userData) {
         const emailResponse = await fetch(`${apiUrl}/users?email=${encodeURIComponent(userData.email)}`);
         if (!emailResponse.ok) {
             console.log('Email check failed:', emailResponse.statusText);
-            showErrorModal('Failed to check email availability');
+            showErrorModal('error_check_email', lang);
             throw new Error('Failed to check email availability');
         }
         const existingEmail = await emailResponse.json();
         if (existingEmail.length > 0) {
             console.log('Email already registered');
-            showErrorModal('Email already registered');
+            showErrorModal('email_taken', lang);
             throw new Error('Email already registered');
         }
 
@@ -238,13 +242,13 @@ export async function registerUser(userData) {
         const nicknameResponse = await fetch(`${apiUrl}/users?nickname=${encodeURIComponent(userData.nickname)}`);
         if (!nicknameResponse.ok) {
             console.log('Nickname check failed:', nicknameResponse.statusText);
-            showErrorModal('Failed to check nickname availability');
+            showErrorModal('error_check_nickname', lang);
             throw new Error('Failed to check nickname availability');
         }
         const existingNickname = await nicknameResponse.json();
         if (existingNickname.length > 0) {
             console.log('Nickname already registered');
-            showErrorModal('Nickname already registered');
+            showErrorModal('nickname_taken', lang);
             throw new Error('Nickname already registered');
         }
 
@@ -257,7 +261,7 @@ export async function registerUser(userData) {
 
         if (!response.ok) {
             console.log('Registration failed:', response.statusText);
-            showErrorModal(`Registration failed: ${response.statusText}`);
+            showErrorModal('error_register', lang);
             throw new Error(`Registration failed: ${response.statusText}`);
         }
 
@@ -290,6 +294,7 @@ export async function registerUser(userData) {
 }
 
 export async function loginUser({ usernameEmail, password }) {
+    const lang = localStorage.getItem('language') || 'en';
     console.log('Logging in user:', usernameEmail);
     try {
         const apiUrl = API_URL || FALLBACK_API_URL;
@@ -299,19 +304,19 @@ export async function loginUser({ usernameEmail, password }) {
         const response = await fetch(`${apiUrl}/users?${loginQuery}`);
         if (!response.ok) {
             console.log('Login request failed:', response.statusText);
-            showErrorModal('Failed to process login request');
+            showErrorModal('error_login', lang);
             throw new Error('Login failed');
         }
         const users = await response.json();
         if (users.length === 0) {
             console.log('User not found');
-            showErrorModal('User does not exist');
+            showErrorModal('user_not_found', lang);
             throw new Error('User does not exist');
         }
         const user = users[0];
         if (user.password !== password) {
             console.log('Incorrect password');
-            showErrorModal('Incorrect password');
+            showErrorModal('incorrect_password', lang);
             throw new Error('Incorrect password');
         }
         console.log('Login successful:', user);
@@ -337,7 +342,6 @@ export async function loginUser({ usernameEmail, password }) {
         return userToSave;
     } catch (error) {
         console.log('Login error:', error.message);
-        showErrorModal(error.message || 'Login failed');
         throw error;
     }
 }

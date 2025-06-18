@@ -1,12 +1,21 @@
-import { translations as catalogTranslations } from './pages-translations/catalog_translations.js';
-import { translations as cartTranslations } from './pages-translations/cart_translations.js';
-import { translations as accountTranslations } from './pages-translations/account_translations.js';
+import { translations as modalTranslations } from './pages-translations/modal_translations.js';
 
-function getTranslation(translations, key, lang, fallback) {
-    return translations[key]?.[lang] || translations[key]?.['en'] || fallback || key;
+function getTranslation(key, lang, fallback, params = {}) {
+    if (!key) {
+        console.warn('Translation key is undefined, using fallback:', fallback);
+        return fallback || 'Unknown';
+    }
+    let text = modalTranslations[key]?.[lang] || modalTranslations[key]?.['en'] || fallback || key;
+    if (text === key) {
+        console.warn(`Translation not found for key: ${key}, lang: ${lang}, using key as fallback`);
+    }
+    Object.keys(params).forEach(param => {
+        text = text.replace(`{${param}}`, params[param]);
+    });
+    return text;
 }
 
-export function showAddToCartModal(product, onAdd, pageType = 'catalog') {
+export function showAddToCartModal(product, onAdd) {
     const modalContainer = document.querySelector('#modal-container');
     if (!modalContainer) {
         console.error('Modal container not found');
@@ -17,34 +26,21 @@ export function showAddToCartModal(product, onAdd, pageType = 'catalog') {
     const lang = localStorage.getItem('language') || 'en';
     document.body.style.overflow = 'hidden';
 
-    const translations = pageType === 'catalog' ? catalogTranslations : pageType === 'cart' ? cartTranslations : accountTranslations;
-
-    if (!translations.add_to_cart_title || !translations.add_to_cart_title[lang]) {
-        console.error(`Translation missing for add_to_cart_title in language ${lang}`);
-        showSimpleModal(
-            getTranslation(translations, 'error_title', lang, 'Error'),
-            'Translation data is missing. Please try again later.',
-            'modal-error',
-            pageType
-        );
-        return;
-    }
-
     const colors = Array.isArray(product.colors) ? product.colors : ['Unknown'];
     const sizes = Array.isArray(product.sizes) ? product.sizes : ['M'];
 
     const translatedColors = colors.map(color => ({
         value: color,
-        label: getTranslation(translations, `color_${color.toLowerCase()}`, lang, color)
+        label: getTranslation(`color_${color.toLowerCase()}`, lang, color)
     }));
 
     const modalHTML = `
         <div class="modal-overlay">
             <div class="modal-dialog-content add-to-cart-modal">
-                <h2 class="modal-title">${getTranslation(translations, 'add_to_cart_title', lang, 'Add {name} to Cart').replace('{name}', product.name)}</h2>
+                <h2 class="modal-title">${getTranslation('add_to_cart_title', lang, 'Add {name} to Cart', { name: product.name })}</h2>
                 <form class="product-form add-to-cart-form">
                     <div class="modal-form-group">
-                        <label for="color-options">${getTranslation(translations, 'color_label', lang, 'Color')}:</label>
+                        <label for="color-options">${getTranslation('color_label', lang, 'Color')}</label>
                         <div class="options-container" id="color-options">
                             ${translatedColors.map((color, index) => `
                                 <div class="color-option ${index === 0 ? 'active' : ''}" 
@@ -55,7 +51,7 @@ export function showAddToCartModal(product, onAdd, pageType = 'catalog') {
                         </div>
                     </div>
                     <div class="modal-form-group">
-                        <label for="size-options">${getTranslation(translations, 'size_label', lang, 'Size')}:</label>
+                        <label for="size-options">${getTranslation('size_label', lang, 'Size')}</label>
                         <div class="options-container" id="size-options">
                             ${sizes.map((size, index) => `
                                 <div class="size-option ${index === 0 ? 'active' : ''}" 
@@ -64,8 +60,8 @@ export function showAddToCartModal(product, onAdd, pageType = 'catalog') {
                         </div>
                     </div>
                     <div class="modal-dialog-actions">
-                        <button type="button" class="modal-dialog-btn confirm-btn">${getTranslation(translations, 'add_button', lang, 'Add to Cart')}</button>
-                        <button type="button" class="modal-dialog-btn cancel-btn">${getTranslation(translations, 'cancel_button', lang, 'Cancel')}</button>
+                        <button type="button" class="modal-dialog-btn confirm-btn">${getTranslation('add_button', lang, 'Add to Cart')}</button>
+                        <button type="button" class="modal-dialog-btn cancel-btn">${getTranslation('cancel_button', lang, 'Cancel')}</button>
                     </div>
                 </form>
             </div>
@@ -112,16 +108,13 @@ export function showAddToCartModal(product, onAdd, pageType = 'catalog') {
             console.log('Calling onAdd with:', { selectedColor, selectedSize });
             onAdd(selectedColor, selectedSize);
             closeModal();
-            showSuccessModal(
-                getTranslation(translations, 'added_to_cart', lang, 'Added to cart!'),
-                pageType
-            );
         } else {
             showSimpleModal(
-                getTranslation(translations, 'error_title', lang, 'Error'),
-                getTranslation(translations, 'form_validation_error', lang, 'Please select color and size.'),
+                getTranslation('error_title', lang, 'Error'),
+                getTranslation('form_validation_error', lang, 'Please select color and size.'),
                 'modal-error',
-                pageType
+                null,
+                lang
             );
         }
     });
@@ -135,33 +128,32 @@ export function showAddToCartModal(product, onAdd, pageType = 'catalog') {
     });
 }
 
-export function showSuccessModal(message, pageType = 'catalog', buttons = []) {
-    const lang = localStorage.getItem('language') || 'en';
-    const translations = pageType === 'catalog' ? catalogTranslations : pageType === 'cart' ? cartTranslations : accountTranslations;
+export function showSuccessModal(messageKey, lang = localStorage.getItem('language') || 'en', params = {}, onClose = null) {
     showSimpleModal(
-        getTranslation(translations, 'success_title', lang, 'Success'),
-        message,
+        getTranslation('success_title', lang, 'Success'),
+        getTranslation(messageKey, lang, messageKey, params),
         'modal-success product-form-modal',
-        pageType,
-        buttons
+        null,
+        lang,
+        params,
+        onClose
     );
-    // Add delay to keep success modal visible
-    setTimeout(() => closeModal(), 2000);
 }
 
-export function showErrorModal(message, pageType = 'catalog', buttons = []) {
-    const lang = localStorage.getItem('language') || 'en';
-    const translations = pageType === 'catalog' ? catalogTranslations : pageType === 'cart' ? cartTranslations : accountTranslations;
+export function showErrorModal(messageKey, lang = localStorage.getItem('language') || 'en', params = {}, onClose = null) {
     showSimpleModal(
-        getTranslation(translations, 'error_title', lang, 'Error'),
-        message,
+        getTranslation('error_title', lang, 'Error'),
+        getTranslation(messageKey, lang, messageKey, params),
         'modal-error product-form-modal',
-        pageType,
-        buttons
+        null,
+        lang,
+        params,
+        onClose
     );
 }
 
-export function showSimpleModal(title, message, modalClass, pageType = 'catalog', buttons = []) {
+export function showSimpleModal(titleKey, messageKey, modalClass, buttons = null, lang = localStorage.getItem('language') || 'en', params = {}, onClose = null) {
+    console.log('showSimpleModal called with:', { titleKey, messageKey, modalClass, lang, params });
     const modalContainer = document.querySelector('#modal-container');
     if (!modalContainer) {
         console.error('Modal container not found');
@@ -170,20 +162,23 @@ export function showSimpleModal(title, message, modalClass, pageType = 'catalog'
 
     modalContainer.innerHTML = '';
     document.body.style.overflow = 'hidden';
-    const lang = localStorage.getItem('language') || 'en';
-    const translations = pageType === 'catalog' ? catalogTranslations : pageType === 'cart' ? cartTranslations : accountTranslations;
 
-    const validButtons = Array.isArray(buttons) && buttons.length > 0 ? buttons : [{
-        text: getTranslation(translations, 'close', lang, 'Close'),
+    if (!['en', 'ru'].includes(lang)) {
+        console.warn(`Invalid language: ${lang}, defaulting to 'en'`);
+        lang = 'en';
+    }
+
+    const validButtons = buttons || [{
+        text: getTranslation('close', lang, 'Close'),
         class: 'modal-ok-btn modal-dialog-btn',
-        action: () => {}
+        action: () => closeModal()
     }];
 
     const modalHTML = `
         <div class="modal-overlay ${modalClass}">
             <div class="modal-dialog-content">
-                <h2 class="modal-title">${title}</h2>
-                <p class="modal-message">${message}</p>
+                <h2 class="modal-title">${getTranslation(titleKey, lang, titleKey, params)}</h2>
+                <p class="modal-message">${getTranslation(messageKey, lang, messageKey, params)}</p>
                 <div class="modal-dialog-actions">
                     ${validButtons.map(btn => `<button class="modal-dialog-btn ${btn.class}" type="button">${btn.text}</button>`).join('')}
                 </div>
@@ -198,20 +193,28 @@ export function showSimpleModal(title, message, modalClass, pageType = 'catalog'
     const modalButtons = modalContainer.querySelectorAll('.modal-dialog-btn');
 
     setTimeout(() => modalContent.classList.add('show'), 10);
+    setTimeout(() => closeModal(), 3000);
 
     function closeModal() {
         modalContent.classList.remove('show');
         setTimeout(() => {
             modalContainer.innerHTML = '';
             document.body.style.overflow = '';
+            sessionStorage.removeItem('showSuccessModal');
+            if (onClose) {
+                onClose();
+            }
         }, 300);
     }
 
     modalButtons.forEach((button, index) => {
         button.addEventListener('click', () => {
-            console.log('Button action called:', validButtons[index].text);
-            validButtons[index].action();
-            closeModal();
+            if (validButtons[index].action) {
+                validButtons[index].action();
+            }
+            if (!validButtons[index].action.toString().includes('closeModal')) {
+                closeModal();
+            }
         });
     });
 
@@ -230,6 +233,21 @@ export function closeModal() {
         setTimeout(() => {
             modalContainer.innerHTML = '';
             document.body.style.overflow = '';
+            sessionStorage.removeItem('showSuccessModal');
         }, 300);
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const successModalData = sessionStorage.getItem('showSuccessModal');
+    if (successModalData) {
+        try {
+            const { messageKey, params } = JSON.parse(successModalData);
+            const lang = localStorage.getItem('language') || 'en';
+            showSuccessModal(messageKey, lang, params);
+        } catch (error) {
+            console.error('Error parsing showSuccessModal data:', error);
+        }
+        sessionStorage.removeItem('showSuccessModal');
+    }
+});

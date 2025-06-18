@@ -3,12 +3,13 @@ import { initPagination } from './modules/pagination.js';
 import { getSortParams } from './modules/sorting.js';
 import { initSearch } from './modules/search.js';
 import { showProductForm, deleteProduct } from './modules/productCRUD.js';
-import { showSimpleModal, closeModal } from './modules/modal.js';
+import { showSimpleModal, closeModal, showSuccessModal, showErrorModal } from './modules/modal.js';
 import { checkAuth, updateUserProfile } from './modules/auth.js';
 import { initBurgerMenu } from './modules/burgerMenu.js';
 import { initLanguageSwitcher } from './modules/languageSwitcher.js';
 import { initThemeSwitcher } from './modules/themeSwitcher.js';
-import { translations } from './modules/pages-translations/admin_translations.js';
+import { translations as adminTranslations } from './modules/pages-translations/admin_translations.js';
+import { translations as modalTranslations } from './modules/pages-translations/modal_translations.js';
 import { showPreloader, hidePreloader, initPreloader } from './modules/preloader.js';
 
 const productsGrid = document.getElementById('products-grid');
@@ -77,8 +78,8 @@ async function fetchProducts(sortOption, page = 1) {
     } catch (error) {
         console.error('Error fetching products:', error);
         showSimpleModal(
-            translations.error?.error_loading_products?.[lang] || 'Error',
-            translations.error?.error_loading_products?.[lang] || 'Failed to load products. Please try again later.',
+            getTranslation(modalTranslations, 'error_title', lang, 'Error'),
+            getTranslation(modalTranslations, 'error_loading_products', lang, 'Failed to load products. Please try again later.'),
             'modal-error'
         );
         renderProducts([], 0, lang);
@@ -95,7 +96,7 @@ function renderProducts(products, totalItems, lang = 'en') {
 
     productsGrid.innerHTML = '';
     noResults.style.display = products.length === 0 ? 'block' : 'none';
-    productsCount.innerHTML = `<span data-i18n="total_products">${translations.total_products?.[lang] || 'Total Products'}</span>: ${totalItems}`;
+    productsCount.innerHTML = `<span data-i18n="total_products">${getTranslation(adminTranslations, 'total_products', lang, 'Total Products')}</span>: ${totalItems}`;
 
     products.forEach(product => {
         const productCard = document.createElement('div');
@@ -104,7 +105,7 @@ function renderProducts(products, totalItems, lang = 'en') {
         productCard.innerHTML = `
             <div class="product-image-container">
                 <img src="${product.image}" alt="${product.name}" class="product-image">
-                <button class="quick-view" data-product-id="${product.id}" data-i18n="quick_view">${translations.quick_view?.[lang] || 'Quick View'}</button>
+                <button class="quick-view" data-product-id="${product.id}" data-i18n="quick_view">${getTranslation(adminTranslations, 'quick_view', lang, 'Quick View')}</button>
             </div>
             <div class="product-info">
                 <h3 class="product-name">${product.name}</h3>
@@ -114,11 +115,11 @@ function renderProducts(products, totalItems, lang = 'en') {
                     <span class="rating-count">(${product.rating.toFixed(1)})</span>
                 </div>
                 <p class="product-price">$${product.price.toFixed(2)}</p>
-                <p class="product-colors"><span data-i18n="colors">${translations.colors?.[lang] || 'Colors'}</span>: ${product.colors?.join(', ') || 'N/A'}</p>
-                <p class="product-category"><span data-i18n="category">${translations.category?.[lang] || 'Category'}</span>: ${product.category}</p>
+                <p class="product-colors"><span data-i18n="colors">${getTranslation(adminTranslations, 'colors', lang, 'Colors')}</span>: ${product.colors?.join(', ') || 'N/A'}</p>
+                <p class="product-category"><span data-i18n="category">${getTranslation(adminTranslations, 'category', lang, 'Category')}</span>: ${product.category}</p>
                 <div class="admin-actions">
-                    <button class="edit-btn" data-id="${product.id}" data-i18n="edit">${translations.edit?.[lang] || 'Edit'}</button>
-                    <button class="delete-btn" data-id="${product.id}" data-i18n="delete">${translations.delete?.[lang] || 'Delete'}</button>
+                    <button class="edit-btn" data-id="${product.id}" data-i18n="edit">${getTranslation(adminTranslations, 'edit', lang, 'Edit')}</button>
+                    <button class="delete-btn" data-id="${product.id}" data-i18n="delete">${getTranslation(adminTranslations, 'delete', lang, 'Delete')}</button>
                 </div>
             </div>
         `;
@@ -131,7 +132,7 @@ function renderProducts(products, totalItems, lang = 'en') {
     initPagination(totalItems, currentPage, 9, (page) => {
         currentPage = page;
         fetchProducts(document.getElementById('sort-by').value, page);
-    }, translations, lang);
+    }, adminTranslations, lang);
 }
 
 function handleGridClick(e) {
@@ -143,8 +144,8 @@ function handleGridClick(e) {
         const productId = e.target.dataset.id;
         if (!productId) {
             showSimpleModal(
-                translations.error?.error_invalid_id?.[lang] || 'Error',
-                translations.error?.error_invalid_id?.[lang] || 'Invalid product ID',
+                getTranslation(modalTranslations, 'error_title', lang, 'Error'),
+                getTranslation(modalTranslations, 'error_invalid_id', lang, 'Invalid product ID'),
                 'modal-error'
             );
             return;
@@ -165,8 +166,8 @@ function handleGridClick(e) {
                     window.location.assign('../pages/page_404_error.html');
                 } else {
                     showSimpleModal(
-                        translations.error?.error_loading_product?.[lang] || 'Error',
-                        translations.error?.error_loading_product?.[lang] || 'Failed to load product',
+                        getTranslation(modalTranslations, 'error_title', lang, 'Error'),
+                        getTranslation(modalTranslations, 'error_loading_product', lang, 'Failed to load product'),
                         'modal-error'
                     );
                 }
@@ -176,8 +177,8 @@ function handleGridClick(e) {
         const productId = e.target.dataset.id;
         if (!productId) {
             showSimpleModal(
-                translations.error?.error_invalid_id?.[lang] || 'Error',
-                translations.error?.error_invalid_id?.[lang] || 'Invalid product ID',
+                getTranslation(modalTranslations, 'error_title', lang, 'Error'),
+                getTranslation(modalTranslations, 'error_invalid_id', lang, 'Invalid product ID'),
                 'modal-error'
             );
             return;
@@ -190,50 +191,31 @@ function handleGridClick(e) {
             })
             .then(product => {
                 showSimpleModal(
-                    translations.confirm?.confirm_delete_product?.[lang] || 'Confirm Delete',
-                    `${translations.confirm?.confirm_delete_product_prompt?.[lang] || 'Are you sure you want to delete product'} "${product.name}"?`,
+                    getTranslation(modalTranslations, 'confirm_delete_product', lang, 'Confirm Deletion'),
+                    `${getTranslation(modalTranslations, 'confirm_delete_product_prompt', lang, 'Are you sure you want to delete product')} "${product.name}"?`,
                     'modal-confirm',
                     [
                         {
-                            text: translations.confirmation_yes?.[lang] || 'Yes',
+                            text: getTranslation(modalTranslations, 'confirmation_yes', lang, 'Yes'),
                             class: 'modal-btn confirm-btn',
                             action: async () => {
                                 try {
                                     showPreloader();
                                     await deleteProduct(productId);
-                                    const card = productsGrid.querySelector(`.product-card[data-id="${productId}"]`);
-                                    if (card) {
-                                        card.remove();
-                                        allProducts = allProducts.filter(p => p.id !== parseInt(productId));
-                                        const remainingItems = allProducts.length;
-                                        noResults.style.display = remainingItems === 0 ? 'block' : 'none';
-                                        initPagination(remainingItems, currentPage, 9, (page) => {
-                                            currentPage = page;
-                                            fetchProducts(document.getElementById('sort-by').value, page);
-                                        }, translations, lang);
-                                    }
-                                    showSimpleModal(
-                                        translations.success?.delete_product_success?.[lang] || 'Success',
-                                        translations.success?.delete_product_success?.[lang] || 'Product deleted successfully!',
-                                        'modal-success'
-                                    );
                                 } catch (error) {
-                                    showSimpleModal(
-                                        translations.error?.error_delete_product?.[lang] || 'Error',
-                                        translations.error?.error_delete_product?.[lang] || 'Failed to delete product',
-                                        'modal-error'
-                                    );
+                                    console.error('Error in delete action:', error);
                                 } finally {
                                     hidePreloader();
                                 }
                             }
                         },
                         {
-                            text: translations.confirmation_no?.[lang] || 'No',
+                            text: getTranslation(modalTranslations, 'confirmation_no', lang, 'No'),
                             class: 'modal-btn cancel-btn',
                             action: () => closeModal()
                         }
-                    ]
+                    ],
+                    lang
                 );
             })
             .catch(error => {
@@ -241,8 +223,8 @@ function handleGridClick(e) {
                     window.location.assign('../pages/page_404_error.html');
                 } else {
                     showSimpleModal(
-                        translations.error?.error_loading_product?.[lang] || 'Error',
-                        translations.error?.error_loading_product?.[lang] || 'Failed to load product',
+                        getTranslation(modalTranslations, 'error_title', lang, 'Error'),
+                        getTranslation(modalTranslations, 'error_loading_product', lang, 'Failed to load product'),
                         'modal-error'
                     );
                 }
@@ -262,16 +244,20 @@ function generateStars(rating) {
     `;
 }
 
+function getTranslation(translations, key, lang, fallback) {
+    return translations[key]?.[lang] || translations[key]?.['en'] || fallback || key;
+}
+
 function updateLanguage(lang, translations) {
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.dataset.i18n;
-        const translation = translations[key]?.[lang] || element.textContent || key;
+        const translation = getTranslation(adminTranslations, key, lang, key);
         element.textContent = translation;
     });
 
     document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
         const key = element.dataset.i18nPlaceholder;
-        const translation = translations[key]?.[lang] || element.placeholder || key;
+        const translation = getTranslation(adminTranslations, key, lang, key);
         element.placeholder = translation;
     });
 }
@@ -279,13 +265,36 @@ function updateLanguage(lang, translations) {
 document.addEventListener('DOMContentLoaded', () => {
     console.log('admin.js loaded');
     initPreloader();
-    sessionStorage.removeItem('showSuccessModal');
     const lang = localStorage.getItem('language') || 'en';
+
+    const modalState = sessionStorage.getItem('modal_state');
+    if (modalState) {
+        try {
+            const { operation, success, successKey, errorKey, message } = JSON.parse(modalState);
+            console.log('Modal state found:', { operation, success, successKey, errorKey, message });
+            if (success) {
+                showSuccessModal(successKey, lang, {}, () => {
+                    console.log('Success modal closed');
+                    sessionStorage.removeItem('modal_state');
+                });
+            } else {
+                showErrorModal(errorKey, lang, { error: message }, () => {
+                    console.log('Error modal closed');
+                    sessionStorage.removeItem('modal_state');
+                });
+            }
+        } catch (error) {
+            console.error('Error parsing modal state:', error);
+            sessionStorage.removeItem('modal_state');
+        }
+    }
+
+    sessionStorage.removeItem('showSuccessModal'); 
     const auth = checkAuth('admin');
     if (!auth.isAuthenticated || !auth.hasRequiredRole) {
         showSimpleModal(
-            translations.error?.access_denied?.[lang] || 'Error',
-            translations.error?.access_denied?.[lang] || 'Access denied',
+            getTranslation(modalTranslations, 'error_title', lang, 'Error'),
+            getTranslation(modalTranslations, 'access_denied', lang, 'Access denied'),
             'modal-error'
         );
         setTimeout(() => window.location.assign('../auth/signin.html'), 1500);
@@ -294,8 +303,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!addProductBtn || !productsGrid || !noResults || !productsCount) {
         showSimpleModal(
-            translations.error?.error_missing_elements?.[lang] || 'Error',
-            translations.error?.error_missing_elements?.[lang] || 'Page elements not found',
+            getTranslation(modalTranslations, 'error_title', lang, 'Error'),
+            getTranslation(modalTranslations, 'error_missing_elements', lang, 'Page elements not found'),
             'modal-error'
         );
         return;
@@ -331,6 +340,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('languageChanged', () => {
         const newLang = localStorage.getItem('language') || 'en';
         fetchProducts(document.getElementById('sort-by').value, currentPage);
-        updateLanguage(newLang, translations);
+        updateLanguage(newLang, adminTranslations);
     });
 });
